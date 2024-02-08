@@ -4,11 +4,14 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    path("", views.home, name="home"),
+    path("", views.index, name="index"),
+    path("home/", views.home, name="home"),
     path("map/", views.map, name="map"),
     path("shop/", views.shop, name="shop"),
     path("camera/", views.camera, name="camera"),
-    path("login/", views.login, name="login"),
     path("admin/", admin.site.urls),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path("login/", views.user_login, name='login'),
+    path("signup/", views.user_signup, name='signup'),
+    path("logout/", views.user_logout, name='logout'),
+    path("profile/", views.profile, name='profile'),
 ]
