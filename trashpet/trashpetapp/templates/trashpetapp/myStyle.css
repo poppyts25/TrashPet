@@ -1,0 +1,74 @@
+
+<style type="text/css"> 
+
+.parent {
+    position: relative center;
+    
+  }
+  .image{
+    position: absolute;
+	width: 50%;
+	height: auto;
+  }
+
+.container{
+
+	display: flex;
+	width: 80%;
+	height: 60%;
+	align-items: center;
+	margin: auto;
+	flex-wrap: wrap;
+	perspective: 1000px;
+	background-color: grey;
+	box-shadow: 5px 5px 5px black;
+
+
+	
+}
+
+.card{
+	position: relative;
+	display: flex;
+	transform-style: preserve-3d;
+	transition: transform 1s;
+	margin: auto;
+	border: 5px solid black;
+	box-shadow: 5px black;
+	width: 16%;
+	height: 40%;
+
+}
+
+
+
+
+
+
+
+.link {
+	color: white;
+	font-style: none;
+}
+
+.link:hover {
+		color: #d9e4fc;
+}
+
+main{ 
+	margin:0px;
+	padding-top: 0px;
+	background-color: #cccccc;
+	background-image: url("arcade.jpg");
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: white; /*as default to make sure all text can be read*/
+}
+body {
+	margin: 0px;
+	background-color: pink;
+}
+
+</style>
