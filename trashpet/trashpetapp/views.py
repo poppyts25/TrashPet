@@ -4,6 +4,7 @@ from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm
+from .models import UserProfile
 
 def index(request):
     return render(request, "trashpetapp/index.html")
@@ -25,9 +26,11 @@ def camera(request):
 
 def profile(request):
     user = request.user
+    profile = UserProfile.objects.get(user=user)
     username = user.username
+    leaves = profile.leaves
 
-    return render(request, "trashpetapp/profile.html", {"username": username})
+    return render(request, "trashpetapp/profile.html", {"username": username, "leaves": leaves})
 
 
 
@@ -35,7 +38,8 @@ def user_signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            UserProfile.objects.create(user=user)
             return redirect('login')
     else:
         form = UserCreationForm()
