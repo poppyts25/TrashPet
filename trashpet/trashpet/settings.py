@@ -127,3 +127,5 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/" #####
+
+LOGIN_URL = "../" # Added to redirect to login page if trying to access a page requiring login, wont work on pages with more sub urls
