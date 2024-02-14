@@ -1,3 +1,14 @@
+
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Virtual Pet</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  {% include "../trashpetapp/navbar.html" %}
+ 
+
 <p>Hi {{ username }}! You have {{ leaves }} leaves</p>
 
 <form method="POST">
@@ -14,3 +25,8 @@
     {% csrf_token %}
     <button type="submit" name="delete_user">Delete account</button>
 </form>
+
+
+
+</body>
+</html>

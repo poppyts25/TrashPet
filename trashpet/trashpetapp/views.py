@@ -16,11 +16,11 @@ def home(request):
 
 @login_required
 def shop(request):
-    return HttpResponse("Shop")
+    return render(request, "trashpetapp/shop.html")
 
 @login_required
 def map(request):
-    return HttpResponse("map")
+    return render(request, "trashpetapp/map.html")
 
 @login_required
 def camera(request):
