@@ -1,5 +1,16 @@
-<p>Hi {{ username }}!</p>
+<p>Hi {{ username }}! You have {{ leaves }} leaves</p>
 
+<form method="POST">
+    {% csrf_token %}
+    <div style="display: inline-block;">
+        {{ form.as_p }}
+    </div>
+    <div style="display: inline-block;">
+        <button type="submit">Rename pet</button>
+    </div>
+</form>
 
-<button>Rename pet</button>
-<button>Delete account</button>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" name="delete_user">Delete account</button>
+</form>
