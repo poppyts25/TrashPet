@@ -4,7 +4,7 @@
     <head>
         <style>
             body{
-                background: url('{% static "SkylineBackground.png" %}') rgba(0,0,0,0.3);
+                background: url('{% static "SkylineBackground.png" %}');
                 background-blend-mode: multiply;
                 background-position: center;
                 background-size: cover;
@@ -20,7 +20,38 @@
             }
             .welcome-message{
                 font-size: 80px;
+                text-shadow: 5px 5px #241F21;
+            }
 
+            /*login/register */
+            a:link{
+                text-decoration: none;
+            }
+            .index-buttons{
+                color: white;
+                text-align: center;
+                font-size: 15px;
+            }
+            .index-button{
+                margin: 10px 30px;
+                display: inline-block;
+                padding: 10px 30px;
+                color: white;
+                font-size: 15px;
+                font-weight: bold;
+                background: none;
+                border: 3px solid;
+                border-radius: 99px;
+                transition: 0.4s;
+              
+            }
+            .log-in:hover {
+                box-shadow: 2px 2px 4px #241F21;
+                background-color: rgb(225, 118, 81);
+            }
+            .register:hover {
+                box-shadow: 2px 2px 4px #241F21;
+                background-color: rgb(24, 68, 116);
             }
         </style>
     </head>
@@ -30,8 +61,14 @@
                 <div class="welcome-message">
                     <p>Welcome!<p>
                 </div>
-                <a href="/trashpetapp/login"><button>Log in</button></a>
-                <a href="/trashpetapp/signup"><button>Register</button></a>
+                <div class="index-buttons">
+                    <a href="/trashpetapp/login" class="log-in index-button">
+                        Log in
+                    </a>
+                    <a href="/trashpetapp/signup" class="register index-button">
+                        Register
+                    </a>
+                </div>
             </div>
         </div>
     </body>
