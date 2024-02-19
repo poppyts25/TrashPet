@@ -53,6 +53,8 @@
     </div>
     <script src="{% static 'script.js' %}"></script>
 
+    <!-- don't think this is required anymore as can't access page if not logged in-->
+    <!--
     <div class="user-output"> 
     {% if request.user.is_authenticated %}
       <p>{{ request.user.username }}</p>
@@ -62,6 +64,7 @@
       <a href="{% url 'signup' %}">Signup</a>
     {% endif %}
     </div>
+    -->
     
   </div>
     
