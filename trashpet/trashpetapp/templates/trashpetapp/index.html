@@ -1,3 +1,38 @@
-<p>Welcome!</p>
-<a href="/trashpetapp/login"><button>Log in</button></a>
-<a href="/trashpetapp/signup"><button>Register</button></a>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            body{
+                background: url('{% static "SkylineBackground.png" %}') rgba(0,0,0,0.3);
+                background-blend-mode: multiply;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                /*background-color: rgb(218, 186, 139) !important;*/
+                min-height: 100%;
+                background-attachment: fixed;
+            }
+            .main-page-index {
+                padding-top: 60px;
+                text-align: center;
+                color: white;
+            }
+            .welcome-message{
+                font-size: 80px;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main-page-index">
+            <div class="text area">
+                <div class="welcome-message">
+                    <p>Welcome!<p>
+                </div>
+                <a href="/trashpetapp/login"><button>Log in</button></a>
+                <a href="/trashpetapp/signup"><button>Register</button></a>
+            </div>
+        </div>
+    </body>
+</html>

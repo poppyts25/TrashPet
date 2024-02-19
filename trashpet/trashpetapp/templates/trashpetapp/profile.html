@@ -4,29 +4,33 @@
     <meta charset="UTF-8">
     <title>Virtual Pet</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .main-page-profile {
+            padding-top: 100px;
+        }
+    </style>
 </head>
 <body>
   {% include "../trashpetapp/navbar.html" %}
  
+    <div class="main-page-profile">
+        <p>Hi {{ username }}! You have {{ leaves }} leaves</p>
 
-<p>Hi {{ username }}! You have {{ leaves }} leaves</p>
+        <form method="POST">
+            {% csrf_token %}
+            <div style="display: inline-block;">
+                {{ form.as_p }}
+            </div>
+            <div style="display: inline-block;">
+                <button type="submit">Rename pet</button>
+            </div>
+        </form>
 
-<form method="POST">
-    {% csrf_token %}
-    <div style="display: inline-block;">
-        {{ form.as_p }}
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="delete_user">Delete account</button>
+        </form>
     </div>
-    <div style="display: inline-block;">
-        <button type="submit">Rename pet</button>
-    </div>
-</form>
-
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit" name="delete_user">Delete account</button>
-</form>
-
-
 
 </body>
 </html>
