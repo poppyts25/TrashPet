@@ -7,14 +7,45 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 
     <style>
-        .main-page-home{
-          background-color: rgb(218, 186, 139);
+        body{
+          background: url('{% static "interiorTemp.jpg" %}') rgba(0,0,0,0.3);
+          background-blend-mode: multiply;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          /*background-color: rgb(218, 186, 139) !important;*/
+        }
+        .welcome{
+          text-align: center;
+          padding-top: 100px;
+        }
+        .user-output{
+          text-align: center;
+          margin-top: 50px;
         }
     </style>
 </head>
 <body>
   {% include "../trashpetapp/navbar.html" %}
+
+  <!-- Highlight tab on navbar -->
+  <script>
+    document.getElementById("home-tab").classList.remove("active")
+    document.getElementById("garden-tab").classList.remove("active")
+    document.getElementById("shop-tab").classList.remove("active")
+    document.getElementById("map-tab").classList.remove("active")
+
+    document.getElementById("home-tab").classList.add("active")
+
+  </script>
+
   <div class="main-page-home">
+
+    <div class="welcome">
+      <h1>Welcome!</h1>
+    </div>
+    
+
     <div id="pet-container">
       <div id="pet">😺</div>
       <button id="feed-button">Feed</button>
@@ -22,6 +53,7 @@
     </div>
     <script src="{% static 'script.js' %}"></script>
 
+    <div class="user-output"> 
     {% if request.user.is_authenticated %}
       <p>{{ request.user.username }}</p>
       <a href="{% url 'logout' %}">Logout</a>
@@ -29,8 +61,8 @@
       <a href="{% url 'login' %}">Login</a>
       <a href="{% url 'signup' %}">Signup</a>
     {% endif %}
-
-    <h1>Welcome!</h1>
+    </div>
+    
   </div>
     
 </body>
