@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
-from .forms import UserCreationForm, LoginForm, RenamePetForm
+from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
 
@@ -23,8 +23,23 @@ def map(request):
     return render(request, "trashpetapp/map.html")
 
 @login_required
+def garden(request):
+    return render(request, "trashpetapp/garden.html")
+
+@login_required
 def camera(request):
-    return HttpResponse("camera")
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+
+    if request.method == 'POST':
+        form = CodeForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            profile.codes = code
+            return redirect("shop")
+    else:
+        form = CodeForm()
+    return render(request, "trashpetapp/camera.html", {"form": form})
 
 @login_required 
 def profile(request):
