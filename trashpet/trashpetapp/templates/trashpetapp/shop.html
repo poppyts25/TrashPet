@@ -1,0 +1,38 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Virtual Pet</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <style>
+      .main-page-shop {
+        padding-top: 100px;
+      }
+    </style>
+</head>
+<body>
+  {% include "../trashpetapp/navbar.html" %}
+
+  <!-- Highlight tab on navbar -->
+  <script>
+    document.getElementById("home-tab").classList.remove("active")
+    document.getElementById("garden-tab").classList.remove("active")
+    document.getElementById("shop-tab").classList.remove("active")
+    document.getElementById("map-tab").classList.remove("active")
+
+    document.getElementById("shop-tab").classList.add("active")
+    
+  </script>
+
+  <div class="main-page-shop"></div>
+    <h1>Welcome to the shop!</h1>
+    
+    <button id="back">Back</button>
+    <div id="item">1</div>
+    <button display:right id="next">Next</button>
+  </div>
+</body>
+</html>

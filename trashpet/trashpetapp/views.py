@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
-from .forms import UserCreationForm, LoginForm, RenamePetForm
+from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
 
@@ -16,15 +16,30 @@ def home(request):
 
 @login_required
 def shop(request):
-    return HttpResponse("Shop")
+    return render(request, "trashpetapp/shop.html")
 
 @login_required
 def map(request):
-    return HttpResponse("map")
+    return render(request, "trashpetapp/map.html")
+
+@login_required
+def garden(request):
+    return render(request, "trashpetapp/garden.html")
 
 @login_required
 def camera(request):
-    return HttpResponse("camera")
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+
+    if request.method == 'POST':
+        form = CodeForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            profile.codes = code
+            return redirect("shop")
+    else:
+        form = CodeForm()
+    return render(request, "trashpetapp/camera.html", {"form": form})
 
 @login_required 
 def profile(request):
@@ -53,7 +68,6 @@ def profile(request):
         form = RenamePetForm()
 
     return render(request, "trashpetapp/profile.html", {"form": form, "username": username, "leaves": leaves, "pet_name": pet_name})
-
 
 
 def user_signup(request):
@@ -85,4 +99,4 @@ def user_login(request):
 # logout page
 def user_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('index')
