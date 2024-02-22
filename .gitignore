@@ -1,4 +1,4 @@
 trashpet/venv/
 trashpet/trashpetapp/venv/
 trashpet/trashpetapp/venv/
-*pyc
+*.pyc
