@@ -50,7 +50,7 @@
     <div class="codebox">
         <form action="{% url 'shop' %}" method="post">
         {% csrf_token %}
-        <input type="text" id="code" name="code" maxlength="" /><br><br>
+        <input type="text" id="code" name="code" /><br><br>
         <input type="submit" value="Submit" />
         </form>
     </div>

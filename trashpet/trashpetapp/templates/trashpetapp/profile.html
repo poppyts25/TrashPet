@@ -1,21 +1,72 @@
 
 {% load static %}
 <head>
+    <script src="https://kit.fontawesome.com/f32a47c063.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Virtual Pet</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
         .main-page-profile {
-            padding-top: 100px;
+            padding-top: 20px;
+            margin-left: 20%;
+            margin-right: 20%;
+            background-color: lavenderblush;
+            border-color: darkslateblue;
+            border-style: solid;
+            border-radius: 4px;
+            font-size: 20;
+            text-align: center;
+        }
+
+        .welcome{
+          color: white;
+          text-align: center;
+          padding-top: 100px;
+        }
+
+        body{
+                background: url('{% static "SkylineBackground.png" %}');
+                background-blend-mode: multiply;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                /*background-color: rgb(218, 186, 139) !important;*/
+                min-height: 100%;
+                background-attachment: fixed;
+            }
+
+        .rename{
+            padding-top: 10px;
+            font-size: 15;
+        }
+
+        input[type=text]{
+            border: none;
+            border-bottom: 2px solid darkslateblue;
+        }
+
+        button{
+            background-color: darkslateblue;
+            border: none;
+            color: white;
+            font-size: 15;
+
         }
     </style>
+
 </head>
 <body>
   {% include "../trashpetapp/navbar.html" %}
  
-    <div class="main-page-profile">
-        <p>Hi {{ username }}! You have {{ leaves }} leaves</p>
+    <div class="welcome">
+        <h1>Hi {{username}}!</h1>
+    </div>
 
+    <div class="main-page-profile">
+        <i class="fa-solid fa-leaf fa-2xl" style="color: #77bb41;"></i> {{leaves}}
+        
+
+        <div class="rename">
         <form method="POST">
             {% csrf_token %}
             <div style="display: inline-block;">
@@ -25,6 +76,7 @@
                 <button type="submit">Rename pet</button>
             </div>
         </form>
+        </div>
 
         <form method="POST">
             {% csrf_token %}
