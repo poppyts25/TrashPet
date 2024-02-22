@@ -12,7 +12,10 @@ def index(request):
 
 @login_required # automatically redirects to login page if not logged in
 def home(request):
-    return render(request, "trashpetapp/home.html")
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    petname = profile.pet_name
+    return render(request, "trashpetapp/home.html", {"petname": petname})
 
 @login_required
 def shop(request):
