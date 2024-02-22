@@ -1,7 +1,111 @@
-<h1>Login</h1>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-    <a href="{% url 'signup' %}">Dont have Account Create</a>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            body{
+                background: url('{% static "SkylineBackground.png" %}');
+                background-blend-mode: multiply;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                /*background-color: rgb(218, 186, 139) !important;*/
+                min-height: 100%;
+                background-attachment: fixed;
+            }
+            .main-page-login {
+                padding-top: 60px;
+                text-align: center;
+                color: white;
+            }
+
+            form{
+                width: 40%;
+                margin: auto;                
+                padding: 30px;
+                
+            }
+            fieldset {        
+                background-color: rgba(0, 0, 0,.4); 
+                border-radius: 30px;
+                position:relative;
+                padding: 0px;
+            }
+            legend {
+                /*position: absolute;*/
+                background-color: rgba(0, 0, 0, .5);
+                color: white;
+                text-indent: 30px;
+                border-radius: 30px 30px 0px 0px;
+                width:100%;
+                padding: 10px 0px 10px 0px;
+                float: left;
+                font-size: 25px;
+            }
+
+            .form-inputs {
+                padding: 30px;
+                margin-top: 1cm;
+            }
+
+
+            a:link{
+                text-decoration: none;
+            }
+            .login-buttons{
+                color: white;
+                text-align: center;
+                font-size: 15px;
+                padding-top: 10px;
+            }
+            .login-button{
+                margin: 10px 30px;
+                display: inline-block;
+                padding: 10px 30px;
+                color: white;
+                font-size: 15px;
+                font-weight: bold;
+                background: none;
+                border: 3px solid;
+                border-radius: 99px;
+                transition: 0.4s;
+              
+            }
+            .signup:hover {
+                box-shadow: 2px 2px 4px #241F21;
+                background-color: rgb(24, 68, 116);
+            }
+            .login:hover {
+                box-shadow: 2px 2px 4px #241F21;
+                background-color: rgb(225, 118, 81);
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="main-page-login">
+
+            <form method="POST">
+                <fieldset>
+                    <legend>Login</legend>
+                    <div class="form-inputs">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+
+                        
+
+                        <div class="login-buttons">
+                            <button type="submit" class="login login-button">Login</button>
+                            <a href="{% url 'signup' %}" class="signup login-button">
+                                Dont have Account Create
+                            </a>
+                        </div>
+                        
+                        
+                    </div>
+                </fieldset>
+                
+            </form>
+        </div>
+    </body>
+</html>
