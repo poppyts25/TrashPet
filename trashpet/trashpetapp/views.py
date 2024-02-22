@@ -73,7 +73,6 @@ def profile(request):
     return render(request, "trashpetapp/profile.html", {"form": form, "username": username, "leaves": leaves, "pet_name": pet_name})
 
 
-
 def user_signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -103,4 +102,4 @@ def user_login(request):
 # logout page
 def user_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('index')
