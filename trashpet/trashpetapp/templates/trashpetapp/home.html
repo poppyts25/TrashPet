@@ -21,6 +21,7 @@
           /*background-color: rgb(218, 186, 139) !important;*/
         }
         .welcome{
+          color: white;
           text-align: center;
           padding-top: 100px;
         }
@@ -90,8 +91,10 @@
   <div class="main-page-home">
 
     <div class="welcome">
-      <h1>Welcome!</h1>
-    </div>    
+      <h1>{{petname}} is happy!</h1>
+    </div>
+    
+
     <div id="pet-container">
         <img src= '{% static "images/petbackground.png" %}'  class="pet-background" alt="pet">
         <img id="eyes" src='{% static "/images/closedeyes.png" %}'class="pet-eyes" alt="pet">
