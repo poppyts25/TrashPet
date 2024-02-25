@@ -31,20 +31,23 @@
         }
 
         #pet-container {
-          position: relative;
-          width: 200px;
-          height: 200px;
-          overflow: hidden;
-        }
-
+        position: relative;
+        width: 200px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
         .pet-background,
         .pet-eyes,
         .pet-smile {
-            max-width: 100%;
-            max-height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+          width: 100%; /* Adjust if necessary */
+          height: auto; /* Maintain aspect ratio */
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
         }
 
         .pet-layered-item {
@@ -56,10 +59,14 @@
           left: 0;
         }
 
-        button {
-          margin-top: 20px;
-          padding: 10px;
-          font-size: 16px;
+        button{
+            background-color: darkslateblue;
+            border: none;
+            color: white;
+            margin-top: 20px;
+            padding: 10px 20px; /* Adjusted for better spacing */
+            font-size: 16px;
+            justify-content: center;
         }
 
         .buttons-container {
@@ -93,17 +100,15 @@
     <div class="welcome">
       <h1>{{petname}} is happy!</h1>
     </div>
-    
-
-    <div id="pet-container">
-        <img src= '{% static "images/petbackground.png" %}'  class="pet-background" alt="pet">
-        <img id="eyes" src='{% static "/images/closedeyes.png" %}'class="pet-eyes" alt="pet">
-        <img src = '{% static "/images/smile.png" %}' class="pet-smile" alt="pet">
-    </div>
-    <div class="buttons-container">
-        <button id="feed-button">Feed</button>
-        <button id="play-button">Play</button>
-    </div>
+      <div id="pet-container">
+          <img src= '{% static "images/petbackground.png" %}'  class="pet-background" alt="pet">
+          <img id="eyes" src='{% static "/images/closedeyes.png" %}'class="pet-eyes" alt="pet">
+          <img src = '{% static "/images/smile.png" %}' class="pet-smile" alt="pet">
+      </div>
+      <div class="buttons-container"></div>
+          <button id="feed-button">Feed</button>
+          <button id="play-button">Play</button>
+      </div>
     <script src="{% static 'script.js' %}"></script>
     <script src="{% static 'animate.js' %}"></script>
 
