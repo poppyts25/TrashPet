@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <title>Virtual Pet</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'garden.css' %}">
+    <script src="https://kit.fontawesome.com/f32a47c063.js" crossorigin="anonymous"></script>
 
     <style>
         body{
-          background: url('{% static "garden-temp.jpg" %}') rgba(0,0,0,0.3);
+          background: url('{% static "gardenBackground.jpg" %}') rgba(0,0,0,0.3);
           background-blend-mode: multiply;
           background-position: center;
           background-size: cover;
@@ -22,6 +24,31 @@
         .user-output{
           text-align: center;
           margin-top: 50px;
+        }
+        #pet-container {
+          position: relative;
+          width: 200px;
+          height: 200px;
+          overflow: hidden;
+        }
+
+        .pet-background,
+        .pet-eyes,
+        .pet-smile {
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .pet-layered-item {
+          position: absolute;
+          max-width: 100%;
+          max-height: 100%;
+          z-index: 2;
+          top: 0;
+          left: 0;
         }
     </style>
 </head>
@@ -39,7 +66,7 @@
 
   </script>
 
-  <div class="main-page-home">
+  <div class="main-page-garden">
 
     <div class="text">
       <h1>The Garden</h1>
@@ -47,12 +74,26 @@
     
 
     <div id="pet-container">
-      <div id="pet">😺</div>
+      <img src= '{% static "images/petbackground.png" %}'  class="pet-background" alt="pet">
+      <img id="eyes" src='{% static "/images/closedeyes.png" %}'class="pet-eyes" alt="pet">
+      <img src = '{% static "/images/smile.png" %}' class="pet-smile" alt="pet">
+  </div>
+  <div class="buttons-container">
       <button id="feed-button">Feed</button>
       <button id="play-button">Play</button>
-    </div>
-    <script src="{% static 'script.js' %}"></script>
+      <button id="bin-button">bin</button>
+  </div>
 
+    <div id="plant-container">
+      <img src="{% static 'images/plant1.png' %}" class="plant-image" id="plant-image">
+    </div>
+
+    <div id="leavesCounterContainer">
+      <i class="fa-solid fa-leaf"></i><div id = "leavesCounter">0</div>
+    </div>
+
+    <script src="{% static 'garden.js' %}"></script>
+    <script src="{% static 'animate.js' %}"></script>
     
   </div>
     
