@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
 from .models import UserProfile, Accessory
 from django.contrib.auth.decorators import login_required
+import json
 
 def index(request): 
     return render(request, "trashpetapp/index.html")
@@ -34,12 +35,26 @@ def garden(request):
 def camera(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
+    locked_list = profile.accessories
+    try:
+        locked_list = json.loads(locked_list)
+    except:
+        locked_list = "" 
+    accessories = Accessory.objects.all()
+    
 
     if request.method == 'POST':
         form = CodeForm(request.POST)
         if form.is_valid():
             code = form.cleaned_data['code']
-            profile.codes = code
+            
+            for accessory in accessories:
+                if accessory.code == code:
+                    name = accessory.name
+                    locked_list[name] = False
+                    locked_list = json.dump(locked_list)
+                    profile.accessories = locked_list
+                    break
             return redirect("shop")
     else:
         form = CodeForm()
