@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://kit.fontawesome.com/f32a47c063.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Virtual Pet</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
@@ -11,6 +12,13 @@
       .main-page-shop {
         padding-top: 100px;
       }
+
+
+      .hidden {
+      display: none; 
+    }
+
+    
     </style>
 </head>
 <body>
@@ -36,7 +44,12 @@
             <!-- Shop items -->
             
             {% for accessory in accessories %}
-              <img src='{% static "/images/" %}{{ accessory.link }}' alt="{{ accessory.name }}" class="shop-item">
+            
+              <div class="accessory">
+                <i class="fa-solid fa-lock {% if not accessory.locked %}d-none{% endif %}" style="color: #FFD43B;"></i> <!--" z-index: 1; position: absolute; width: 150px; height: auto; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px;"></i> -->
+                <img src='{% static "/images/" %}{{ accessory.link }}' alt="{{ accessory.name }}" class="shop-item"> <!-- style="width: 100%; height: auto; display: block;"> -->
+              </div>
+
             {% endfor %}
 
         </div>
