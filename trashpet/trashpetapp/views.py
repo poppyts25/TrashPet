@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
-from .models import UserProfile
+from .models import UserProfile, Accessory
 from django.contrib.auth.decorators import login_required
 
 def index(request): 
@@ -19,7 +19,8 @@ def home(request):
 
 @login_required
 def shop(request):
-    return render(request, "trashpetapp/shop.html")
+    accessories = Accessory.objects.all()
+    return render(request, "trashpetapp/shop.html", {"accessories": accessories})
 
 @login_required
 def map(request):
