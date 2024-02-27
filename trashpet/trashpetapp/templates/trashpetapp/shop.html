@@ -34,10 +34,11 @@
     <div id="shop-section">
         <div id="item-reel">
             <!-- Shop items -->
-            <img src='{% static "images/socks.png" %}' alt="socks" class="shop-item">
-            <img src='{% static "images/bottle.png" %}'alt="bottle" class="shop-item">
-            <img src='{% static "images/crown.png" %}' alt="crown" class="shop-item">
-            <img src='{% static "images/cap.png" %}' alt="cap" class="shop-item">
+            
+            {% for accessory in accessories %}
+              <img src='{% static "/images/" %}{{ accessory.link }}' alt="{{ accessory.name }}" class="shop-item">
+            {% endfor %}
+
         </div>
     </div>
     <div id="color-menu" style="display: none;">
