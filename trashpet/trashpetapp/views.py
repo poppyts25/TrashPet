@@ -4,7 +4,7 @@ from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
-from .models import UserProfile
+from .models import UserProfile, Accessory
 from django.contrib.auth.decorators import login_required
 
 def index(request): 
@@ -19,7 +19,26 @@ def home(request):
 
 @login_required
 def shop(request):
-    return render(request, "trashpetapp/shop.html")
+    cap = Accessory.objects.create(name="cap",type="normal", locked=False, price=0, link="images/cap.png")
+    cap.save()
+    socks = Accessory.objects.create(name="socks",type="normal", locked=False, price=0, link="images/socks.png")
+    socks.save()
+    crown = Accessory.objects.create(name="crown",type="normal", locked=False, price=0, link="images/crown.png")
+    crown.save()
+    bottle = Accessory.objects.create(name="bottle",type="normal", locked=False, price=0, link="images/bottle.png")
+    bottle.save()
+
+    cap_image = cap.link
+    socks_image = socks.link
+    crown_image = crown.link
+    bottle_image = bottle.link
+
+    cap_locked = cap.locked
+    socks_locked = socks.locked
+    crown_locked = crown.locked
+    bottle_locked = bottle.locked
+
+    return render(request, "trashpetapp/shop.html", {"cap_image": cap_image, "socks_image": socks_image, "crown_image":crown_image, "bottle_image":bottle_image, "cap_locked":cap_locked, "socks_locked":socks_locked, "crown_locked":crown_locked, "bottle_locked":bottle_locked})
 
 @login_required
 def map(request):

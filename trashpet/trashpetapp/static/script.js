@@ -26,6 +26,7 @@ function applySavedItems() {
         const newItem = document.createElement("img");
         newItem.src = itemSrc;
         newItem.className = "pet-layered-item";
+        newItem.className = "locked"
         newItem.id = itemId;
         document.getElementById("pet-container").appendChild(newItem);
       }

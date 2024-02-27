@@ -23,7 +23,10 @@
     document.getElementById("shop-tab").classList.remove("active")
     document.getElementById("map-tab").classList.remove("active")
     document.getElementById("shop-tab").classList.add("active")
+    
   </script>
+
+
 
   <div class="main-page-shop"></div>
     <div id="pet-container">
@@ -34,10 +37,10 @@
     <div id="shop-section">
         <div id="item-reel">
             <!-- Shop items -->
-            <img src='{% static "images/socks.png" %}' alt="socks" class="shop-item">
-            <img src='{% static "images/bottle.png" %}'alt="bottle" class="shop-item">
-            <img src='{% static "images/crown.png" %}' alt="crown" class="shop-item">
-            <img src='{% static "images/cap.png" %}' alt="cap" class="shop-item">
+            <img src="{% static socks_image %}" alt="socks" class="shop-item">
+            <img src="{% static bottle_image %}" alt="bottle" class="shop-item">
+            <img src="{% static crown_image %}" alt="crown" class="shop-item">
+            <img src="{% static cap_image %}" alt="cap" class="shop-item">
         </div>
     </div>
     <div id="color-menu" style="display: none;">
