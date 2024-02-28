@@ -17,7 +17,7 @@ class UserProfile(models.Model):
         return f"{self.user.username}"
     
 
-z# Accessory: stores information about each store item
+# Accessory: stores information about each store item
 class Accessory(models.Model):
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=20)
