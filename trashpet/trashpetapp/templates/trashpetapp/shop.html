@@ -1,5 +1,6 @@
 <!--Background image credit: Daniel Thomas on ArtStation-->
 {% load static %}
+{% load trashpetextras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,9 +45,9 @@
             <!-- Shop items -->
             
             {% for accessory in accessories %}
-            
+          
               <div class="accessory">
-                <i class="fa-solid fa-lock {% if not accessory.locked %}d-none{% endif %}" style="color: #FFD43B;"></i> <!--" z-index: 1; position: absolute; width: 150px; height: auto; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px;"></i> -->
+                <i class="fa-solid fa-lock {% if not locked_list|keyvalue:accessory.name %}d-none{% endif %}" style="color: #FFD43B;"></i> <!--" z-index: 1; position: absolute; width: 150px; height: auto; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px;"></i> -->
                 <img src='{% static "/images/" %}{{ accessory.link }}' alt="{{ accessory.name }}" class="shop-item"> <!-- style="width: 100%; height: auto; display: block;"> -->
               </div>
 

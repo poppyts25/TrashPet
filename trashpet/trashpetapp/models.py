@@ -7,7 +7,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     leaves = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     pet_name = models.CharField(max_length=30, default="Trash Pet") # set different / validate pet name length???
-    accessories = models.CharField(max_length=200, default='{"cap":False, "crown":False, "socks":False, "bottle":True }')
+    accessories = models.CharField(max_length=200, default='{Cap":False, "Crown":False, "Socks":False, "Bottle":True }')
 
 
 

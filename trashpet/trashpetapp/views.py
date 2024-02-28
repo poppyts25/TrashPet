@@ -20,8 +20,17 @@ def home(request):
 
 @login_required
 def shop(request):
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    locked_list = profile.accessories
+    try:
+        locked_list = json.loads(locked_list)
+    except:
+        locked_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":True}
+
     accessories = Accessory.objects.all()
-    return render(request, "trashpetapp/shop.html", {"accessories": accessories})
+
+    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "locked_list": locked_list})
 
 @login_required
 def map(request):
@@ -39,7 +48,7 @@ def camera(request):
     try:
         locked_list = json.loads(locked_list)
     except:
-        locked_list = "" 
+        locked_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":True}
     accessories = Accessory.objects.all()
     
 
