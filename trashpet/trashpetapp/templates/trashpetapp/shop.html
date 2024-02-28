@@ -1,10 +1,8 @@
 <!--Background image credit: Daniel Thomas on ArtStation-->
 {% load static %}
-{% load trashpetextras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://kit.fontawesome.com/f32a47c063.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title>Virtual Pet</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
@@ -13,13 +11,6 @@
       .main-page-shop {
         padding-top: 100px;
       }
-
-
-      .hidden {
-      display: none; 
-    }
-
-    
     </style>
 </head>
 <body>
@@ -43,16 +34,10 @@
     <div id="shop-section">
         <div id="item-reel">
             <!-- Shop items -->
-            
-            {% for accessory in accessories %}
-          
-              <div class="accessory">
-                <i class="fa-solid fa-lock {% if not locked_list|keyvalue:accessory.name %}d-none{% endif %}" style="color: #FFD43B;"></i> <!--" z-index: 1; position: absolute; width: 150px; height: auto; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px;"></i> -->
-                <img src='{% static "/images/" %}{{ accessory.link }}' alt="{{ accessory.name }}" class="shop-item"> <!-- style="width: 100%; height: auto; display: block;"> -->
-              </div>
-
-            {% endfor %}
-
+            <img src='{% static "images/socks.png" %}' alt="socks" class="shop-item">
+            <img src='{% static "images/bottle.png" %}'alt="bottle" class="shop-item">
+            <img src='{% static "images/crown.png" %}' alt="crown" class="shop-item">
+            <img src='{% static "images/cap.png" %}' alt="cap" class="shop-item">
         </div>
     </div>
     <div id="color-menu" style="display: none;">
