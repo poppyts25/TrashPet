@@ -6,7 +6,27 @@
     <meta charset="UTF-8">
     <title>Virtual Pet</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
-
+  
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+      />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="{% static 'map.css' %}"
+      />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://unpkg.com/leaflet/dist/leaflet.css"
+        crossorigin=""
+      />
+      <script
+        src="https://unpkg.com/leaflet/dist/leaflet.js"
+        crossorigin=""
+      ></script>
+    
     <style>
       .main-page-map {
         padding-top: 100px;
@@ -31,6 +51,11 @@
     <h1>Welcome to the map!</h1>
   
   </div>
+  <div id="map"></div>
+  <script
+    src="{% static 'map.js' %}"
+    defer
+  ></script>
    
 
 </body>
