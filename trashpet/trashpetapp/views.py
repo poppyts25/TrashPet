@@ -61,10 +61,10 @@ def update_leaves(request):
         # Handle other HTTP methods if necessary
         return render(request, 'trashpetapp/garden.html', {'leaves': 0})
     
-    
+
 
 @login_required
-def camera(request):
+def codes(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.accessories
@@ -91,7 +91,7 @@ def camera(request):
             return redirect("shop")
     else:
         form = CodeForm()
-    return render(request, "trashpetapp/camera.html", {"form": form})
+    return render(request, "trashpetapp/codes.html", {"form": form})
 
 @login_required 
 def profile(request):
