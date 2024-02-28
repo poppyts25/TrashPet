@@ -1,7 +1,162 @@
-<h1>Signup</h1>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Signup</button>
-    <a href="{% url 'login' %}">Already have account?</a>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Sign Up</title>
+        <style>
+            body{
+                background: url('{% static "SkylineBackground.png" %}');
+                background-blend-mode: multiply;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                /*background-color: rgb(218, 186, 139) !important;*/
+                min-height: 100%;
+                background-attachment: fixed;
+            }
+            .main-page-signup {
+                padding-top: 60px;
+                text-align: center;
+                color: white;
+            }
+
+            form{
+                width: 40%;
+                margin: auto;                
+                padding: 30px;
+                
+            }
+            fieldset {        
+                background-color: rgba(0, 0, 0,.4); 
+                border-radius: 30px;
+                position:relative;
+                padding: 0px;
+            }
+            legend {
+                /*position: absolute;*/
+                background-color: rgba(0, 0, 0, .5);
+                color: white;
+                border-radius: 30px 30px 0px 0px;
+                width:100%;
+                padding: 10px 0px 10px 0px;
+                float: left;
+                font-size: 25px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .form-inputs {
+                padding: 30px;
+                margin-top: 1cm;
+            }
+
+            label{
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 17px;
+            }
+
+            .signup-inputs{
+                text-align: left;
+            }
+
+            .helptext{
+                color: rgb(150,150,150);
+                text-align: center;
+            }
+
+            p{
+                margin-bottom: 30px;
+            }
+
+            li{
+                color: rgb(150,150,150);
+            }
+
+            input[type=text]{
+                margin-left:10px;
+                color: white;
+                background-color: rgba(0,0,0,0);
+                border:none;
+                border-bottom: 1px solid white;
+            }
+            input[type=password]{
+                margin-left:10px;
+                color: white;
+                background-color: rgba(0,0,0,0);
+                border:none;
+                border-bottom: 1px solid white;
+            }
+
+            a:link{
+                text-decoration: none;
+            }
+            .signup-buttons{
+                /*color: white;*/
+                text-align: center;
+                /*font-size: 15px;*/
+                padding-top: 10px;
+            }
+            .signup-button{
+                margin: 10px 20px;
+                display: inline-block;
+                padding: 8px 20px;
+                color: white;
+                font-size: 15px;
+                font-weight: bold;
+                background: none;
+                border: 3px solid;
+                border-radius: 99px;
+                transition: 0.4s;
+                font-family: Arial, Helvetica, sans-serif;
+              
+            }
+            .login:hover {
+                box-shadow: 3px 4px 4px #241F21;
+                background-color: rgb(24, 68, 116);
+            }
+            .signup:hover {
+                box-shadow: 3px 4px 4px #241F21;
+                background-color: rgb(225, 118, 81);
+                cursor: pointer;
+            }
+
+            ul.errorlist li{
+                color: red;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="main-page-signup">
+
+            <form method="POST">
+                <fieldset>
+                    <legend>Sign Up</legend>
+                    <div class="form-inputs">
+                        {% csrf_token %}
+
+                        <div class="signup-inputs">
+                            {{ form.as_p }}
+
+                        </div>
+                        
+
+                        <div class="signup-buttons">
+                            <button type="submit" class="signup signup-button">Sign up</button>
+
+                            <a href="{% url 'login' %}" class="login signup-button">
+                                Already have account?
+                            </a>
+                        </div>
+                        
+                        
+                    </div>
+                </fieldset>
+                
+            </form>
+        </div>
+        <script>
+            document.getElementById("id_username_helptext").innerHTML="<br><br>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+            document.getElementById("id_password2_helptext").innerHTML="<br><br>Enter the same password as before, for verification."
+        </script>
+    </body>
+</html>
