@@ -141,3 +141,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "/" #####
 
 LOGIN_URL = "../" # Added to redirect to login page if trying to access a page requiring login, wont work on pages with more sub urls
+
+#have to specify the path
+import os
+os.environ['PATH'] = os.path.join(BASE_DIR, r'venv\\Lib\\site-packages\\osgeo') + ';' + os.environ['PATH']
+os.environ['PROJ_LIB'] = os.path.join(BASE_DIR, r'env3\\Lib\site-packages\\osgeo\\data\\proj') + ';' + os.environ['PATH']
+GDAL_LIBRARY_PATH = os.path.join(BASE_DIR, r'venv\\lib\\site-packages\\osgeo\\gdal.dll')

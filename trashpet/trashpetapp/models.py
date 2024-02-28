@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.gis.db import models
 import json
 
 # Create your models here.
@@ -27,3 +28,14 @@ class Accessory(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+
+class Marker(models.Model):
+    name = models.CharField(
+        max_length=255
+    )
+    location = models.PointField()
+
+    def __str__(self):
+        return self.name
