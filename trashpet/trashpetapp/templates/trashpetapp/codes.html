@@ -13,7 +13,6 @@
           background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
-          /*background-color: rgb(218, 186, 139) !important;*/
         }
         .text{
           text-align: center;
@@ -32,7 +31,7 @@
 <body>
   {% include "../trashpetapp/navbar.html" %}
 
-  <!-- Highlight tab on navbar -->
+  <!-- unhighlight navbar -->
   <script>
     document.getElementById("home-tab").classList.remove("active")
     document.getElementById("garden-tab").classList.remove("active")
@@ -47,6 +46,7 @@
       <h1>Enter Your Code</h1>
     </div>
     
+    <!-- Code Entry Form -->
     <div class="codebox">
         <form method="post">
         {% csrf_token %}

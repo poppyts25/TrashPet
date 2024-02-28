@@ -23,6 +23,8 @@ def shop(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.accessories
+
+    #loads unlocked accessories
     try:
         locked_list = json.loads(locked_list)
     except:
@@ -68,6 +70,8 @@ def codes(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.accessories
+
+    #loads unlocked accessories list
     try:
         locked_list = json.loads(locked_list)
     except:
@@ -80,6 +84,7 @@ def codes(request):
         if form.is_valid():
             code = form.cleaned_data['code']
             
+            #checks accessory unlock codes, and if one is correct sets that accessory to "unlocked"
             for accessory in accessories:
                 if accessory.code == code:
                     name = accessory.name
