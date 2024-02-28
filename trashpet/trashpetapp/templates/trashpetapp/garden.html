@@ -2,28 +2,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Virtual Pet</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+  <meta charset="UTF-8">
+  <title>Virtual Pet</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'garden.css' %}">
+  <script src="https://kit.fontawesome.com/f32a47c063.js" crossorigin="anonymous"></script>
 
-    <style>
-        body{
-          background: url('{% static "garden-temp.jpg" %}') rgba(0,0,0,0.3);
-          background-blend-mode: multiply;
-          background-position: center;
-          background-size: cover;
-          background-repeat: no-repeat;
-          /*background-color: rgb(218, 186, 139) !important;*/
-        }
-        .text{
-          text-align: center;
-          padding-top: 100px;
-        }
-        .user-output{
-          text-align: center;
-          margin-top: 50px;
-        }
-    </style>
+  <style>
+    /*style for the pet displaying on the page*/
+    body{
+      background: url('{% static "gardenBackground.jpg" %}') rgba(0,0,0,0.3);
+      background-blend-mode: multiply;
+      background-position: center;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      /*background-color: rgb(218, 186, 139) !important;*/
+    }
+    .text{
+      text-align: center;
+      padding-top: 100px;
+    }
+    .user-output{
+      text-align: center;
+      margin-top: 50px;
+    }
+    #pet-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .pet-background,
+    .pet-eyes,
+    .pet-smile {
+      max-width: 100%;
+      max-height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .pet-layered-item {
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      z-index: 2;
+      top: 0;
+      left: 0;
+    }
+  </style>
 </head>
 <body>
   {% include "../trashpetapp/navbar.html" %}
@@ -39,22 +67,101 @@
 
   </script>
 
-  <div class="main-page-home">
+  <div class="main-page-garden">
 
     <div class="text">
       <h1>The Garden</h1>
     </div>
     
-
+    <!--container that the pet is displayed in-->
     <div id="pet-container">
-      <div id="pet">😺</div>
+      <img src= '{% static "images/petbackground.png" %}'  class="pet-background" alt="pet">
+      <img id="eyes" src='{% static "/images/closedeyes.png" %}'class="pet-eyes" alt="pet">
+      <img src = '{% static "/images/smile.png" %}' class="pet-smile" alt="pet">
+    </div>
+
+    <!--container that holds buttons that user can interact with-->
+    <div class="buttons-container">
       <button id="feed-button">Feed</button>
       <button id="play-button">Play</button>
+      <button id="bin-button">Bin <i class="fa-solid fa-trash-can"></i></button>
     </div>
-    <script src="{% static 'script.js' %}"></script>
 
-    
+    <!--container that plant is stored in-->
+    <div id="plant-container">
+      <img src="{% static 'images/plant1.png' %}" class="plant-image" id="plant-image">
+    </div>
+  
+    <!--leaves count for user to see-->
+    <div id="leavesCounterContainer">
+      <!--leaf icon-->
+      <i class="fa-solid fa-leaf"></i>:
+      <div id = "leavesCounter">
+        <!--django reference-->
+        {{leaves}}
+      </div>
+    </div>
+
+
+    <script src="{% static 'garden.js' %}"></script>
+    <script src="{% static 'animate.js' %}"></script>
+    <script src="{% static 'jquery.min.js' %}"></script>
   </div>
-    
+  
+  <script>
+    //script to update leaves count in database and on screen
+    $(document).ready(function() {
+      $('#bin-button').click(function() {
+        // Get the current number of leaves from the div
+        var currentLeaves = parseInt($('#leavesCounter').text().trim());
+        //get cookie value
+        function getCookie(name) {
+          var cookieValue = null;
+
+          //check cookie exists
+          if (document.cookie && document.cookie !== '') {
+            //split cookies into an array
+            var cookies = document.cookie.split(';');
+
+            //loop through each cookie and remove whitespace from string
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+
+                //check cookie matches name
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                //get value of cookie
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          //return cookie value
+          return cookieValue;
+        } 
+
+        // Update the leaves value using AJAX
+        $.ajax({
+          // URL to Django view for updating leaves
+          url: '{% url "update_leaves" %}',  
+          method: 'POST',
+          headers: { 'X-CSRFToken': getCookie('csrftoken')},
+          // Increment the leaves value by 1
+          data: {'new_leaves': currentLeaves + 1},  
+          success: function(response) {
+            // Update the leaves value displayed in the leavesCounter div
+            $('#leavesCounter').text(response.new_leaves);
+            //log success in console
+            console.log('Leaves updated successfully.');
+            console.log('leaves value: ', response.new_leaves);
+          },
+          error: function(xhr, status, error) {
+            //error message if request fails
+            console.error('Error updating leaves:', error);
+          }
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>

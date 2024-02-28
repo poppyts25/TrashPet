@@ -13,9 +13,15 @@
           background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
           /*background-color: rgb(218, 186, 139) !important;*/
         }
         .welcome{
+          color: white;
           text-align: center;
           padding-top: 100px;
         }
@@ -23,6 +29,51 @@
           text-align: center;
           margin-top: 50px;
         }
+
+        #pet-container {
+          position: relative;
+          width: 200px;
+          height: 200px;
+          overflow: hidden;
+          margin: auto;
+        }
+
+        .pet-background,
+        .pet-eyes,
+        .pet-smile {
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .pet-layered-item {
+          position: absolute;
+          max-width: 100%;
+          max-height: 100%;
+          z-index: 2;
+          top: 0;
+          left: 0;
+        }
+
+        button {
+          margin-top: 20px;
+          padding: 10px;
+          font-size: 16px;
+        }
+
+        .buttons-container {
+          padding: 10%;
+          display: flex;
+          justify-content: center; 
+          align-items: center; 
+          width: 100%; 
+          flex-direction: row;
+          gap: 10px; 
+        }
+
+        
     </style>
 </head>
 <body>
@@ -34,7 +85,6 @@
     document.getElementById("garden-tab").classList.remove("active")
     document.getElementById("shop-tab").classList.remove("active")
     document.getElementById("map-tab").classList.remove("active")
-
     document.getElementById("home-tab").classList.add("active")
 
   </script>
@@ -42,16 +92,21 @@
   <div class="main-page-home">
 
     <div class="welcome">
-      <h1>Welcome!</h1>
+      <h1>{{petname}} is happy!</h1>
     </div>
     
 
     <div id="pet-container">
-      <div id="pet">😺</div>
-      <button id="feed-button">Feed</button>
-      <button id="play-button">Play</button>
+        <img src= '{% static "images/petbackground.png" %}'  class="pet-background" alt="pet">
+        <img id="eyes" src='{% static "/images/closedeyes.png" %}'class="pet-eyes" alt="pet">
+        <img src = '{% static "/images/smile.png" %}' class="pet-smile" alt="pet">
     </div>
-    <script src="{% static 'script.js' %}"></script>
+    <div class="buttons-container">
+        <button id="feed-button">Feed</button>
+        <button id="play-button">Play</button>
+    </div>
+    <script src="{% static 'home.js' %}"></script>
+    <script src="{% static 'animate.js' %}"></script>
 
     <!-- don't think this is required anymore as can't access page if not logged in-->
     <!--
@@ -67,6 +122,6 @@
     -->
     
   </div>
-    
+  
 </body>
 </html>

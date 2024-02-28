@@ -48,12 +48,13 @@
     </div>
     
     <div class="codebox">
-        <form action="{% url 'shop' %}" method="post">
+        <form method="post">
         {% csrf_token %}
-        <input type="text" id="code" name="code" /><br><br>
+        {{ form.as_p }}
         <input type="submit" value="Submit" />
         </form>
     </div>
+
 
   
     
