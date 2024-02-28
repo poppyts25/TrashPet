@@ -1,38 +1,43 @@
+//list of paths to images
 const plants = [
     '/static/images/plant1.png',
     '/static/images/plant2.png',
     '/static/images/plant3.png',
     '/static/images/plant4.png',
     ];
+//set current index to 1 as image 1 is the default
 var currentIndex = 1;
-var leaves = 0;
-    
+   
+//run when bin button is clicked
 document.getElementById("bin-button").addEventListener("click",function (){
-    
-    console.log("Current index:", currentIndex, " pl: ", plants.length);
+    //reset back to start of list if variable is too long
     if (currentIndex === plants.length){
         currentIndex = 0;
-        leaves +=5;
-        //document.getElementById("leavesCounter").innerText = leaves;
     }
 
+    //change plant image src to the next image to show
     document.getElementById("plant-image").src = plants[currentIndex];
+
+    //increment index
     currentIndex = currentIndex + 1;
-    console.log("end");
 });
 
+//alert placeholder for feed button
 document.getElementById("feed-button").addEventListener("click", function () {
     alert("Yum! Thanks for feeding me.");
-  });
+});
   
+//alert placeholder for play buttin
 document.getElementById("play-button").addEventListener("click", function () {
     alert("Yay! Playing is fun.");
-  });
+});
 
+//when page loads, run applySavedItems function
 document.addEventListener("DOMContentLoaded", function () {
-    applySavedItems(); // Apply the saved items to the pet on the home page
-  });
+    applySavedItems();
+});
   
+
 function applySavedItems() {
     const items = [
       "/static/images/socks.png",
