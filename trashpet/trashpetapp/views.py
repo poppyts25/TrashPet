@@ -19,7 +19,17 @@ def home(request):
 
 @login_required
 def shop(request):
-    return render(request, "trashpetapp/shop.html")
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    locked_list = profile.accessories
+    try:
+        locked_list = json.loads(locked_list)
+    except:
+        locked_list = {"":""}
+
+    accessories = Accessory.objects.all()
+
+    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "locked_list": locked_list})
 
 @login_required
 def map(request):
@@ -56,12 +66,27 @@ def update_leaves(request):
 def camera(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
+    locked_list = profile.accessories
+    try:
+        locked_list = json.loads(locked_list)
+    except:
+        locked_list = {"":""}
+    accessories = Accessory.objects.all()
+    
 
     if request.method == 'POST':
         form = CodeForm(request.POST)
         if form.is_valid():
             code = form.cleaned_data['code']
-            profile.codes = code
+            
+            for accessory in accessories:
+                if accessory.code == code:
+                    name = accessory.name
+                    locked_list[name] = False
+                    locked_list = json.dumps(locked_list)
+                    profile.accessories = locked_list
+                    profile.save()
+                    break
             return redirect("shop")
     else:
         form = CodeForm()
