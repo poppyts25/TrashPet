@@ -26,7 +26,7 @@ def shop(request):
     try:
         locked_list = json.loads(locked_list)
     except:
-        locked_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":True}
+        locked_list = {"":""}
 
     accessories = Accessory.objects.all()
 
@@ -48,7 +48,7 @@ def camera(request):
     try:
         locked_list = json.loads(locked_list)
     except:
-        locked_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":True}
+        locked_list = {"":""}
     accessories = Accessory.objects.all()
     
 
@@ -61,8 +61,9 @@ def camera(request):
                 if accessory.code == code:
                     name = accessory.name
                     locked_list[name] = False
-                    locked_list = json.dump(locked_list)
+                    locked_list = json.dumps(locked_list)
                     profile.accessories = locked_list
+                    profile.save()
                     break
             return redirect("shop")
     else:
