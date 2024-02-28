@@ -38,6 +38,7 @@
     document.getElementById("garden-tab").classList.remove("active")
     document.getElementById("shop-tab").classList.remove("active")
     document.getElementById("map-tab").classList.remove("active")
+    document.getElementById("camera-tab").classList.add("active")
 
   </script>
 
@@ -48,12 +49,13 @@
     </div>
     
     <div class="codebox">
-        <form action="{% url 'shop' %}" method="post">
+        <form method="post">
         {% csrf_token %}
-        <input type="text" id="code" name="code" /><br><br>
+        {{ form.as_p }}
         <input type="submit" value="Submit" />
         </form>
     </div>
+
 
   
     
