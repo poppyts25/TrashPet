@@ -13,7 +13,7 @@ document.getElementById("bin-button").addEventListener("click",function (){
     if (currentIndex === plants.length){
         currentIndex = 0;
         leaves +=5;
-        document.getElementById("leavesCounter").innerText = leaves;
+        //document.getElementById("leavesCounter").innerText = leaves;
     }
 
     document.getElementById("plant-image").src = plants[currentIndex];
@@ -25,7 +25,7 @@ document.getElementById("feed-button").addEventListener("click", function () {
     alert("Yum! Thanks for feeding me.");
   });
   
-  document.getElementById("play-button").addEventListener("click", function () {
+document.getElementById("play-button").addEventListener("click", function () {
     alert("Yay! Playing is fun.");
   });
 
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     applySavedItems(); // Apply the saved items to the pet on the home page
   });
   
-  function applySavedItems() {
+function applySavedItems() {
     const items = [
       "/static/images/socks.png",
       "/static/images/bottle.png",
@@ -59,4 +59,4 @@ document.addEventListener("DOMContentLoaded", function () {
     if (savedBackgroundImage) {
       document.querySelector(".pet-background").src = savedBackgroundImage;
     }
-  }
+}

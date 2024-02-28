@@ -87,15 +87,60 @@
     <div id="plant-container">
       <img src="{% static 'images/plant1.png' %}" class="plant-image" id="plant-image">
     </div>
-
+    
     <div id="leavesCounterContainer">
-      <i class="fa-solid fa-leaf"></i><div id = "leavesCounter">0</div>
+      <i class="fa-solid fa-leaf"></i>:
+      <div id = "leavesCounter">
+        {{leaves}}
+      </div>
     </div>
 
     <script src="{% static 'garden.js' %}"></script>
     <script src="{% static 'animate.js' %}"></script>
-    
+    <script src="{% static 'jquery.min.js' %}"></script>
   </div>
-    
+  
+  <script>
+    //script to update leaves count in database and on screen
+    $(document).ready(function() {
+            $('#bin-button').click(function() {
+                // Get the current number of leaves from the div
+                var currentLeaves = parseInt($('#leavesCounter').text().trim());
+                
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                } 
+
+                // Update the leaves value using AJAX
+                $.ajax({
+                    url: '{% url "update_leaves" %}',  // URL to Django view for updating leaves
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': getCookie('csrftoken')},
+                    data: {'new_leaves': currentLeaves + 1},  // Increment the leaves value by 1
+                    success: function(response) {
+                        // Update the leaves value displayed in the leavesCounter div
+                        $('#leavesCounter').text(response.new_leaves);
+                        console.log('Leaves updated successfully.');
+                        console.log('leaves value: ', response.new_leaves);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error updating leaves:', error);
+                    }
+                });
+            });
+        });
+  </script>
+
 </body>
 </html>
