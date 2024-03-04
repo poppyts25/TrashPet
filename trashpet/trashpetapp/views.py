@@ -23,6 +23,8 @@ def shop(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.accessories
+
+    #loads unlocked accessories
     try:
         locked_list = json.loads(locked_list)
     except:
@@ -38,13 +40,38 @@ def map(request):
 
 @login_required
 def garden(request):
-    return render(request, "trashpetapp/garden.html")
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    leaves = profile.leaves
+    data = {"leaves":leaves} #view that handles ajax request
+    return render(request, "trashpetapp/garden.html", data)
+
+def update_leaves(request):
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    leaves = profile.leaves
+    if request.method == 'POST':
+        # Get the new leaves value from the POST data
+        new_leaves = request.POST.get('new_leaves')
+        
+        # Update the leaves value in your Django application
+        profile.leaves=new_leaves
+        profile.save()
+        
+        return JsonResponse({'new_leaves': new_leaves})
+    else:
+        # Handle other HTTP methods if necessary
+        return render(request, 'trashpetapp/garden.html', {'leaves': 0})
+    
+
 
 @login_required
-def camera(request):
+def codes(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.accessories
+
+    #loads unlocked accessories list
     try:
         locked_list = json.loads(locked_list)
     except:
@@ -57,6 +84,7 @@ def camera(request):
         if form.is_valid():
             code = form.cleaned_data['code']
             
+            #checks accessory unlock codes, and if one is correct sets that accessory to "unlocked"
             for accessory in accessories:
                 if accessory.code == code:
                     name = accessory.name
@@ -68,7 +96,7 @@ def camera(request):
             return redirect("shop")
     else:
         form = CodeForm()
-    return render(request, "trashpetapp/camera.html", {"form": form})
+    return render(request, "trashpetapp/codes.html", {"form": form})
 
 @login_required 
 def profile(request):

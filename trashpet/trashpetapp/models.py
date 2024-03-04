@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 import json
 
-# Create your models here.
+# User Profile: Leaves are currency, locked_list designates unlocked accessories
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     leaves = models.DecimalField(max_digits=10, decimal_places=0, default=0)
@@ -17,6 +17,7 @@ class UserProfile(models.Model):
         return f"{self.user.username}"
     
 
+# Accessory: stores information about each store item
 class Accessory(models.Model):
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=20)
