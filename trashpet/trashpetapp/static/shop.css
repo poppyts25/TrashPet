@@ -12,6 +12,7 @@ body {
 
 
 #pet-container {
+    margin: auto;
     position: relative;
     width: 200px;
     height: 200px;
