@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Virtual Pet</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <style>
+        body{
+          background: url('{% static "SkylineBackground.png" %}') rgba(0,0,0,0.3);
+          background-blend-mode: multiply;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+        .text{
+          text-align: center;
+          padding-top: 100px;
+        }
+        .user-output{
+          text-align: center;
+          margin-top: 50px;
+        }
+
+        .codebox{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+  {% include "../trashpetapp/navbar.html" %}
+
+  <!-- unhighlight navbar -->
+  <script>
+    document.getElementById("home-tab").classList.remove("active")
+    document.getElementById("garden-tab").classList.remove("active")
+    document.getElementById("shop-tab").classList.remove("active")
+    document.getElementById("map-tab").classList.remove("active")
+    document.getElementById("camera-tab").classList.add("active")
+
+  </script>
+
+  <div class="main-page-home">
+
+    <div class="text">
+      <h1>Enter Your Code</h1>
+    </div>
+    
+    <!-- Code Entry Form -->
+    <div class="codebox">
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+        </form>
+    </div>
+
+
+  
+    
+  </div>
+    
+</body>
+</html>
