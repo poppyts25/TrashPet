@@ -12,8 +12,8 @@
 
 // Creating map options
 var mapOptions = {
-  center: [17.385044, 78.486671],
-  zoom: 10
+  center: [50.736509, -3.534422],
+  zoom: 15
 }
 // Creating a map object
 var map = new L.map('map', mapOptions);
@@ -25,7 +25,23 @@ var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
 map.addLayer(layer);
 
 // Creating a marker
-var marker = L.marker([17.385044, 78.486671]);
+var uni = L.marker([50.7366, -3.5351]);
+var lukes = L.marker([50.7224, -3.5166]);
+var penryn = L.marker([50.1710, -5.1238]);
 
 // Adding marker to the map
-marker.addTo(map);
+uni.addTo(map);
+lukes.addTo(map);
+penryn.addTo(map);
+
+map
+  .locate()
+  .on("locationfound", (e) =>
+    map.setView(e.latlng,15)
+  )
+  .on("locationerror", () =>
+    map.setView([0, 0], 5)
+  );
+  
+  var self = L.marker(e.latlng);
+  self.addTo(map);
