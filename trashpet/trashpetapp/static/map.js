@@ -1,11 +1,10 @@
-const copy =
-  "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>";
-const url =
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+
 const layer = L.tileLayer(url, {
   attribution: copy,
 });
 const map = L.map("map", {
   layers: [layer],
-});
-map.fitWorld();
+  
+}).setView([51.505, -0.09], 13);
+
+var marker = L.marker([51.5, -0.09]).addTo(map);
