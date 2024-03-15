@@ -15,5 +15,5 @@
 <h3> Links:</h3>
 <ul>
 <li>GitHub: https://github.com/poppyts25/TrashPet
-<li>Kanban Board: __
+<li>Kanban Board: https://trello.com/b/N11jXliZ 
 </ul>
