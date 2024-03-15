@@ -157,3 +157,8 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('index')
+
+
+#policy page
+def policy(request): 
+    return render(request, "trashpetapp/policy.html")
