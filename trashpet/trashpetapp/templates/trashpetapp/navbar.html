@@ -1,3 +1,4 @@
+{% load static %}
 <html lang="en">
 	<head>
  
@@ -15,6 +16,48 @@
 					backdrop-filter:blur(10px);
 				}
 			}
+		
+			.navbar .navbar-nav .nav-item{
+				position: relative;
+			}
+			.navbar .navbar-nav .nav-item::after{
+				content: '';
+				position:absolute;
+				bottom:0;
+				left:0;
+				right: 0;
+				width: 0%;
+				margin: 0 auto;
+				height: 2px;
+				background-color: rgb(252, 91, 209);
+				transition: all 0.6s ease-in-out;
+			}
+			.navbar .navbar-nav .nav-item:hover::after{
+				width:100%;
+			}
+			.navbar .navbar-nav .nav-link:hover{				
+				color: rgb(252, 91, 209);
+			}
+
+			.navbar .logout{
+				transition: 0.4s;
+			}
+			.navbar .logout:hover{
+				background-color: rgb(252, 91, 209) !important;
+			}
+
+			.navbar .profile{
+				text-decoration: none;
+				transition: 0.4s;
+			}
+			.navbar .profile:hover{
+				color: rgb(252, 91, 209) !important;
+			}
+
+			.navbar-NavTitle{
+				vertical-align: middle;
+				padding-left: 5px;
+			}
 		</style>
 		
 	</head>
@@ -22,7 +65,10 @@
 		<!-- Navbar -->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 			<div class="container">
-				<a class="navbar-brand" href="#">TrashPet 😺</a>
+				<a class="navbar-brand">
+					<img src='{% static "TrashPetNavLogo.png" %}' width="46" height="46">
+					<label class="navbar-NavTitle">TrashPet</label>
+				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -48,15 +94,15 @@
 								<a class="nav-link" id="shop-tab" href="{% url 'shop' %}">Shop</a>
 							</li>
 							<li class="nav-item mx-2">
-								<a class="nav-link" id="map-tab" href="{% url 'map' %}">Map</a>
+								<a class="nav-link" id="map-tab" href="{% url 'map' %}">Walking</a>
 							</li>
 							
 						</ul>
 						
 						<!-- Profile/Logout -->
 						<div class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3">
-							<a class="text-white" href="{% url 'profile' %}">Profile</a>
-							<a class="text-white text-decoration-none px-3 py-1 rounded-4" style="background-color: rgb(235, 52, 152)" href="{% url 'logout' %}">Logout</a>
+							<a class="text-white profile" href="{% url 'profile' %}">Profile</a>
+							<a class="text-white text-decoration-none px-3 py-1 rounded-4 logout" style="background-color: rgb(235, 52, 152)" href="{% url 'logout' %}">Logout</a>
 						</div>
 					</div>
 				</div>

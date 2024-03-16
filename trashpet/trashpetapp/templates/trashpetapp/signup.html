@@ -122,7 +122,13 @@
             ul.errorlist li{
                 color: red;
             }
-            
+            .disclaimer{
+                padding:0px 30px 0px 30px;
+            }
+            .disclaimer a{
+                text-decoration: none;
+                color: #0CAFFF;
+            }
         </style>
     </head>
     <body>
@@ -150,9 +156,14 @@
                         
                         
                     </div>
-                </fieldset>
-                
+
+                    <div class="disclaimer">
+                        <p>By creating an account, you agree to TrashPet's <a href="{% url 'policy' %}">Privacy Notice</a>.</p>
+                    </div>
+
+                </fieldset>                
             </form>
+            
         </div>
         <script>
             document.getElementById("id_username_helptext").innerHTML="<br><br>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
