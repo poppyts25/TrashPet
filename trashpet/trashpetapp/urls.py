@@ -3,6 +3,7 @@ from django.contrib import admin
 
 from . import views
 
+
 urlpatterns = [
     path("", views.index, name="index"),
     path("home/", views.home, name="home"),
@@ -16,4 +17,8 @@ urlpatterns = [
     path("profile/", views.profile, name='profile'),
     path("garden/", views.garden, name="garden"),
     path('update_leaves/', views.update_leaves, name='update_leaves'),
+    path('total-distance/', views.calculate_total_distance, name='calculate_total_distance'),
+    path('track-journey/', views.track_journey, name='track_journey'),
+    
+    
 ]

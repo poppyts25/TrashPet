@@ -4,15 +4,51 @@ from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
-from .models import UserProfile, Accessory, LeavesCode,Marker
+from .models import UserProfile, Accessory, LeavesCode,Marker,JourneyPoint
 from django.contrib.auth.decorators import login_required, permission_required
 import json
+#from django.contrib.gis import gdal,OGR
+
+from django.contrib.gis.geos import Point
+
+from datetime import datetime
+
+def track_journey(request):
+    # Assuming GPS coordinates are passed in the request data as 'latitude' and 'longitude'
+    latitude = float(request.POST.get('latitude'))
+    longitude = float(request.POST.get('longitude'))
+    
+    # Create a point object
+    location = Point(longitude, latitude)
+    
+    # Save the journey point
+    timestamp = datetime.now()
+    journey_point = JourneyPoint.objects.create(timestamp=timestamp, location=location)
+    
+    return render(request, 'map.html', {'journey_point': journey_point})
+
+from django.contrib.gis.db.models.functions import Distance
+
+def calculate_total_distance(request):
+    journey_points = JourneyPoint.objects.order_by('timestamp')
+    
+    total_distance = 0.0
+    prev_point = None
+    
+    
+    for point in journey_points:
+        if prev_point:
+            distance = prev_point.location.Distance(point.location)
+            total_distance += distance
+        prev_point = point
+    
+    return render(request, 'trashpetapp/map.html', {'total_distance': total_distance})
 
 
 
 def map_view(request):
     markers = Marker.objects.all()
-    return render(request, 'map.html', {'markers': markers})
+    return render(request, 'trashpetapp/map.html', {'markers': markers})
 
 def index(request): 
     return render(request, "trashpetapp/index.html")

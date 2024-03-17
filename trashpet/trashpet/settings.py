@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
+    "django.contrib.gis.gdal",
     "rest_framework",
     "rest_framework_gis",
 ]
@@ -142,7 +143,7 @@ LOGIN_REDIRECT_URL = "/" #####
 
 LOGIN_URL = "../" # Added to redirect to login page if trying to access a page requiring login, wont work on pages with more sub urls
 
-#have to specify the path
+#have to specify the path for windows but not other systems
 if platform.system() == 'Windows':
     import os
     os.environ['PATH'] = os.path.join(BASE_DIR, r'venv\\Lib\\site-packages\\osgeo') + ';' + os.environ['PATH']

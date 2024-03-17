@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User,Permission
 from django.db import models
 from django.contrib.gis.db import models
+
+
+
 import json
 
 
@@ -58,3 +61,9 @@ class Marker(models.Model):
 
     def __str__(self):
         return self.name
+    
+class JourneyPoint(models.Model):
+    timestamp = models.DateTimeField()
+    location = models.PointField()
+    def __str__(self):
+        return f"{self.timestamp} - {self.location}"
