@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.db import models
 import json
 
@@ -32,3 +32,10 @@ class Accessory(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class CustomUserPermissions:
+    class Meta:
+        permissions = (
+            ("gamemaker", "Can add items to shop")
+        )

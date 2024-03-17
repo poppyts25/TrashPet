@@ -5,11 +5,16 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
 from .models import UserProfile, Accessory
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 import json
 
 def index(request): 
     return render(request, "trashpetapp/index.html")
+
+@login_required
+@permission_required('auth.gamemaker')
+def gamemaker(request): 
+    return render(request, "trashpetapp/gamemaker.html")
 
 @login_required # automatically redirects to login page if not logged in
 def home(request):
@@ -190,6 +195,7 @@ def profile(request):
         form = RenamePetForm()
 
     return render(request, "trashpetapp/profile.html", {"form": form, "username": username, "leaves": leaves, "pet_name": pet_name})
+
 
 
 def user_signup(request):

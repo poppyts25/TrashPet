@@ -17,5 +17,6 @@ urlpatterns = [
     path("profile/", views.profile, name='profile'),
     path("garden/", views.garden, name="garden"),
     path('update_leaves/', views.update_leaves, name='update_leaves'),
-    path("policy/", views.policy, name="policy")
+    path("policy/", views.policy, name="policy"),
+    path("gamemaker/", views.gamemaker, name="gamemaker"),
 ]
