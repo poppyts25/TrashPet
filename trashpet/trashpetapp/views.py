@@ -4,7 +4,7 @@ from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
-from .models import UserProfile, Accessory
+from .models import UserProfile, Accessory, LeavesCode
 from django.contrib.auth.decorators import login_required, permission_required
 import json
 
@@ -82,6 +82,8 @@ def codes(request):
     except:
         locked_list = {"":""}
     accessories = Accessory.objects.all()
+    leavescodes = LeavesCode.objects.all()
+    found = False
     
 
     if request.method == 'POST':
@@ -97,7 +99,17 @@ def codes(request):
                     locked_list = json.dumps(locked_list)
                     profile.accessories = locked_list
                     profile.save()
+                    found = True
                     break
+            
+            if not found:
+                for leavescode in leavescodes:
+                    if leavescode.name == code:
+                        prize = leavescode.leaves
+                        profile.leaves += prize
+                        profile.save()
+                        break
+
             return redirect("shop")
     else:
         form = CodeForm()

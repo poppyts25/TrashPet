@@ -13,6 +13,7 @@ class UserProfile(models.Model):
 
 
 
+
     def __str__(self):
         return f"{self.user.username}"
     
@@ -30,8 +31,15 @@ class Accessory(models.Model):
         return f"{self.name}"
 
 
+class LeavesCode(models.Model):
+    name = models.CharField(max_length=20)
+    leaves = models.DecimalField(max_digits=5, decimal_places = 0)
+
+    def __str__(self):
+        return f"{self.name}"
+
 class CustomUserPermissions:
     class Meta:
         permissions = (
-            ("gamemaker", "Can add items to shop")
+            ("gamemaker", "Can add event unlocks")
         )
