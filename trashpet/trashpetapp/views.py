@@ -23,6 +23,8 @@ def shop(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.accessories
+
+    #loads unlocked accessories
     try:
         locked_list = json.loads(locked_list)
     except:
@@ -61,13 +63,15 @@ def update_leaves(request):
         # Handle other HTTP methods if necessary
         return render(request, 'trashpetapp/garden.html', {'leaves': 0})
     
-    
+
 
 @login_required
-def camera(request):
+def codes(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.accessories
+
+    #loads unlocked accessories list
     try:
         locked_list = json.loads(locked_list)
     except:
@@ -80,6 +84,7 @@ def camera(request):
         if form.is_valid():
             code = form.cleaned_data['code']
             
+            #checks accessory unlock codes, and if one is correct sets that accessory to "unlocked"
             for accessory in accessories:
                 if accessory.code == code:
                     name = accessory.name
@@ -91,7 +96,7 @@ def camera(request):
             return redirect("shop")
     else:
         form = CodeForm()
-    return render(request, "trashpetapp/camera.html", {"form": form})
+    return render(request, "trashpetapp/codes.html", {"form": form})
 
 @login_required 
 def profile(request):

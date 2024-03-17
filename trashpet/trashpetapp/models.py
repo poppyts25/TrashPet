@@ -1,14 +1,12 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.contrib.gis.db import models
-import json
 
-# Create your models here.
+# User Profile: Leaves are currency, locked_list designates unlocked accessories
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     leaves = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     pet_name = models.CharField(max_length=30, default="Trash Pet") # set different / validate pet name length???
-    locked_list = {"Cap":True, "Crown":False, "Socks":False, "Bottle":True }
+    locked_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":True }
     locked_list = json.dumps(locked_list)               
     accessories = models.CharField(max_length=200, default=locked_list)
 
@@ -18,6 +16,7 @@ class UserProfile(models.Model):
         return f"{self.user.username}"
     
 
+# Accessory: stores information about each store item
 class Accessory(models.Model):
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=20)
@@ -28,14 +27,3 @@ class Accessory(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-
-
-
-class Marker(models.Model):
-    name = models.CharField(
-        max_length=255
-    )
-    location = models.PointField()
-
-    def __str__(self):
-        return self.name

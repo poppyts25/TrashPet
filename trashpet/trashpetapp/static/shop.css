@@ -18,7 +18,6 @@ body {
     overflow: hidden;
 }
 
-
 .shop-item {
     width: 150px;
     margin: 20px;
@@ -27,7 +26,6 @@ body {
     border-radius: 10px;
     outline: 2px solid red;
 }
-
 
 .pet-background,
 .pet-eyes,
@@ -56,25 +54,6 @@ button {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-}
-
-.accessory {
-    position: relative;
-}
-
-.fa-lock {
-    position: absolute;
-    padding: 60px;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); /* Center lock */
-    font-size: 50px; 
-    color: #FFD43B; 
-    z-index: 1; /* Ensure lock is on top */
-}
-
-.hidden {
-    display: none; 
 }
 
 .pet-layered-item {

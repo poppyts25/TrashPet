@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Login</title>
         <style>
             body{
                 background: url('{% static "SkylineBackground.png" %}');
@@ -36,12 +35,12 @@
                 /*position: absolute;*/
                 background-color: rgba(0, 0, 0, .5);
                 color: white;
+                text-indent: 30px;
                 border-radius: 30px 30px 0px 0px;
                 width:100%;
                 padding: 10px 0px 10px 0px;
                 float: left;
                 font-size: 25px;
-                font-family: Arial, Helvetica, sans-serif;
             }
 
             .form-inputs {
@@ -49,39 +48,20 @@
                 margin-top: 1cm;
             }
 
-            label{
-                font-family: Arial, Helvetica, sans-serif;
-            }
-
-
-            input[type=text]{
-                margin-left:10px;
-                color: white;
-                background-color: rgba(0,0,0,0);
-                border:none;
-                border-bottom: 1px solid white;
-            }
-            input[type=password]{
-                margin-left:10px;
-                color: white;
-                background-color: rgba(0,0,0,0);
-                border:none;
-                border-bottom: 1px solid white;
-            }
 
             a:link{
                 text-decoration: none;
             }
             .login-buttons{
-                /*color: white;*/
+                color: white;
                 text-align: center;
-                /*font-size: 15px;*/
+                font-size: 15px;
                 padding-top: 10px;
             }
             .login-button{
-                margin: 10px 20px;
+                margin: 10px 30px;
                 display: inline-block;
-                padding: 8px 20px;
+                padding: 10px 30px;
                 color: white;
                 font-size: 15px;
                 font-weight: bold;
@@ -89,17 +69,15 @@
                 border: 3px solid;
                 border-radius: 99px;
                 transition: 0.4s;
-                font-family: Arial, Helvetica, sans-serif;
               
             }
             .signup:hover {
-                box-shadow: 3px 4px 4px #241F21;
+                box-shadow: 2px 2px 4px #241F21;
                 background-color: rgb(24, 68, 116);
             }
             .login:hover {
-                box-shadow: 3px 4px 4px #241F21;
+                box-shadow: 2px 2px 4px #241F21;
                 background-color: rgb(225, 118, 81);
-                cursor: pointer;
             }
             
         </style>
@@ -112,16 +90,14 @@
                     <legend>Login</legend>
                     <div class="form-inputs">
                         {% csrf_token %}
+                        {{ form.as_p }}
 
-                        <div class="login-inputs">
-                            {{ form.as_p }}
-                        </div>
                         
 
                         <div class="login-buttons">
                             <button type="submit" class="login login-button">Login</button>
                             <a href="{% url 'signup' %}" class="signup login-button">
-                                Create Account
+                                Dont have Account Create
                             </a>
                         </div>
                         
