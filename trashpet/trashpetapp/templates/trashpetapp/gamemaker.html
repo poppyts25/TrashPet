@@ -28,8 +28,30 @@
 
   <div class="main-page-map">
     <h1>Gamemaker Page</h1>
+
   
   </div>
+  <div>
+    <form method="POST">
+      <fieldset>
+          <legend>Add New Shop Item</legend>
+          <div class="form-inputs">
+            {% csrf_token %}
+
+            <div class="code-inputs">
+              {{ form.as_p }}
+            </div>            
+
+            <div class="codes-buttons">
+              <button type="submit" class="codes-button">Submit</button>
+            </div>              
+              
+          </div>
+      </fieldset> 
+  </div>
+    
+  </form>      
+
    
 
 </body>

@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
-from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
+from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm, GamemakerForm
 from .models import UserProfile, Accessory, LeavesCode
 from django.contrib.auth.decorators import login_required, permission_required
 import json
@@ -14,7 +14,42 @@ def index(request):
 @login_required
 @permission_required('auth.gamemaker')
 def gamemaker(request): 
-    return render(request, "trashpetapp/gamemaker.html")
+
+    if request.method == 'POST':
+        form = GamemakerForm(request.POST)
+
+        if form.is_valid():
+            item_name = form.cleaned_data['item_name']
+            item_type = form.cleaned_data['item_type']
+            item_code = form.cleaned_data['item_code']
+            item_price = form.cleaned_data['item_price']
+            item_link = form.cleaned_data['item_link']
+            Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link)
+
+            for user in UserProfile.objects.all():
+                locked_list = user.accessories
+                bought_list = user.bought
+
+                try:
+                    locked_list = json.loads(locked_list)
+                except:
+                    locked_list = {"":""}
+
+                try:
+                    bought_list = json.loads(bought_list)
+                except:
+                    bought_list = {"":""}
+                
+                locked_list[item_name] = True
+                bought_list[item_name] = True
+
+
+
+    else:
+        form = GamemakerForm()
+
+    return render(request, "trashpetapp/gamemaker.html", {"form": form})
+
 
 @login_required # automatically redirects to login page if not logged in
 def home(request):
