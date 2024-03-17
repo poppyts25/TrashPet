@@ -12,6 +12,7 @@ body {
 
 
 #pet-container {
+    margin: auto;
     position: relative;
     width: 200px;
     height: 200px;
@@ -44,8 +45,8 @@ button {
 }
 
 #item-reel {
-    background-color: white;
-    outline-color: navy;
+    background-color: rgba(0,0,0,.5);
+    outline-color: black;
     outline-style: ridge;
     border-radius: 10px;
     padding: 10px;
@@ -54,6 +55,25 @@ button {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+}
+
+.accessory {
+    position: relative;
+}
+
+.fa-lock, .fa-dollar-sign {
+    position: absolute;
+    padding: 60px;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); /* Center lock */
+    font-size: 50px; 
+    color: #FFD43B; 
+    z-index: 1; /* Ensure lock is on top */
+}
+
+.hidden {
+    display: none; 
 }
 
 .pet-layered-item {
@@ -87,6 +107,55 @@ button {
     cursor: pointer;
     display: inline-block;
     /* Align side by side */
-    margin: 5px;
-    /* Spacing */
+    margin: 20px;
+    /* Spacing */    
+
+    transition: 0.4s;
+}
+
+.color-option:hover{
+    border: 1px solid black;
+}
+
+#code-page-button{
+    transition: 0.4s;
+    padding: 0px; /*vertically align*/
+}
+#code-page-button:hover{
+    background-color: rgb(255, 212, 59);
+    border-color: black;
+    box-shadow: 2px 2px 3px;
+}
+
+#item-menu-button{
+    transition: 0.4s;
+    padding: 0px; /*vertically align*/
+}
+#item-menu-button:hover{
+    background-color: rgb(111, 198, 252);
+    border-color: black;
+    box-shadow: 2px 2px 3px;
+}
+
+#color-menu-button{
+    transition: 0.4s;
+    padding: 0px; /*vertically align*/
+}
+#color-menu-button:hover{
+    background-color: rgb(252, 146, 224);
+    border-color: black;
+    box-shadow: 2px 2px 3px;
+}
+
+#color-menu{
+    background-color: rgba(0,0,0,.5);
+    outline-color: black;
+    outline-style: ridge;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
 }

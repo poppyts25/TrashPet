@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Policy Page</title>
+        <style>
+            body{
+                background: url('{% static "SkylineBackground.png" %}');
+                background-blend-mode: multiply;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                /*background-color: rgb(218, 186, 139) !important;*/
+                min-height: 100%;
+                background-attachment: fixed;
+            }
+            .main-page-policy {
+                padding-top: 60px;
+                text-align: center;
+                color: white;
+            }
+            .text-area{
+                width: 60%;
+                margin: auto;                
+                padding: 30px;
+            }
+            .message{
+                background-color: rgba(0, 0, 0,.4); 
+                border-radius: 30px;
+                position:relative;
+                padding: 0px;
+            }
+            legend {
+                /*position: absolute;*/
+                background-color: rgba(0, 0, 0, .5);
+                color: white;
+                border-radius: 30px 30px 0px 0px;
+                width:100%;
+                padding: 10px 0px 10px 0px;
+                float: left;
+                font-size: 25px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .policy-wording {
+                padding: 50px 30px 30px 30px;
+            }
+
+            p{
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main-page-policy">
+            <div class="text-area">
+                <div class="message">
+                    <legend>Policy/GDPR</legend>
+                    <div class="policy-wording">
+                        <p>Our site uses cookies to authenticate user profile.</p>     
+                        <p>We do not use any analytic or marketing engines or share any information with third parties.</p>
+                        <p>Your information is stored within Django, we are not responsible for the security implemented. Passwords are encrypted and stored in the database via Django using the PBKDF2 algorithm with a SHA256 hash.</p>
+                        <p>When choosing to delete an account, all information stored will be removed from the site and cannot be recovered.</p>
+                        <p>Personal information stored about each user is a username and password. Other information stored is points and items unlocked.</p>
+                        <br>
+                        <p>Tracking Walking Distance:</p>
+                        <p>By clicking start walk, you are agreeing to the tracking of your GPS location and for it to be processed in order to gain points. When you click stop, the tracking of your location will stop, and a calculation of your distance will be converted into points.</p>
+                        <p>We do not retain your GPS location history data, it is only processed for points and then deleted.</p>
+                        <br>
+                        <p>This is in line with the General Data Protection Regulation (GDPR).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

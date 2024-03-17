@@ -3,8 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
-from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm
-from .models import UserProfile, Accessory, LeavesCode,Marker,JourneyPoint
+from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm, GamemakerForm, LeavesCodeForm
+from .models import UserProfile, Accessory, LeavesCode,Marker
 from django.contrib.auth.decorators import login_required, permission_required
 import json
 #from django.contrib.gis import gdal,OGR
@@ -12,37 +12,6 @@ import json
 from django.contrib.gis.geos import Point
 
 from datetime import datetime
-
-def track_journey(request):
-    # Assuming GPS coordinates are passed in the request data as 'latitude' and 'longitude'
-    latitude = float(request.POST.get('latitude'))
-    longitude = float(request.POST.get('longitude'))
-    
-    # Create a point object
-    location = Point(longitude, latitude)
-    
-    # Save the journey point
-    timestamp = datetime.now()
-    journey_point = JourneyPoint.objects.create(timestamp=timestamp, location=location)
-    
-    return render(request, 'map.html', {'journey_point': journey_point})
-
-from django.contrib.gis.db.models.functions import Distance
-
-def calculate_total_distance(request):
-    journey_points = JourneyPoint.objects.order_by('timestamp')
-    
-    total_distance = 0.0
-    prev_point = None
-    
-    
-    for point in journey_points:
-        if prev_point:
-            distance = prev_point.location.Distance(point.location)
-            total_distance += distance
-        prev_point = point
-    
-    return render(request, 'trashpetapp/map.html', {'total_distance': total_distance})
 
 
 
@@ -56,7 +25,52 @@ def index(request):
 @login_required
 @permission_required('auth.gamemaker')
 def gamemaker(request): 
-    return render(request, "trashpetapp/gamemaker.html")
+
+    if request.method == 'POST':
+        if 'gamemaker_form' in request.POST:
+            form = GamemakerForm(request.POST)
+            
+            if form.is_valid():
+                item_name = form.cleaned_data['item_name']
+                item_type = form.cleaned_data['item_type']
+                item_code = form.cleaned_data['item_code']
+                item_price = form.cleaned_data['item_price']
+                item_link = form.cleaned_data['item_link']
+                Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link)
+
+                for user in UserProfile.objects.all():
+                    locked_list = user.accessories
+                    bought_list = user.bought
+
+                    try:
+                        locked_list = json.loads(locked_list)
+                    except:
+                        locked_list = {"":""}
+
+                    try:
+                        bought_list = json.loads(bought_list)
+                    except:
+                        bought_list = {"":""}
+                    
+                    locked_list[item_name] = True
+                    bought_list[item_name] = True
+        else:
+            form = GamemakerForm()
+        if 'leavescode_form' in request.POST:  
+            form2 = LeavesCodeForm(request.POST)
+            if form2.is_valid():
+                code = form2.cleaned_data['code']
+                leaves = form2.cleaned_data['leaves']
+                LeavesCode.objects.create(name=code, leaves=leaves)
+        else:
+            form2 = LeavesCodeForm()
+
+    else:
+        form = GamemakerForm()
+        form2 = LeavesCodeForm()
+
+    return render(request, "trashpetapp/gamemaker.html", {"form": form, "form2": form2})
+
 
 @login_required # automatically redirects to login page if not logged in
 def home(request):

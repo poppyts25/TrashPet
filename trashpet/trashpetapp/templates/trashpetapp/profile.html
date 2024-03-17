@@ -7,83 +7,149 @@
     <title>Virtual Pet</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
-        .main-page-profile {
-            padding-top: 20px;
-            margin-left: 20%;
-            margin-right: 20%;
-            background-color: lavenderblush;
-            border-color: darkslateblue;
-            border-style: solid;
-            border-radius: 4px;
-            font-size: 20;
-            text-align: center;
+        body{
+          background: url('{% static "SkylineBackground.png" %}') rgba(0,0,0,0.3);
+          background-blend-mode: multiply;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
         }
-
-        .welcome{
-          color: white;
+        /*.text{
           text-align: center;
           padding-top: 100px;
+        }*/
+
+        .main-page-profile {
+          text-align: center;
+          color: white;
+          width: 40%;
+          margin-top: 140px !important;
+          margin: auto;    
+          background-color: rgba(0, 0, 0,.4); 
+          border-radius: 30px;
+          position:relative;
         }
 
-        body{
-                background: url('{% static "SkylineBackground.png" %}');
-                background-blend-mode: multiply;
-                background-position: center;
-                background-size: cover;
-                background-repeat: no-repeat;
-                /*background-color: rgb(218, 186, 139) !important;*/
-                min-height: 100%;
-                background-attachment: fixed;
-            }
+
+        legend {
+          background-color: rgba(0, 0, 0, .5);
+          color: white;
+          border-radius: 30px 30px 0px 0px;
+          width:100%;
+          padding: 8px 0px 8px 0px !important;
+          float: left;
+          font-size: 25px !important;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .profile-body {
+          padding: 0px 30px 30px 30px;
+        }
+
+        p{
+            font-family: Arial, Helvetica, sans-serif
+        }
 
         .rename{
-            padding-top: 10px;
+            padding-top: 40px;
             font-size: 15;
         }
 
         input[type=text]{
-            border: none;
-            border-bottom: 2px solid darkslateblue;
+            color: white;
+            background-color: rgba(0,0,0,0);
+            border:none;
+            border-bottom: 1px solid white;
+            text-align: center;
         }
 
-        button{
-            background-color: darkslateblue;
-            border: none;
+        .form-btn{
+            margin: 10px 20px;
+            display: inline-block;
+            padding: 8px 20px;
             color: white;
-            font-size: 15;
+            font-size: 15px;
+            font-weight: bold;
+            background: none;
+            border: 3px solid;
+            border-radius: 99px;
+            transition: 0.4s;
+            font-family: Arial, Helvetica, sans-serif; 
+        }
 
+        .submit-name{
+            margin-left: 10px;
+        }
+
+        .submit-name-btn:hover{
+            box-shadow: 3px 4px 4px #241F21;
+            background-color: rgb(95, 79, 199);
+            cursor: pointer;
+            border-color: black;
+            color: black;
+        }
+
+        .delete{
+            padding-top: 30px;
+        }
+
+        .delete-btn:hover{
+            box-shadow: 3px 4px 4px #241F21;
+            background-color: darkred;
+            cursor: pointer;
+            border-color: black;
+            color: black;
         }
     </style>
 
 </head>
 <body>
-  {% include "../trashpetapp/navbar.html" %}
- 
-    <div class="welcome">
-        <h1>Hi {{username}}!</h1>
-    </div>
+  {% include "../trashpetapp/navbar.html" %}    
 
     <div class="main-page-profile">
-        <i class="fa-solid fa-leaf fa-2xl" style="color: #77bb41;"></i> {{leaves}}
-        
+        <legend>Hi {{username}}!</legend>
 
-        <!-- Change Pet Name form -->
-        <div class="rename">
-        <form method="POST">
-            {% csrf_token %}
-            <div style="display: inline-block;">
-                {{ form.as_p }}
+        <div class="profile-body">
+            <p>This is your profile page. You can see your points, rename your pet and delete your account from here</p>
+            <br>
+
+            <i class="fa-solid fa-leaf fa-2xl" style="color: #77bb41;"></i> {{leaves}}
+            
+            
+            <!-- Change Pet Name form -->
+            <div class="rename">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div style="display: inline-block;">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="submit-name" style="display: inline-block;">
+                        <button class="form-btn submit-name-btn" type="submit">Rename pet</button>
+                    </div>
+                </form>
             </div>
-            <div style="display: inline-block;">
-                <button type="submit">Rename pet</button>
+
+            <!-- delete account -->
+            <div class="delete">
+                <form method="POST">
+                    {% csrf_token %}
+                    <button class="form-btn delete-btn" type="submit" name="delete_user">Delete account</button>
+                </form>
             </div>
-        </form>
+
+            {% if perms.trashpetapp.gamemaker %}
+            <div>
+                <button class="form-btn submit-name-btn" onclick="goToGamemaker()">Gamemaker Control Page</button>
+            </div>
+            {% endif %}
+
+            <script>
+                function goToGamemaker(){
+                  window.location.href=("{%url 'gamemaker' %}")
+                }
+              </script>
+
         </div>
-
-        <form method="POST">
-            {% csrf_token %}
-            <button type="submit" name="delete_user">Delete account</button>
-        </form>
     </div>
 
     <script>

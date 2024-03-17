@@ -23,8 +23,78 @@
           margin-top: 50px;
         }
 
-        .codebox{
-            text-align: center;
+        .main-page-codes {
+          padding-top: 60px;
+          text-align: center;
+          color: white;
+        }
+
+        form{
+          width: 40%;
+          margin: auto;                
+          padding: 30px;
+          padding-top: 80px;
+            
+        }
+        fieldset {        
+          background-color: rgba(0, 0, 0,.4); 
+          border-radius: 30px;
+          position:relative;
+          padding: 0px;
+        }
+        legend {
+          background-color: rgba(0, 0, 0, .5);
+          color: white;
+          border-radius: 30px 30px 0px 0px;
+          width:100%;
+          padding: 8px 0px 8px 0px !important;
+          float: left;
+          font-size: 25px !important;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .form-inputs {
+          padding: 30px;
+          margin-top: 1cm;
+        }
+
+        input[type=text]{
+          color: white;
+          background-color: rgba(0,0,0,0);
+          border:none;
+          border-bottom: 1px solid white;
+          text-align: center;
+        }
+
+        .codes-buttons{
+          text-align: center;
+          padding-top: 10px;
+        }
+
+        .codes-button{
+          margin: 10px 20px;
+          display: inline-block;
+          padding: 8px 20px;
+          color: white;
+          font-size: 15px;
+          font-weight: bold;
+          background: none;
+          border: 3px solid;
+          border-radius: 99px;
+          transition: 0.4s;
+          font-family: Arial, Helvetica, sans-serif;          
+        }
+        
+        .codes-button:hover {
+          box-shadow: 3px 4px 4px #241F21;
+          background-color: rgb(97, 212, 132);
+          cursor: pointer;
+          border-color: black;
+          color: black;
+        }
+
+        label{
+          font-family: Arial, Helvetica, sans-serif;
         }
     </style>
 </head>
@@ -41,24 +111,24 @@
 
   </script>
 
-  <div class="main-page-home">
+  <div class="main-page-codes">
+    <form method="POST">
+      <fieldset>
+          <legend>Enter Your Code</legend>
+          <div class="form-inputs">
+            {% csrf_token %}
 
-    <div class="text">
-      <h1>Enter Your Code</h1>
-    </div>
-    
-    <!-- Code Entry Form -->
-    <div class="codebox">
-        <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit" />
-        </form>
-    </div>
+            <div class="code-inputs">
+              {{ form.as_p }}
+            </div>            
 
-
-  
-    
+            <div class="codes-buttons">
+              <button type="submit" class="codes-button">Submit</button>
+            </div>              
+              
+          </div>
+      </fieldset>      
+    </form>      
   </div>
     
 </body>

@@ -44,6 +44,7 @@ function applySavedItems() {
       "/static/images/bottle.png",
       "/static/images/crown.png",
       "/static/images/cap.png",
+      "/static/images/guitar.png",
     ];
     items.forEach((itemSrc, index) => {
       const itemId = `item-${index}`;

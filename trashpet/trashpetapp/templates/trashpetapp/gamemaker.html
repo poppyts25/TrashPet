@@ -1,0 +1,78 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Virtual Pet</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <style>
+      .main-page-map {
+        padding-top: 100px;
+      }
+    </style>
+</head>
+<body>
+  {% include "../trashpetapp/navbar.html" %}
+
+  <!-- Highlight tab on navbar -->
+  <script>
+    document.getElementById("home-tab").classList.remove("active")
+    document.getElementById("garden-tab").classList.remove("active")
+    document.getElementById("shop-tab").classList.remove("active")
+    document.getElementById("map-tab").classList.remove("active")
+
+    
+  </script>
+
+  <div class="main-page-map">
+    <h1>Gamemaker Page</h1>
+
+  
+  </div>
+  <div>
+    <form method="POST">
+      <fieldset>
+          <legend>Add New Shop Item</legend>
+          <div class="form-inputs">
+            {% csrf_token %}
+
+            <div class="code-inputs">
+              {{ form.as_p }}
+            </div>            
+
+            <div class="codes-buttons">
+              <button type="submit" class="codes-button">Submit</button>
+            </div>              
+              
+          </div>
+      </fieldset> 
+  
+    
+  </form>   
+  
+  <form method="POST">
+    <fieldset>
+        <legend>Add New Reward Code</legend>
+        <div class="form-inputs">
+          {% csrf_token %}
+
+          <div class="code-inputs">
+            {{ form2.as_p }}
+          </div>            
+
+          <div class="codes-buttons">
+            <button type="submit" class="codes-button">Submit</button>
+          </div>              
+            
+        </div>
+    </fieldset> 
+
+  
+</form> 
+
+</div>
+
+</body>
+</html>
