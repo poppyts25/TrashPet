@@ -12,3 +12,8 @@
 <li>Shop to customize the pet
 <li>Can change colour of pet and add accessories
 </ul>
+<h3> Links:</h3>
+<ul>
+<li>GitHub: https://github.com/poppyts25/TrashPet
+<li>Kanban Board: https://trello.com/b/N11jXliZ 
+</ul>

@@ -7,9 +7,13 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     leaves = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     pet_name = models.CharField(max_length=30, default="Trash Pet") # set different / validate pet name length???
-    locked_list = {"Cap":True, "Crown":False, "Socks":False, "Bottle":True }
+    locked_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":True }
     locked_list = json.dumps(locked_list)               
     accessories = models.CharField(max_length=200, default=locked_list)
+
+    bought_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":False }
+    bought_list = json.dumps(bought_list) 
+    bought = models.CharField(max_length=200, default=bought_list)
 
 
 
