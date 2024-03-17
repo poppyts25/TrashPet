@@ -23,4 +23,7 @@ class Migration(migrations.Migration):
             name='used_codes',
             field=models.CharField(default='', max_length=2000),
         ),
+
+
+        
     ]

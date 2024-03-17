@@ -19,4 +19,7 @@ class Migration(migrations.Migration):
             model_name='userprofile',
             name='used_codes',
         ),
+        
+        
+ 
     ]
