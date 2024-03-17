@@ -54,7 +54,10 @@
   <div id="map"></div>
   <script
     src="{% static 'map.js' %}"
-    
+    {% for marker in markers %}
+            L.marker([{{ marker.latitude }}, {{ marker.longitude }}]).addTo(map)
+                .bindPopup("{{ marker.name }}");
+    {% endfor %}
   ></script>
    
 

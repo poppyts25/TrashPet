@@ -19,6 +19,7 @@ var map = L.map('map').setView([50.7374, -3.5351], 13); // Centered at Universit
         var lukesMarker = L.marker([50.7224, -3.5166], {icon:uniicon}).addTo(map);
         lukesMarker.bindPopup("<b>University of Exeter</b>").openPopup();
 
+        
       
         //initial set up of user location
         var userLocation = L.marker([50.737, -3.535], {

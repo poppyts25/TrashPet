@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Accessory
-from .models import Marker
+from .models import UserProfile, Accessory, Marker
 # Register your models here.
 admin.site.register(UserProfile)
 admin.site.register(Accessory)
