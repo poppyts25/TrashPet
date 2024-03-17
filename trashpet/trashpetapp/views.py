@@ -28,6 +28,12 @@ def shop(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.accessories
+    bought_list = profile.bought
+
+    # Default bought list - for testing
+    '''bought_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":False }
+    profile.bought = json.dumps(bought_list) 
+    profile.save()'''
 
     #loads unlocked accessories
     try:
@@ -35,9 +41,57 @@ def shop(request):
     except:
         locked_list = {"":""}
 
+    #loads bought accessories
+    try:
+        bought_list = json.loads(bought_list)
+    except:
+        bought_list = {"":""}
+
     accessories = Accessory.objects.all()
 
-    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "locked_list": locked_list})
+    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves})
+
+
+def buy_accessory(request):
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    leaves = profile.leaves
+    bought_list = profile.bought
+    #loads bought accessories
+    try:
+        bought_list = json.loads(bought_list)
+    except:
+        bought_list = {"":""}
+
+    if request.method == 'POST':
+        # Get the new leaves value from the POST data
+        new_leaves = request.POST.get('new_leaves')
+        
+        # Update the leaves value in your Django application
+        profile.leaves=new_leaves
+        profile.save()
+
+        #checks accessories and if they match sets that accessory to "bought"
+        accessories = Accessory.objects.all()
+        accessory_name = request.POST.get('accessory_name')
+
+        for accessory in accessories:
+            if accessory.name == accessory_name:
+                name = accessory.name
+                bought_list[name] = True
+                bought_list = json.dumps(bought_list)
+                profile.bought = bought_list
+                profile.save()
+                break
+        
+        return JsonResponse({'new_leaves': new_leaves, 'accessory_name': accessory_name})
+    else:
+        # Handle other HTTP methods if necessary
+        return render(request, 'trashpetapp/shop.html', {'leaves': 0})
+    
+
+
+
 
 @login_required
 def map(request):
@@ -75,12 +129,20 @@ def codes(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.accessories
+    bought_list = profile.bought
 
     #loads unlocked accessories list
     try:
         locked_list = json.loads(locked_list)
     except:
         locked_list = {"":""}
+    
+    #loads bought accessories
+    try:
+        bought_list = json.loads(bought_list)
+    except:
+        bought_list = {"":""}
+    
     accessories = Accessory.objects.all()
     leavescodes = LeavesCode.objects.all()
     found = False
@@ -98,6 +160,10 @@ def codes(request):
                     locked_list[name] = False
                     locked_list = json.dumps(locked_list)
                     profile.accessories = locked_list
+                    # Add to bought list
+                    bought_list[name] = True
+                    bought_list = json.dumps(bought_list)
+                    profile.bought = bought_list
                     profile.save()
                     found = True
                     break

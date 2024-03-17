@@ -11,6 +11,10 @@ class UserProfile(models.Model):
     locked_list = json.dumps(locked_list)               
     accessories = models.CharField(max_length=200, default=locked_list)
 
+    bought_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":False }
+    bought_list = json.dumps(bought_list) 
+    bought = models.CharField(max_length=200, default=bought_list)
+
 
 
 

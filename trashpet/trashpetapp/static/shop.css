@@ -63,7 +63,7 @@ button {
     position: relative;
 }
 
-.fa-lock {
+.fa-lock, .fa-dollar-sign {
     position: absolute;
     padding: 60px;
     top: 50%; 

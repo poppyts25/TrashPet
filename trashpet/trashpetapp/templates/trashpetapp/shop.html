@@ -34,6 +34,7 @@
     document.getElementById("shop-tab").classList.remove("active")
     document.getElementById("map-tab").classList.remove("active")
     document.getElementById("shop-tab").classList.add("active")
+    document.getElementById("camera-tab").classList.remove("active")
   </script>
 
   <!-- display pet -->
@@ -53,8 +54,9 @@
             {% for accessory in accessories %}
           
               <div class="accessory">
-                <i class="fa-solid fa-lock {% if not locked_list|keyvalue:accessory.name %}d-none{% endif %}" style="color: #FFD43B;"></i> <!--" z-index: 1; position: absolute; width: 150px; height: auto; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px;"></i> -->
-                <img src='{% static "/images/" %}{{ accessory.link }}' alt="{{ accessory.name }}" class="shop-item"> <!-- style="width: 100%; height: auto; display: block;"> -->
+                <i class="fa-solid fa-lock {% if not locked_list|keyvalue:accessory.name %}d-none{% endif %}" style="color: #FFD43B;"></i>
+                <i accessory-price="{{ accessory.price }}" accessory-name="{{ accessory.name }}" class="fa-solid fa-dollar-sign {% if bought_list|keyvalue:accessory.name or locked_list|keyvalue:accessory.name %}d-none{% endif %}" style="color: #FFD43B;"></i>
+                <img src='{% static "/images/" %}{{ accessory.link }}' alt="{{ accessory.name }}" class="shop-item">
               </div>
 
             {% endfor %}
@@ -81,11 +83,94 @@
   <script src="https://kit.fontawesome.com/f32a47c063.js" crossorigin="anonymous"></script>
   <script src="{% static 'shop.js' %}"></script>
   <script src="{% static 'animate.js' %}"></script>
+  <script src="{% static 'jquery.min.js' %}"></script>
 
   <script>
     function goToCodes(){
       window.location.href=("{%url 'codes' %}")
     }
+
+    // Get the user's current number of leaves
+    var userLeaves = {{ leaves }};
+
+    // Script to buy accessories and update database
+    $(document).ready(function() {
+      $('.fa-dollar-sign').click(function() {
+
+        // Store the clicked item
+        var item = $(this); 
+
+        // Get price of accessory clicked
+        var price = parseInt(item.attr('accessory-price'));
+
+        // Get cookie value
+        function getCookie(name) {
+          var cookieValue = null;
+
+          // Check cookie exists
+          if (document.cookie && document.cookie !== '') {
+            // Split cookies into an array
+            var cookies = document.cookie.split(';');
+
+            // Loop through each cookie and remove whitespace from string
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+
+                // Check cookie matches name
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                // Get value of cookie
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          // Return cookie value
+          return cookieValue;
+        } 
+
+        // Check sufficient number of leaves
+        if (userLeaves >= price) {
+
+          // Confirm if user wants to buy
+          var confirmMessage = "This costs " + price + " leaves.\nWould you like to buy it?";
+          if (confirm(confirmMessage)) {
+            // Update the user profile using AJAX
+            $.ajax({
+              // URL to Django view for buying accessories
+              url: '{% url "buy_accessory" %}',  
+              method: 'POST',
+              headers: { 'X-CSRFToken': getCookie('csrftoken')},
+              // Reduce the leaves value by the price
+              data: {'new_leaves': userLeaves - price, 'accessory_name': item.attr('accessory-name')},  
+              success: function(response) {
+                // Log success in console
+                console.log('Profile updated successfully.');
+                console.log('leaves value: ', response.new_leaves);
+                // Reload the current page after successful purchase
+                window.location.reload();
+              },
+              error: function(xhr, status, error) {
+                // Error message if request fails
+                console.error('Error updating leaves:', error);
+              }
+            });
+
+            // Hide dollar symbol
+            item.addClass('d-none');
+            alert("Bought successfully!");
+            } 
+            
+        } else {
+          alert("Insufficient funds.");
+        }
+
+        
+    // remove price from user money
+    // make accessory bought = True for user
+
+      });
+    });
+
   </script>
 </body>
 </html>
