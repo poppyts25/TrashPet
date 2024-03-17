@@ -21,3 +21,5 @@ class RenamePetForm(forms.Form):
 #Form for unlock codes
 class CodeForm(forms.Form):
     code = forms.CharField(max_length=30, label='', widget=forms.TextInput(attrs={'placeholder': 'Enter code here'}))
+
+#Gamemaker form to add shop items
