@@ -136,6 +136,19 @@
                     <button class="form-btn delete-btn" type="submit" name="delete_user">Delete account</button>
                 </form>
             </div>
+
+            {% if perms.trashpetapp.gamemaker %}
+            <div>
+                <button class="form-btn submit-name-btn" onclick="goToGamemaker()">Gamemaker Control Page</button>
+            </div>
+            {% endif %}
+
+            <script>
+                function goToGamemaker(){
+                  window.location.href=("{%url 'gamemaker' %}")
+                }
+              </script>
+
         </div>
     </div>
 
