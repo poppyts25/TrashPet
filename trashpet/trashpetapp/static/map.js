@@ -17,7 +17,15 @@ var uniicon = L.icon({
 var exeterMarker = L.marker([50.7374, -3.5351], {
     icon: uniicon
 }).addTo(map);
-exeterMarker.bindPopup("<b>University of Exeter</b>").openPopup();
+exeterMarker.bindPopup("<b>University of Exeter</b>");
+var lukesMarker = L.marker([50.7374, -3.5351], {
+    icon: uniicon
+}).addTo(map);
+lukesMarker.bindPopup("<b>University of Exeter</b>");
+var penrynMarker = L.marker([50.7374, -3.5351], {
+    icon: uniicon
+}).addTo(map);
+penrynMarker.bindPopup("<b>University of Exeter</b>");
 
 // Marker for user location
 var userLocation = L.marker([50.737, -3.535], {
@@ -28,6 +36,8 @@ var userLocation = L.marker([50.737, -3.535], {
         popupAnchor: [-3, -38]
     })
 }).addTo(map);
+userLocation.bindPopup("<b>Your Location</b>").openPopup();
+
 
 // Function to calculate distance between two points using Haversine formula
 function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -54,15 +64,9 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 function updateUserLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            userLocation.bindPopup("<b>Your Location</b>");
             userLocation.setLatLng([position.coords.latitude, position.coords.longitude]);
-
-            // Calculate distance to University of Exeter
-            //var distanceToExeter = calculateDistance(position.coords.latitude, position.coords.longitude, 50.7374, -3.5351);
-            
-           // document.getElementById("words").innerText = "Distance to University of Exeter: " + distanceToExeter.toFixed(2) + " km";
         }, function() {
-            alert('Error: The Geolocation service failed.');
+            alert('Error: Failed to get a location');
             userLocation.bindPopup("<b>Default location</b>");
             userLocation.setLatLng([50.737, -3.535]);
         });
@@ -73,23 +77,12 @@ function updateUserLocation() {
     }
 }
 
-    //iconSize: [38, 95],
-        // iconAnchor: [22, 94],
-        // popupAnchor: [-3, -76]
 
 //initial function call
 updateUserLocation();
 // Call updateUserLocation() every 10 seconds
 setInterval(updateUserLocation, 10000);
 
-// var initialLocation = L.marker([userLocation.latitude, userLocation.longitude], {
-//     icon: L.icon({
-//         iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-orange.png',
-//         iconSize: [19, 47],
-//         iconAnchor: [11, 47],
-//         popupAnchor: [-3, -38]
-//     })
-// })
 var initialLat;
 var initialLang;
 function timer() {
@@ -115,21 +108,22 @@ var intervalId
 document.getElementById("start-stop").addEventListener("click", function () {
     var startStop = document.getElementById("start-stop");
     if (startStop.innerText=="Start Walking") {
-        startStop.innerText="Stop Walking";
+        startStop.innerText="Stop Walking";//chnage button text
         var initialLatLng = userLocation.getLatLng();
         initialLat = initialLatLng.lat;
         initialLang = initialLatLng.lng;
-        //setup timer
+
+        //start timer 
         document.getElementById("Time").innerHTML="You have been walking for <a id='mins'>0</a>minutes and <a id='seconds'>0</a> seconds";
         intervalId = setInterval(timer,1000);
-        //initialLocation.bindPopup("<b>Initial location</b>");
+     
     } else {
-        startStop.innerText="Start Walking"
+        startStop.innerText="Start Walking";//change button text
         var finalLatLang = userLocation.getLatLng();
         finalLat = finalLatLang.lat;
         finalLang = finalLatLang.lng;
         var distance=calculateDistance(initialLat,initialLang,finalLat,finalLang)
-        clearInterval(intervalId);//change this
+        clearInterval(intervalId);
         document.getElementById("Distance").innerText = "Distance travelled: " + distance.toFixed(2) + " km";
 
     }
