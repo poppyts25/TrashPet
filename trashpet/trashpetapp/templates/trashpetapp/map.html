@@ -6,7 +6,30 @@
     <meta charset="UTF-8">
     <title>Virtual Pet</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
-
+  
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+      />
+      <link
+        rel="stylesheet"
+        href="{% static 'map.css' %}"
+      />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://unpkg.com/leaflet/dist/leaflet.css"
+        crossorigin=""
+      />
+      <script
+        src="https://unpkg.com/leaflet/dist/leaflet.js"
+        crossorigin=""
+      ></script>
+      <script 
+      src="https://kit.fontawesome.com/f32a47c063.js" 
+      crossorigin="anonymous">
+    </script>
+    
     <style>
       .main-page-map {
         padding-top: 100px;
@@ -28,9 +51,31 @@
   </script>
 
   <div class="main-page-map">
-    <h1>Welcome to the map!</h1>
-  
+    <p style="text-align:left;" ><a id="Distance">temp distance</a>
+      <span style="float:right;">
+      <i class="fa-solid fa-leaf"></i>:
+      
+        {{leaves}} a number
+      
+      </span>
+  </p>
+  <p style="text-align:left;" >
+    <a id="Time">temp time</a> 
+
+    <span style="float:right;">
+  <button type="button" id="start-stop">Start Walking</button>
+        
+    </span>
+</p>
   </div>
+  <div id="map"></div>
+  <script
+    src="{% static 'map.js' %}"
+    {% for marker in markers %}
+            L.marker([{{ marker.latitude }}, {{ marker.longitude }}]).addTo(map)
+                .bindPopup("{{ marker.name }}");
+    {% endfor %}
+  ></script>
    
 
 </body>

@@ -3,10 +3,19 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
-from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm, GamemakerForm
-from .models import UserProfile, Accessory, LeavesCode
+from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm, GamemakerForm, LeavesCodeForm
+from .models import UserProfile, Accessory, LeavesCode,Marker
 from django.contrib.auth.decorators import login_required, permission_required
 import json
+
+
+
+def map_view(request):
+    markers = Marker.objects.all()
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    leaves = profile.leaves
+    return render(request, 'trashpetapp/map.html', {"leaves":leaves,"markers":markers})
 
 def index(request): 
     return render(request, "trashpetapp/index.html")
@@ -16,39 +25,49 @@ def index(request):
 def gamemaker(request): 
 
     if request.method == 'POST':
-        form = GamemakerForm(request.POST)
+        if 'gamemaker_form' in request.POST:
+            form = GamemakerForm(request.POST)
+            
+            if form.is_valid():
+                item_name = form.cleaned_data['item_name']
+                item_type = form.cleaned_data['item_type']
+                item_code = form.cleaned_data['item_code']
+                item_price = form.cleaned_data['item_price']
+                item_link = form.cleaned_data['item_link']
+                Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link)
 
-        if form.is_valid():
-            item_name = form.cleaned_data['item_name']
-            item_type = form.cleaned_data['item_type']
-            item_code = form.cleaned_data['item_code']
-            item_price = form.cleaned_data['item_price']
-            item_link = form.cleaned_data['item_link']
-            Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link)
+                for user in UserProfile.objects.all():
+                    locked_list = user.accessories
+                    bought_list = user.bought
 
-            for user in UserProfile.objects.all():
-                locked_list = user.accessories
-                bought_list = user.bought
+                    try:
+                        locked_list = json.loads(locked_list)
+                    except:
+                        locked_list = {"":""}
 
-                try:
-                    locked_list = json.loads(locked_list)
-                except:
-                    locked_list = {"":""}
-
-                try:
-                    bought_list = json.loads(bought_list)
-                except:
-                    bought_list = {"":""}
-                
-                locked_list[item_name] = True
-                bought_list[item_name] = True
-
-
+                    try:
+                        bought_list = json.loads(bought_list)
+                    except:
+                        bought_list = {"":""}
+                    
+                    locked_list[item_name] = True
+                    bought_list[item_name] = True
+        else:
+            form = GamemakerForm()
+        if 'leavescode_form' in request.POST:  
+            form2 = LeavesCodeForm(request.POST)
+            if form2.is_valid():
+                code = form2.cleaned_data['code']
+                leaves = form2.cleaned_data['leaves']
+                LeavesCode.objects.create(name=code, leaves=leaves)
+        else:
+            form2 = LeavesCodeForm()
 
     else:
         form = GamemakerForm()
+        form2 = LeavesCodeForm()
 
-    return render(request, "trashpetapp/gamemaker.html", {"form": form})
+    return render(request, "trashpetapp/gamemaker.html", {"form": form, "form2": form2})
 
 
 @login_required # automatically redirects to login page if not logged in
@@ -281,3 +300,9 @@ def user_logout(request):
 #policy page
 def policy(request): 
     return render(request, "trashpetapp/policy.html")
+
+
+
+def map_view(request):
+    markers = Marker.objects.all()
+    return render(request, 'map.html', {'markers': markers})

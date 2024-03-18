@@ -19,7 +19,6 @@ body {
     overflow: hidden;
 }
 
-
 .shop-item {
     width: 150px;
     margin: 20px;
@@ -28,7 +27,6 @@ body {
     border-radius: 10px;
     outline: 2px solid red;
 }
-
 
 .pet-background,
 .pet-eyes,

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import platform
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
+    #"django.contrib.gis.gdal",
+    "rest_framework",
+    "rest_framework_gis",
 ]
 
 MIDDLEWARE = [
@@ -64,9 +69,6 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
-            "libraries":{
-                'trashpetextras': 'trashpetapp.templatetags.trashpetextras'
-            }
         },
     },
 ]
@@ -81,6 +83,14 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+    },
+      "map":{
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "HOST": "localhost",
+        "NAME": "myMaps",
+        "PASSWORD": "password",
+        "PORT": 5432,
+        "USER": "mapper",        
     }
 }
 
@@ -132,3 +142,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "/" #####
 
 LOGIN_URL = "../" # Added to redirect to login page if trying to access a page requiring login, wont work on pages with more sub urls
+
+#have to specify the path for windows but not other systems
+if platform.system() == 'Windows':
+    import os
+    os.environ['PATH'] = os.path.join(BASE_DIR, r'venv\\Lib\\site-packages\\osgeo') + ';' + os.environ['PATH']
+    os.environ['PROJ_LIB'] = os.path.join(BASE_DIR, r'env3\\Lib\site-packages\\osgeo\\data\\proj') + ';' + os.environ['PATH']
+    GDAL_LIBRARY_PATH = os.path.join(BASE_DIR, r'venv\\lib\\site-packages\\osgeo\\gdal.dll')

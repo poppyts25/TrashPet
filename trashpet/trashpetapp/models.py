@@ -1,6 +1,11 @@
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import User,Permission
 from django.db import models
+from django.contrib.gis.db import models
+
+
+
 import json
+
 
 # User Profile: Leaves are currency, locked_list designates unlocked accessories
 class UserProfile(models.Model):
@@ -47,3 +52,13 @@ class CustomUserPermissions:
         permissions = (
             ("gamemaker", "Can add event unlocks")
         )
+    
+class Marker(models.Model):
+    name = models.CharField(
+        max_length=255
+    )
+
+    def __str__(self):
+        return self.name
+    
+

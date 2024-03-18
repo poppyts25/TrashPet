@@ -48,11 +48,31 @@
               
           </div>
       </fieldset> 
-  </div>
+  
     
-  </form>      
+  </form>   
+  
+  <form method="POST">
+    <fieldset>
+        <legend>Add New Reward Code</legend>
+        <div class="form-inputs">
+          {% csrf_token %}
 
-   
+          <div class="code-inputs">
+            {{ form2.as_p }}
+          </div>            
+
+          <div class="codes-buttons">
+            <button type="submit" class="codes-button">Submit</button>
+          </div>              
+            
+        </div>
+    </fieldset> 
+
+  
+</form> 
+
+</div>
 
 </body>
 </html>
