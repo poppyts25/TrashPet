@@ -57,10 +57,17 @@
           left: 0;
         }
 
-        button {
-          margin-top: 20px;
-          padding: 10px;
-          font-size: 16px;
+        .action-button {
+            margin: 10px 20px;
+            display: inline-block;
+            padding: 8px 20px;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.5); /* Translucent white background */
+            border: 3px solid;
+            border-radius: 99px; 
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .buttons-container {
@@ -102,8 +109,8 @@
         <img src = '{% static "/images/smile.png" %}' class="pet-smile" alt="pet">
     </div>
     <div class="buttons-container">
-        <button id="feed-button">Feed</button>
-        <button id="play-button">Play</button>
+        <button id="feed-button" class="action-button">Feed</button>
+        <button id="play-button" class="action-button">Play</button>
     </div>
     <script src="{% static 'animate.js' %}"></script>
     <script src="{% static 'home.js' %}"></script>
