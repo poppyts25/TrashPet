@@ -7,17 +7,15 @@ from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm, Gamemak
 from .models import UserProfile, Accessory, LeavesCode,Marker
 from django.contrib.auth.decorators import login_required, permission_required
 import json
-#from django.contrib.gis import gdal,OGR
-
-from django.contrib.gis.geos import Point
-
-from datetime import datetime
 
 
 
 def map_view(request):
     markers = Marker.objects.all()
-    return render(request, 'trashpetapp/map.html', {'markers': markers})
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    leaves = profile.leaves
+    return render(request, 'trashpetapp/map.html', {"leaves":leaves,"markers":markers})
 
 def index(request): 
     return render(request, "trashpetapp/index.html")
