@@ -5,4 +5,4 @@ django
 psycopg[binary]
 psycopg2
 postgis
-"trashpetapp/GDAL-3.4.3-cp310-cp310-win_amd64.whl"
+trashpetapp/GDAL-3.4.3-cp310-cp310-win_amd64.whl
