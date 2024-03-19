@@ -133,6 +133,6 @@ document.getElementById("start-stop").addEventListener("click", function () {
         var distance=calculateDistance(initialLat,initialLang,finalLat,finalLang)
         clearInterval(intervalId);
         document.getElementById("Distance").innerText = "Distance travelled: " + distance.toFixed(2) + " km";
-
+        window.distanceTravelled = distance;
     }
   });
