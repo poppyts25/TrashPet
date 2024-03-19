@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--<meta charset="UTF-8">-->
+        <title>Virtual Pet</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+
+        <style>
+            body{
+                background: url('{% static "SkylineBackground.png" %}') rgba(0,0,0,0.3);
+                background-blend-mode: multiply;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            .main-page-gkcreator {
+                padding-top: 60px;
+                text-align: center;
+                color: white;
+            }
+
+            form{
+                width: 42%;
+                margin: auto;                
+                padding: 30px
+                
+            }
+
+            fieldset {        
+                background-color: rgba(0, 0, 0,.4); 
+                border-radius: 30px;
+                position:relative;
+                padding: 0px;
+            }
+
+            legend {
+                background-color: rgba(0, 0, 0, .5);
+                color: white;
+                border-radius: 30px 30px 0px 0px;
+                width:100%;
+                padding: 8px 0px 8px 0px !important;
+                float: left;
+                font-size: 25px !important;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            
+            .form-inputs {
+                padding: 0px 30px 30px 30px;
+                margin-top: 1cm;
+            }
+
+            .gkcreator-inputs{
+                text-align: left;
+            }
+
+            .helptext{
+                color: rgb(150,150,150);
+                text-align: center;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: .9rem;
+            }
+
+            p{
+                margin-bottom: 30px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .gkcreator-inputs ul li{
+                color: rgb(150,150,150);
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: .9rem;
+            }
+
+            input[type=text]{
+                margin-left:10px;
+                color: white;
+                background-color: rgba(0,0,0,0);
+                border:none;
+                border-bottom: 1px solid white;
+            }
+            input[type=password]{
+                margin-left:10px;
+                color: white;
+                background-color: rgba(0,0,0,0);
+                border:none;
+                border-bottom: 1px solid white;
+            }
+            
+            .form-btn{
+                margin: 10px 20px;
+                display: inline-block;
+                padding: 8px 20px;
+                color: white;
+                font-size: 15px;
+                font-weight: bold;
+                background: none;
+                border: 3px solid;
+                border-radius: 99px;
+                transition: 0.4s;
+                font-family: Arial, Helvetica, sans-serif; 
+            }
+
+            .gkcreator-buttons{
+                text-align: center;
+                padding-top: 10px;
+            }
+            .gkcreator-button{
+                margin: 10px 20px;
+                display: inline-block;
+                padding: 8px 20px;
+                color: white;
+                font-size: 15px;
+                font-weight: bold;
+                background: none;
+                border: 3px solid;
+                border-radius: 99px;
+                transition: 0.4s;
+                font-family: Arial, Helvetica, sans-serif;
+                
+            }
+            .gkcreator-button:hover {
+                box-shadow: 3px 4px 4px #241F21;
+            background-color: rgb(97, 212, 132);
+            cursor: pointer;
+            border-color: black;
+            color: black;
+            }
+            ul.errorlist li{
+                color: red;
+            }
+
+            .disclaimer{
+                padding:0px 30px 0px 30px;
+            }
+            .disclaimer a{
+                text-decoration: none;
+                color: #0CAFFF;
+            }
+    </style>
+    </head>
+
+    <body>
+        {% include "../trashpetapp/navbar.html" %}
+
+        <!-- Highlight tab on navbar -->
+        <script>
+        document.getElementById("home-tab").classList.remove("active")
+        document.getElementById("garden-tab").classList.remove("active")
+        document.getElementById("shop-tab").classList.remove("active")
+        document.getElementById("map-tab").classList.remove("active")
+
+        
+        </script>
+
+        <div class="main-page-gkcreator">
+            <form method="POST">
+                <fieldset>
+                    <legend>Create a Game keeper</legend>
+                    <div class="form-inputs">
+                        <p>Enter a username and password to create a game keeper account</p>
+                        <br>
+                        
+                        {% csrf_token %}
+
+                        <div class="gkcreator-inputs">
+                            {{ form.as_p }}
+                        </div>                    
+
+                        <div class="gkcreator-buttons">
+                            <button type="submit" class="gkcreator-button">Create</button>
+                        </div>
+                    </div>
+
+                    <div class="disclaimer">
+                        <p>By creating this Game Keeper account, the Game Keeper will agree to TrashPet's <a href="{% url 'policy' %}">Privacy Notice</a>.</p>
+                    </div>
+                                            
+                </fieldset>  
+            </form>   
+        </div>
+        <script>
+            document.getElementById("id_username_helptext").innerHTML="<br><br>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+            document.getElementById("id_password2_helptext").innerHTML="<br><br>Enter the same password as before, for verification."
+        </script>
+
+    </body>
+</html>

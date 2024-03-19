@@ -121,7 +121,7 @@
     </div>
     
     <script src="{% static 'animate.js' %}"></script>
-    <script src="{% static 'home.js' %}"></script>
+    <script src="{% static 'home.js' %}?{% now 'U' %}"></script>
     <script>
       
       const items = JSON.parse('{{ accessories | escapejs }}');
