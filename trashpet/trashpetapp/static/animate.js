@@ -1,4 +1,4 @@
-// Initialize an object to keep track of added items
+// Initialise an object to keep track of added items
 const addedItems = {};
 
 function startBlinking() {
