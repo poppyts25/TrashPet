@@ -64,9 +64,10 @@
         display: flex;
         justify-content: right; 
         align-items: top; 
-        width: 100%; 
+        width: 50%; 
         flex-direction: row;
-        gap: 10px; 
+        gap: 5%; 
+        right:10px
       }
     </style>
 </head>
@@ -85,29 +86,19 @@
   </script>
 
   <div class="main-page-map">
-<<<<<<< HEAD
-
-  <!--leaves count for user to see-->
-  <div id="leavesCounterContainer">
-=======
-    <p style=" justify-content:left;" ><a id="Distance">temp distance</a></p>
-    <p style=" justify-content:right;padding-right:150px" id="leavesCounterContainer">
->>>>>>> 007b3a97842534c710f128fdfb3853ce36e201a4
+    <p style=" justify-content:left;" ><a id="Distance"></a></p>
+    <p style=" justify-content:right;padding-right:50px" id="leavesCounterContainer">
     <!--leaf icon-->
     <i class="fa-solid fa-leaf"></i>:
-    <div id = "leavesCounter">
+    <span id = "leavesCounter">
       <!--django reference-->
       {{leaves}}
-    </div>
-<<<<<<< HEAD
-  </div>
-
-    <p style="text-align:left;" ><a id="Distance">temp distance</a></p>
-=======
->>>>>>> 007b3a97842534c710f128fdfb3853ce36e201a4
-  <p style="text-align:left;" >
-    <a id="Time">temp time</a> 
-
+    </span>
+  </p>
+  
+  <p style="text-align:left; padding-top:50px;" >
+    <a id="Time"></a> 
+  </p>
     <span style="float:right;">
       <div class="button-container">
     <button  id="stop" class="action-button">Stop Tracking</button>
@@ -115,7 +106,7 @@
       </div>
         
     </span>
-</p>
+
   </div>
   <div id="map"></div>
   <script
@@ -125,12 +116,71 @@
                 .bindPopup("{{ marker.name }}");
     {% endfor %}
   ></script>
+  <script src="{% static 'jquery.min.js' %}"></script>
   <script>
     //script to update leaves count in database and on screen
     $(document).ready(function() {
-      $('#stop-start').click(function() {
+      function timeLeaves(){var currentLeaves = parseInt($('#leavesCounter').text().trim());
+ 
+//get cookie value
+function getCookie(name) {
+var cookieValue = null;
+
+//check cookie exists
+if (document.cookie && document.cookie !== '') {
+//split cookies into an array
+var cookies = document.cookie.split(';');
+
+//loop through each cookie and remove whitespace from string
+for (var i = 0; i < cookies.length; i++) {
+var cookie = cookies[i].trim();
+
+//check cookie matches name
+if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//get value of cookie
+cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+break;
+}
+}
+}
+//return cookie value
+return cookieValue;
+} 
+
+// Update the leaves value using AJAX
+$.ajax({
+// URL to Django view for updating leaves
+url: '{% url "update_map_leaves" %}',  
+method: 'POST',
+headers: { 'X-CSRFToken': getCookie('csrftoken')},
+// Increment the leaves value by 1
+data: {'new_leaves': currentLeaves + 1},  
+success: function(response) {
+// Update the leaves value displayed in the leavesCounter div
+$('#leavesCounter').text(response.new_leaves);
+//log success in console
+console.log('Leaves updated successfully.');
+console.log('leaves value: ', response.new_leaves);
+},
+error: function(xhr, status, error) {
+//error message if request fails
+console.error('Error updating leaves:', error);
+}
+});}
+
+
+      $('#start-stop').click(function() {
+        
+        if (document.getElementById("start-stop").innerText=="Start Walking") {
+          clearInterval(leavesInterval);
         // Get the current number of leaves from the div
         var currentLeaves = parseInt($('#leavesCounter').text().trim());
+                        // Get the distance travelled from the global variable
+                        var distance = window.distanceTravelled;
+
+                        // Calculate the number of leaves a person has earned
+                        var updateLeavesValues = Math.trunc(distance * 10);
+        
         //get cookie value
         function getCookie(name) {
           var cookieValue = null;
@@ -159,11 +209,11 @@
         // Update the leaves value using AJAX
         $.ajax({
           // URL to Django view for updating leaves
-          url: '{% url "update_leaves" %}',  
+          url: '{% url "update_map_leaves" %}',  
           method: 'POST',
           headers: { 'X-CSRFToken': getCookie('csrftoken')},
           // Increment the leaves value by 1
-          data: {'new_leaves': currentLeaves + 1},  
+          data: {'new_leaves': currentLeaves + updateLeavesValues},  
           success: function(response) {
             // Update the leaves value displayed in the leavesCounter div
             $('#leavesCounter').text(response.new_leaves);
@@ -176,6 +226,8 @@
             console.error('Error updating leaves:', error);
           }
         });
+      }
+      else{leavesInterval = setInterval(timeLeaves,60000);}
       });
     });
   </script>

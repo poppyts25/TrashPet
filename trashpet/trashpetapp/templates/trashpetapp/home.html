@@ -57,6 +57,13 @@
           left: 0;
         }
 
+        .ball {
+          width: 100%; 
+          height: 100%;
+          position: absolute;
+          bottom: 100;
+        }
+
         .action-button {
             margin: 10px 20px;
             display: inline-block;
@@ -106,7 +113,7 @@
     <div id="pet-container">
         <img src= '{% static "images/petbackground.png" %}'  class="pet-background" alt="pet">
         <img id="eyes" src='{% static "/images/closedeyes.png" %}'class="pet-eyes" alt="pet">
-        <img src = '{% static "/images/smile.png" %}' class="pet-smile" alt="pet">
+        <img id="mouth" src = '{% static "/images/smile.png" %}' class="pet-smile" alt="pet">
     </div>
     <div class="buttons-container">
         <button id="feed-button" class="action-button">Feed</button>
@@ -114,9 +121,6 @@
     </div>
     <script src="{% static 'animate.js' %}"></script>
     <script data-items="{{items}}" src="{% static 'home.js' %}"></script>
-
-
-   
     
   </div>
   
