@@ -122,7 +122,7 @@ document.getElementById("start-stop").addEventListener("click", function () {
         initialLang = initialLatLng.lng;
 
         //start timer 
-        document.getElementById("Time").innerHTML="You have been walking for <a id='mins'>0</a>minutes and <a id='seconds'>0</a> seconds";
+        document.getElementById("Time").innerHTML="You have been walking for <a id='mins'>0</a> minutes and <a id='seconds'>0</a> seconds";
         intervalId = setInterval(timer,1000);
      
     } else {
