@@ -92,7 +92,7 @@ def home(request):
 def shop(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
-    locked_list = profile.accessories
+    locked_list = profile.locked_list
     bought_list = profile.bought
 
     # Default bought list - for testing
@@ -115,6 +115,42 @@ def shop(request):
     accessories = Accessory.objects.all()
 
     return render(request, "trashpetapp/shop.html", {"accessories": accessories, "locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves})
+
+
+def save_accessories(request):
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    user_accessories = profile.accessories
+
+    try:
+        user_accessories = json.loads(user_accessories)
+    except:
+        user_accessories = {"":""}
+    
+    if request.method == 'POST':
+        user_accessories = {}
+        new_accessory_list = request.POST.get('accessories')
+        try:
+            new_accessory_list = json.loads(new_accessory_list)
+        except:
+            new_accessory_list = []
+        
+        accessories = Accessory.objects.all()
+
+        for accessory in accessories:
+            if "/static/images/"+accessory.link in new_accessory_list:
+                user_accessories[accessory.name] = True
+            else:
+                user_accessories[accessory.name] = False
+   
+
+        user_accessories = json.dumps(user_accessories)
+        print(user_accessories)
+
+        profile.accessories = user_accessories
+        profile.save()
+
+        return JsonResponse({"message": "Saved Successfully"})
 
 
 def buy_accessory(request):
