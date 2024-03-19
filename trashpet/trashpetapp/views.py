@@ -216,7 +216,21 @@ def garden(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     leaves = profile.leaves
-    data = {"leaves":leaves} #view that handles ajax request
+    accessories = Accessory.objects.all()
+    user_accessories = profile.accessories
+    try:
+        user_accessories = json.loads(user_accessories)
+    except:
+        user_accessories = {"":""}
+
+    items = []
+    for accessory in accessories:
+        if user_accessories[accessory.name]:
+            items.append('/static/images/'+accessory.link)
+
+    items = json.dumps(items)
+
+    data = {"leaves":leaves, "accessories": items} #view that handles ajax request
     return render(request, "trashpetapp/garden.html", data)
 
 def update_leaves(request):

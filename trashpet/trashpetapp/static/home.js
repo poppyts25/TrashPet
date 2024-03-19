@@ -97,12 +97,12 @@ function startEating() {
 }
 
 function applySavedItems() {
-  items.forEach((itemSrc, index) => {
+  items.forEach((item, index) => {
     const itemId = `item-${index}`;
     if (!document.getElementById(itemId)) {
       // Check to avoid duplicating the item
       const newItem = document.createElement("img");
-      newItem.src = itemSrc;
+      newItem.src = item;
       newItem.className = "pet-layered-item";
       newItem.id = itemId;
       document.getElementById("pet-container").appendChild(newItem);
