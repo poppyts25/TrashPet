@@ -1,3 +1,11 @@
+.main-page-garden{
+    width: 100vw; /* Set width to 100% of viewport width */
+    height: 100vh; /* Set height to 100% of viewport height */
+    /* Additional styling */
+    padding: 20px; /* Adjust padding as needed */
+    box-sizing: border-box; /* Include padding in width and height */
+}
+
 #plant-container{
     position: fixed;
     bottom: 0;
@@ -20,12 +28,11 @@
     display: flex;
 }
 
-#pet-container{
-    padding: 10px;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+#bin-button{
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    font-size: medium;
 }
 
 #leavesCounterContainer {
@@ -35,4 +42,13 @@
     background-color: #00ff2f;
     padding: 10px 20px;
     border-radius: 5px;
+    text-align: center;
+}
+
+.buttons-container{
+    position: fixed;
+    top: 10%;
+    left: 10px;
+    width: 50px;
+    height: 50px;
 }

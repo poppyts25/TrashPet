@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Virtual Pet</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}?{%now 'U'%}">
   <link rel="stylesheet" href="{% static 'garden.css' %}">
   <script src="https://kit.fontawesome.com/f32a47c063.js" crossorigin="anonymous"></script>
 
@@ -27,10 +27,12 @@
       margin-top: 50px;
     }
     #pet-container {
-      position: relative;
+      position: fixed;
       width: 200px;
       height: 200px;
       overflow: hidden;
+      bottom: 8%;
+      left: 0;
     }
 
     .pet-background,
@@ -69,10 +71,6 @@
   </script>
 
   <div class="main-page-garden">
-
-    <div class="text">
-      <h1>The Garden</h1>
-    </div>
     
     <!--container that the pet is displayed in-->
     <div id="pet-container">
@@ -83,9 +81,7 @@
 
     <!--container that holds buttons that user can interact with-->
     <div class="buttons-container">
-      <button id="feed-button">Feed</button>
-      <button id="play-button">Play</button>
-      <button id="bin-button">Bin <i class="fa-solid fa-trash-can"></i></button>
+      <button id="bin-button"><i class="fa-solid fa-droplet"></i></button>
     </div>
 
     <!--container that plant is stored in-->

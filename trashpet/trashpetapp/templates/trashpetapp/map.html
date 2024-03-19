@@ -13,7 +13,7 @@
       />
       <link
         rel="stylesheet"
-        href="{% static 'map.css' %}"
+        href="{% static 'map.css' %}?{% now 'U' %}"
       />
       <link
         rel="stylesheet"
@@ -32,7 +32,41 @@
     
     <style>
       .main-page-map {
+    
         padding-top: 100px;
+        height:300px;
+        background-color:  rgb(26,68,115);
+        background-image: linear-gradient(to right, purple,rgb(80,68,100), rgb(26,68,115));
+        
+      }
+      .action-button {
+        overflow:hidden;
+        margin: 10px 20px;
+        display: inline-block;
+        padding: 8px 20px;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        background: rgba(255, 118, 081, 0.5); /* Translucent white background */
+        border: 3px solid;
+        border-radius: 99px; 
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      p{
+        position:absolute;
+        width:100%;
+        display:flex;
+        color:white;
+      }
+      .button-container {
+        position:absolute;
+        padding-top: 20px;
+        display: flex;
+        justify-content: right; 
+        align-items: top; 
+        width: 100%; 
+        flex-direction: row;
+        gap: 10px; 
       }
     </style>
 </head>
@@ -51,17 +85,34 @@
   </script>
 
   <div class="main-page-map">
-    <p style="text-align:left;" ><a id="Distance">temp distance</a>
-      <span style="float:right;">
-      <i class="fa-solid fa-leaf"></i>{{leaves}} 
-      
-      </span>
-  </p>
+<<<<<<< HEAD
+
+  <!--leaves count for user to see-->
+  <div id="leavesCounterContainer">
+=======
+    <p style=" justify-content:left;" ><a id="Distance">temp distance</a></p>
+    <p style=" justify-content:right;padding-right:150px" id="leavesCounterContainer">
+>>>>>>> 007b3a97842534c710f128fdfb3853ce36e201a4
+    <!--leaf icon-->
+    <i class="fa-solid fa-leaf"></i>:
+    <div id = "leavesCounter">
+      <!--django reference-->
+      {{leaves}}
+    </div>
+<<<<<<< HEAD
+  </div>
+
+    <p style="text-align:left;" ><a id="Distance">temp distance</a></p>
+=======
+>>>>>>> 007b3a97842534c710f128fdfb3853ce36e201a4
   <p style="text-align:left;" >
     <a id="Time">temp time</a> 
 
     <span style="float:right;">
-  <button type="button" id="start-stop">Start Walking</button>
+      <div class="button-container">
+    <button  id="stop" class="action-button">Stop Tracking</button>
+  <button  id="start-stop" class="action-button">Start Walking</button>
+      </div>
         
     </span>
 </p>
@@ -74,6 +125,60 @@
                 .bindPopup("{{ marker.name }}");
     {% endfor %}
   ></script>
+  <script>
+    //script to update leaves count in database and on screen
+    $(document).ready(function() {
+      $('#stop-start').click(function() {
+        // Get the current number of leaves from the div
+        var currentLeaves = parseInt($('#leavesCounter').text().trim());
+        //get cookie value
+        function getCookie(name) {
+          var cookieValue = null;
+
+          //check cookie exists
+          if (document.cookie && document.cookie !== '') {
+            //split cookies into an array
+            var cookies = document.cookie.split(';');
+
+            //loop through each cookie and remove whitespace from string
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+
+                //check cookie matches name
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                //get value of cookie
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          //return cookie value
+          return cookieValue;
+        } 
+
+        // Update the leaves value using AJAX
+        $.ajax({
+          // URL to Django view for updating leaves
+          url: '{% url "update_leaves" %}',  
+          method: 'POST',
+          headers: { 'X-CSRFToken': getCookie('csrftoken')},
+          // Increment the leaves value by 1
+          data: {'new_leaves': currentLeaves + 1},  
+          success: function(response) {
+            // Update the leaves value displayed in the leavesCounter div
+            $('#leavesCounter').text(response.new_leaves);
+            //log success in console
+            console.log('Leaves updated successfully.');
+            console.log('leaves value: ', response.new_leaves);
+          },
+          error: function(xhr, status, error) {
+            //error message if request fails
+            console.error('Error updating leaves:', error);
+          }
+        });
+      });
+    });
+  </script>
    
 
 </body>

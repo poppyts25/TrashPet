@@ -160,7 +160,10 @@ def buy_accessory(request):
 
 @login_required
 def map(request):
-    return render(request, "trashpetapp/map.html")
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    leaves = profile.leaves
+    return render(request, "trashpetapp/map.html", {'leaves': leaves})
 
 @login_required
 def garden(request):
@@ -281,7 +284,21 @@ def user_signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            UserProfile.objects.create(user=user)
+            profile = UserProfile.objects.create(user=user)
+            accessories = Accessory.objects.all()
+            locked_list = {}
+            bought_list = {}
+
+            # Set all items to unbought and locked items to locked
+            for accessory in accessories:
+                accessory_name = accessory.name
+                locked_list[accessory_name] = accessory.locked
+                bought_list[accessory_name] = False
+
+            profile.accessories = json.dumps(locked_list) 
+            profile.bought = json.dumps(bought_list) 
+            profile.save()
+
             return redirect('login')
     else:
         form = UserCreationForm()
