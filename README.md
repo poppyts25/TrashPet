@@ -16,6 +16,16 @@ Basic page functionality
 <li>Shop to customize the pet
 <li>Can change colour of pet and add accessories
 </ul>
+<h3> Requirements:</h3>
+<ul>
+  <li> All external requirements are listed in the requirements.txt file</li>
+  <li>The full directory of this file is:
+  <ul><li>TrashPet\trashpet\requirements.txt</li></ul>
+  </li>
+  <li>pip install -r requirements.txt</li>
+  <li>This system is made using python 3.10.11</li>
+  <li> The maping system does not run on newer versions of python but does work on previous versions</li>
+</ul>
 <h3> Links:</h3>
 <ul>
 <li>GitHub: https://github.com/poppyts25/TrashPet
