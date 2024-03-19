@@ -116,7 +116,11 @@
                         <div class="login-inputs">
                             {{ form.as_p }}
                         </div>
-                        
+
+                        <!-- Display error for incorrect user/password -->
+                        {% if error_message %}
+                            {{ error_message }}
+                        {% endif %}
 
                         <div class="login-buttons">
                             <button type="submit" class="login login-button">Login</button>

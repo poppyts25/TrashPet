@@ -89,18 +89,13 @@ def shop(request):
     locked_list = profile.accessories
     bought_list = profile.bought
 
-    # Default bought list - for testing
-    '''bought_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":False }
-    profile.bought = json.dumps(bought_list) 
-    profile.save()'''
-
-    #loads unlocked accessories
+    # Loads unlocked accessories
     try:
         locked_list = json.loads(locked_list)
     except:
         locked_list = {"":""}
 
-    #loads bought accessories
+    # Loads bought accessories
     try:
         bought_list = json.loads(bought_list)
     except:
@@ -116,7 +111,8 @@ def buy_accessory(request):
     profile = UserProfile.objects.get(user=user)
     leaves = profile.leaves
     bought_list = profile.bought
-    #loads bought accessories
+    
+    # Loads bought accessories
     try:
         bought_list = json.loads(bought_list)
     except:
@@ -130,7 +126,7 @@ def buy_accessory(request):
         profile.leaves=new_leaves
         profile.save()
 
-        #checks accessories and if they match sets that accessory to "bought"
+        # Checks accessories and if they match sets that accessory to "bought"
         accessories = Accessory.objects.all()
         accessory_name = request.POST.get('accessory_name')
 
@@ -148,9 +144,6 @@ def buy_accessory(request):
         # Handle other HTTP methods if necessary
         return render(request, 'trashpetapp/shop.html', {'leaves': 0})
     
-
-
-
 
 @login_required
 def map(request):
@@ -256,6 +249,7 @@ def profile(request):
             # Check if the delete button was clicked
             if not user.is_superuser:
                 user.delete()
+                profile.delete()
             return redirect('login')
         
         else:
@@ -309,6 +303,10 @@ def user_login(request):
             if user:
                 login(request, user)    
                 return redirect('home')
+            else:
+                # Add an error message to template if incorrect user/password
+                return render(request, 'trashpetapp/login.html', {'form': form, 'error_message': 'Invalid username or password.'})
+
     else:
         form = LoginForm()
     return render(request, 'trashpetapp/login.html', {'form': form})
