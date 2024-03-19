@@ -20,12 +20,8 @@
     display: flex;
 }
 
-#pet-container{
-    padding: 10px;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+#bin-button{
+    border-radius: 50%;
 }
 
 #leavesCounterContainer {
@@ -35,4 +31,11 @@
     background-color: #00ff2f;
     padding: 10px 20px;
     border-radius: 5px;
+}
+
+.buttons-container{
+    position: fixed;
+    top: 10%;
+    left: 10px;
+    padding:0px;
 }
