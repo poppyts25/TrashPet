@@ -23,3 +23,4 @@ urlpatterns = [
     path("policy/", views.policy, name="policy"),
     path("gamemaker/", views.gamemaker, name="gamemaker"),
 ]
+

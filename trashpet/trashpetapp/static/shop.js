@@ -35,8 +35,7 @@ function loadItemStates() {
       newItem.src = item.getAttribute("src");
       newItem.className = "pet-layered-item";
       newItem.id = itemId;
-      var name = item.getAttribute("data-name");
-      newItem.setAttribute("data-name", name);
+
       document.getElementById("pet-container").appendChild(newItem);
       item.style.outline = "2px solid green"; // Visual cue for selected item
     } else {
