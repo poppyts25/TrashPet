@@ -33,8 +33,10 @@ def gamemaker(request):
                 item_type = form.cleaned_data['item_type']
                 item_code = form.cleaned_data['item_code']
                 item_price = form.cleaned_data['item_price']
-                item_link = form.cleaned_data['item_link']
-                Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link)
+                image = form.cleaned_data['image']
+                item_link = image.path
+
+                Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link, image=image)
 
                 for user in UserProfile.objects.all():
                     locked_list = user.accessories
@@ -52,6 +54,8 @@ def gamemaker(request):
                     
                     locked_list[item_name] = True
                     bought_list[item_name] = True
+
+                return redirect("shop")
         else:
             form = GamemakerForm()
         if 'leavescode_form' in request.POST:  
@@ -60,6 +64,8 @@ def gamemaker(request):
                 code = form2.cleaned_data['code']
                 leaves = form2.cleaned_data['leaves']
                 LeavesCode.objects.create(name=code, leaves=leaves)
+            return redirect("shop")
+        
         else:
             form2 = LeavesCodeForm()
 
