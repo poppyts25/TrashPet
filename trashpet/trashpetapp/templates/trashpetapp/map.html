@@ -52,7 +52,7 @@
 
   <div class="main-page-map">
     <p style="text-align:left;" ><a id="Distance">temp distance</a>
-      <span style="float:right;">
+      <span style="float:right;" id ="leavesCounter">
       <i class="fa-solid fa-leaf"></i>:
       
         {{leaves}} a number
@@ -63,6 +63,7 @@
     <a id="Time">temp time</a> 
 
     <span style="float:right;">
+    <button type="button" id="stop">Stop Tracking</button>
   <button type="button" id="start-stop">Start Walking</button>
         
     </span>
@@ -76,6 +77,60 @@
                 .bindPopup("{{ marker.name }}");
     {% endfor %}
   ></script>
+  <script>
+    //script to update leaves count in database and on screen
+    $(document).ready(function() {
+      $('#stop-start').click(function() {
+        // Get the current number of leaves from the div
+        var currentLeaves = parseInt($('#leavesCounter').text().trim());
+        //get cookie value
+        function getCookie(name) {
+          var cookieValue = null;
+
+          //check cookie exists
+          if (document.cookie && document.cookie !== '') {
+            //split cookies into an array
+            var cookies = document.cookie.split(';');
+
+            //loop through each cookie and remove whitespace from string
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+
+                //check cookie matches name
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                //get value of cookie
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          //return cookie value
+          return cookieValue;
+        } 
+
+        // Update the leaves value using AJAX
+        $.ajax({
+          // URL to Django view for updating leaves
+          url: '{% url "update_leaves" %}',  
+          method: 'POST',
+          headers: { 'X-CSRFToken': getCookie('csrftoken')},
+          // Increment the leaves value by 1
+          data: {'new_leaves': currentLeaves + 1},  
+          success: function(response) {
+            // Update the leaves value displayed in the leavesCounter div
+            $('#leavesCounter').text(response.new_leaves);
+            //log success in console
+            console.log('Leaves updated successfully.');
+            console.log('leaves value: ', response.new_leaves);
+          },
+          error: function(xhr, status, error) {
+            //error message if request fails
+            console.error('Error updating leaves:', error);
+          }
+        });
+      });
+    });
+  </script>
    
 
 </body>

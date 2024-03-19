@@ -81,7 +81,7 @@ function updateUserLocation() {
 //initial function call
 updateUserLocation();
 // Call updateUserLocation() every 10 seconds
-setInterval(updateUserLocation, 10000);
+var locationInterval=setInterval(updateUserLocation, 10000);
 
 var initialLat;
 var initialLang;
@@ -105,6 +105,14 @@ function timer() {
 
 }
 var intervalId
+document.getElementById("stop").addEventListener("click", function () {
+    clearInterval(locationInterval);
+    document.getElementById("stop").style.display="none";
+    document.getElementById("start-stop").style.display="none";
+    map.removeLayer(userLocation);
+
+
+})
 document.getElementById("start-stop").addEventListener("click", function () {
     var startStop = document.getElementById("start-stop");
     if (startStop.innerText=="Start Walking") {
