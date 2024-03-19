@@ -119,8 +119,14 @@
         <button id="feed-button" class="action-button">Feed</button>
         <button id="play-button" class="action-button">Play</button>
     </div>
+    
     <script src="{% static 'animate.js' %}"></script>
-    <script data-items="{{items}}" src="{% static 'home.js' %}"></script>
+    <script src="{% static 'home.js' %}"></script>
+    <script>
+      
+      const items = JSON.parse('{{ accessories | escapejs }}');
+    </script>
+    
     
   </div>
   

@@ -83,10 +83,20 @@ def home(request):
     petname = profile.pet_name
     #list of item links
     accessories = Accessory.objects.all()
+    user_accessories = profile.accessories
+    try:
+        user_accessories = json.loads(user_accessories)
+    except:
+        user_accessories = {"":""}
+
     items = []
     for accessory in accessories:
-        items.append(accessory.link)
-    return render(request, "trashpetapp/home.html", {"petname": petname, "items":items})
+        if user_accessories[accessory.name]:
+            items.append('/static/images/'+accessory.link)
+
+    items = json.dumps(items)
+    
+    return render(request, "trashpetapp/home.html", {"petname": petname, "accessories":items})
 
 @login_required
 def shop(request):

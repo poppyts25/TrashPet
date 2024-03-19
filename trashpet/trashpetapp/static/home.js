@@ -97,20 +97,17 @@ function startEating() {
 }
 
 function applySavedItems() {
-  const items = home.attr("data-items");
   items.forEach((itemSrc, index) => {
     const itemId = `item-${index}`;
-    if (localStorage.getItem(itemId)) {
-      // Item was previously added, recreate it on the pet
-      if (!document.getElementById(itemId)) {
-        // Check to avoid duplicating the item
-        const newItem = document.createElement("img");
-        newItem.src = itemSrc;
-        newItem.className = "pet-layered-item";
-        newItem.id = itemId;
-        document.getElementById("pet-container").appendChild(newItem);
-      }
+    if (!document.getElementById(itemId)) {
+      // Check to avoid duplicating the item
+      const newItem = document.createElement("img");
+      newItem.src = itemSrc;
+      newItem.className = "pet-layered-item";
+      newItem.id = itemId;
+      document.getElementById("pet-container").appendChild(newItem);
     }
+    
   });
 
   const savedBackgroundImage = localStorage.getItem("petBackgroundImage");
