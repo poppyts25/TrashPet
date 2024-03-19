@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Item is being added
         const newItem = document.createElement("img");
         newItem.src = item.getAttribute("src");
+        newItem.data = item.getAttribute("alt")
         newItem.className = "pet-layered-item";
         newItem.id = itemId;
         document.getElementById("pet-container").appendChild(newItem);
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         // Item is being removed
         document.getElementById(itemId).remove();
-        // Update the item state as removed
+        // Update the item state as removeds
         localStorage.removeItem(itemId);
         item.style.outline = "2px solid red"; // Visual cue for deselected item
       }
@@ -34,6 +35,8 @@ function loadItemStates() {
       newItem.src = item.getAttribute("src");
       newItem.className = "pet-layered-item";
       newItem.id = itemId;
+      var name = item.getAttribute("data-name");
+      newItem.setAttribute("data-name", name);
       document.getElementById("pet-container").appendChild(newItem);
       item.style.outline = "2px solid green"; // Visual cue for selected item
     } else {

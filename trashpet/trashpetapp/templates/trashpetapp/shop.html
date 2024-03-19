@@ -68,12 +68,12 @@
               <div class="accessory">
                 <i class="fa-solid fa-lock {% if not locked_list|keyvalue:accessory.name %}d-none{% endif %}" style="color: #FFD43B;"></i>
                 <i accessory-price="{{ accessory.price }}" accessory-name="{{ accessory.name }}" class="fa-solid fa-dollar-sign {% if bought_list|keyvalue:accessory.name or locked_list|keyvalue:accessory.name %}d-none{% endif %}" style="color: #FFD43B;"></i>
-                <img src='{% static "/images/" %}{{ accessory.link }}' alt="{{ accessory.name }}" class="shop-item">
+                <img src='{% static "/images/" %}{{ accessory.link }}' alt="{{ accessory.name }}" data-name="{{accessory.name}}" class="shop-item">
               </div>
 
             {% endfor %}
 
-        </div>s
+        </div>
     </div>
 
     <!-- Change pet's colour -->
@@ -92,6 +92,8 @@
     <button id="code-page-button" class="menu-toggle-button" onclick="goToCodes()"><i class="fa-solid fa-key"></i></button>
   </div>
 
+  <button onclick="saveAccessories()">Save</button>
+
   <script src="https://kit.fontawesome.com/f32a47c063.js" crossorigin="anonymous"></script>
   <script src="{% static 'shop.js' %}"></script>
   <script src="{% static 'animate.js' %}"></script>
@@ -104,6 +106,62 @@
 
     // Get the user's current number of leaves
     var userLeaves = {{ leaves }};
+
+    function getCookie(name) {
+          var cookieValue = null;
+
+          // Check cookie exists
+          if (document.cookie && document.cookie !== '') {
+            // Split cookies into an array
+            var cookies = document.cookie.split(';');
+
+            // Loop through each cookie and remove whitespace from string
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+
+                // Check cookie matches name
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                // Get value of cookie
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          // Return cookie value
+          return cookieValue;
+        } 
+
+    //Add chosen accessories to user profile
+    function saveAccessories(){
+      const accessories = []
+      document.querySelectorAll(".pet-layered-item").forEach((item, index) => {
+        accessories[index] = item.getAttribute("src");
+
+      });
+      
+
+      $.ajax({
+              // URL to Django view
+              url: '{% url "save_accessories" %}',  
+              method: 'POST',
+              headers: { 'X-CSRFToken': getCookie('csrftoken')},
+              
+              data: {'accessories': JSON.stringify(accessories)},  
+              success: function(response) {
+                console.log('Accessories saved successfully.');
+                
+              },
+              error: function(xhr, status, error) {
+                //error message if request fails
+                console.error('Error saving accessories:', error);
+              }
+            });
+
+  
+  
+  };
+      
+        
 
     // Script to buy accessories and update database
     $(document).ready(function() {
