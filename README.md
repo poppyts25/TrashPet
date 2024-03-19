@@ -22,6 +22,7 @@ Basic page functionality
   <li>The full directory of this file is:
   <ul><li>TrashPet\trashpet\requirements.txt</li></ul>
   </li>
+  <li>You should enter the venv before installing requirements</li>
   <li>pip install -r requirements.txt</li>
   <li>This system is made using python 3.10.11</li>
   <li> The maping system does not run on newer versions of python but does work on previous versions</li>
