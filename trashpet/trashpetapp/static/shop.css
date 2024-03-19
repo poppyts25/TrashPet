@@ -55,6 +55,7 @@ button {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+    flex-wrap: wrap;
 }
 
 .accessory {
@@ -159,3 +160,13 @@ button {
     overflow-y: hidden;
     white-space: nowrap;
 }
+
+#leavesCounterContainer {
+    position: fixed;
+    top: 10%;
+    right: 10px;
+    background-color: #00ff2f;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+  }

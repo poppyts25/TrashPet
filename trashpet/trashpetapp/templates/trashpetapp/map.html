@@ -86,14 +86,14 @@
 
   <div class="main-page-map">
     <p style=" justify-content:left;" ><a id="Distance">temp distance</a></p>
-    <p style=" justify-content:right;padding-right:150px" id ="leavesCounter">
-      <i class="fa-solid fa-leaf"></i>:
-      
-        {{leaves}} a number
-      
-      </span>
-  </p>
-  <p style="text-align:left;padding-top:50px" >
+    <p style=" justify-content:right;padding-right:150px" id="leavesCounterContainer">
+    <!--leaf icon-->
+    <i class="fa-solid fa-leaf"></i>:
+    <div id = "leavesCounter">
+      <!--django reference-->
+      {{leaves}}
+    </div>
+  <p style="text-align:left;" >
     <a id="Time">temp time</a> 
 
     <span style="float:right;">
