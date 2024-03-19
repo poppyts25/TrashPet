@@ -75,7 +75,12 @@ def home(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     petname = profile.pet_name
-    return render(request, "trashpetapp/home.html", {"petname": petname})
+    #list of item links
+    accessories = Accessory.objects.all()
+    items = []
+    for accessory in accessories:
+        items.append(accessory.link)
+    return render(request, "trashpetapp/home.html", {"petname": petname, "items":items})
 
 @login_required
 def shop(request):
@@ -302,7 +307,3 @@ def policy(request):
     return render(request, "trashpetapp/policy.html")
 
 
-
-# def map_view(request):
-#     markers = Marker.objects.all()
-#     return render(request, 'map.html', {'markers': markers})

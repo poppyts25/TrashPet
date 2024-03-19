@@ -39,27 +39,22 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
 function applySavedItems() {
-    const items = [
-      "/static/images/socks.png",
-      "/static/images/bottle.png",
-      "/static/images/crown.png",
-      "/static/images/cap.png",
-      "/static/images/guitar.png",
-    ];
-    items.forEach((itemSrc, index) => {
-      const itemId = `item-${index}`;
-      if (localStorage.getItem(itemId)) {
-        // Item was previously added, recreate it on the pet
-        if (!document.getElementById(itemId)) {
-          // Check to avoid duplicating the item
-          const newItem = document.createElement("img");
-          newItem.src = itemSrc;
-          newItem.className = "pet-layered-item";
-          newItem.id = itemId;
-          document.getElementById("pet-container").appendChild(newItem);
-        }
+
+  const items = home.attr('data-items')
+  items.forEach((itemSrc, index) => {
+    const itemId = `item-${index}`;
+    if (localStorage.getItem(itemId)) {
+      // Item was previously added, recreate it on the pet
+      if (!document.getElementById(itemId)) {
+        // Check to avoid duplicating the item
+        const newItem = document.createElement("img");
+        newItem.src = itemSrc;
+        newItem.className = "pet-layered-item";
+        newItem.id = itemId;
+        document.getElementById("pet-container").appendChild(newItem);
       }
-    });
+    }
+  });
   
     const savedBackgroundImage = localStorage.getItem("petBackgroundImage");
     if (savedBackgroundImage) {
