@@ -40,6 +40,17 @@
   <!-- display pet -->
 
   <div class="main-page-shop">
+
+    <!--leaves count for user to see-->
+    <div id="leavesCounterContainer">
+      <!--leaf icon-->
+      <i class="fa-solid fa-leaf"></i>:
+      <div id = "leavesCounter">
+        <!--django reference-->
+        {{leaves}}
+      </div>
+    </div>
+
     <div id="pet-container">
         <img src= '{% static "images/petbackground.png" %}'  class="pet-background" alt="pet">
         <img id="eyes" src='{% static "/images/closedeyes.png" %}'class="pet-eyes" alt="pet">

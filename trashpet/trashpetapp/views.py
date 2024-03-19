@@ -154,7 +154,10 @@ def buy_accessory(request):
 
 @login_required
 def map(request):
-    return render(request, "trashpetapp/map.html")
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    leaves = profile.leaves
+    return render(request, "trashpetapp/map.html", {'leaves': leaves})
 
 @login_required
 def garden(request):

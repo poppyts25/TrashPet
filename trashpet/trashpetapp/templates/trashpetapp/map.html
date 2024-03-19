@@ -51,12 +51,18 @@
   </script>
 
   <div class="main-page-map">
-    <p style="text-align:left;" ><a id="Distance">temp distance</a>
-      <span style="float:right;">
-      <i class="fa-solid fa-leaf"></i>{{leaves}} 
-      
-      </span>
-  </p>
+
+  <!--leaves count for user to see-->
+  <div id="leavesCounterContainer">
+    <!--leaf icon-->
+    <i class="fa-solid fa-leaf"></i>:
+    <div id = "leavesCounter">
+      <!--django reference-->
+      {{leaves}}
+    </div>
+  </div>
+
+    <p style="text-align:left;" ><a id="Distance">temp distance</a></p>
   <p style="text-align:left;" >
     <a id="Time">temp time</a> 
 
