@@ -406,3 +406,33 @@ def policy(request):
     return render(request, "trashpetapp/policy.html")
 
 
+#game keeper creator from admin
+@login_required
+def gkcreator(request): 
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            profile = UserProfile.objects.create(user=user)
+            accessories = Accessory.objects.all()
+            locked_list = {}
+            bought_list = {}
+
+            # Set all items to unbought and locked items to locked
+            for accessory in accessories:
+                accessory_name = accessory.name
+                locked_list[accessory_name] = accessory.locked
+                bought_list[accessory_name] = False
+
+            profile.accessories = json.dumps(locked_list) 
+            profile.bought = json.dumps(bought_list) #
+
+            #Need to add it so that they have the game keeper permissions   <----------
+
+            profile.save()
+
+            #already logged in so redirect to profile to signify that they created an account   <----------
+            return redirect('profile')
+    else:
+        form = UserCreationForm()
+    return render(request, 'trashpetapp/gkcreator.html', {'form': form})

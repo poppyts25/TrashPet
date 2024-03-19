@@ -22,5 +22,6 @@ urlpatterns = [
     path('update_leaves/', views.update_leaves, name='update_leaves'),
     path("policy/", views.policy, name="policy"),
     path("gamemaker/", views.gamemaker, name="gamemaker"),
+    path("gkcreator/", views.gkcreator, name="gkcreator"),
 ]
 
