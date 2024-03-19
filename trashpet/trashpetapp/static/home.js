@@ -39,13 +39,8 @@ function startEating() {
 }
 
 function applySavedItems() {
-  const items = [
-    "/static/images/socks.png",
-    "/static/images/bottle.png",
-    "/static/images/crown.png",
-    "/static/images/cap.png",
-    "/static/images/guitar.png",
-  ];
+
+  const items = home.attr('data-items')
   items.forEach((itemSrc, index) => {
     const itemId = `item-${index}`;
     if (localStorage.getItem(itemId)) {
