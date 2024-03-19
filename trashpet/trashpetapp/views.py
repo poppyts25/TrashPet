@@ -10,7 +10,7 @@ import json
 
 
 
-def map_view(request):
+def map(request):
     markers = Marker.objects.all()
     user = request.user
     profile = UserProfile.objects.get(user=user)
@@ -303,6 +303,6 @@ def policy(request):
 
 
 
-def map_view(request):
-    markers = Marker.objects.all()
-    return render(request, 'map.html', {'markers': markers})
+# def map_view(request):
+#     markers = Marker.objects.all()
+#     return render(request, 'map.html', {'markers': markers})
