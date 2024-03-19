@@ -13,7 +13,7 @@
       />
       <link
         rel="stylesheet"
-        href="{% static 'map.css' %}"
+        href="{% static 'map.css' %}?{% now 'U' %}"
       />
       <link
         rel="stylesheet"
@@ -32,7 +32,41 @@
     
     <style>
       .main-page-map {
+    
         padding-top: 100px;
+        height:300px;
+        background-color:  rgb(26,68,115);
+        background-image: linear-gradient(to right, purple,rgb(80,68,100), rgb(26,68,115));
+        
+      }
+      .action-button {
+        overflow:hidden;
+        margin: 10px 20px;
+        display: inline-block;
+        padding: 8px 20px;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        background: rgba(255, 118, 081, 0.5); /* Translucent white background */
+        border: 3px solid;
+        border-radius: 99px; 
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      p{
+        position:absolute;
+        width:100%;
+        display:flex;
+        color:white;
+      }
+      .button-container {
+        position:absolute;
+        padding-top: 20px;
+        display: flex;
+        justify-content: right; 
+        align-items: top; 
+        width: 100%; 
+        flex-direction: row;
+        gap: 10px; 
       }
     </style>
 </head>
@@ -51,20 +85,22 @@
   </script>
 
   <div class="main-page-map">
-    <p style="text-align:left;" ><a id="Distance">temp distance</a>
-      <span style="float:right;" id ="leavesCounter">
+    <p style=" justify-content:left;" ><a id="Distance">temp distance</a></p>
+    <p style=" justify-content:right;padding-right:150px" id ="leavesCounter">
       <i class="fa-solid fa-leaf"></i>:
       
         {{leaves}} a number
       
       </span>
   </p>
-  <p style="text-align:left;" >
+  <p style="text-align:left;padding-top:50px" >
     <a id="Time">temp time</a> 
 
     <span style="float:right;">
+      <div class="button-container">
     <button  id="stop" class="action-button">Stop Tracking</button>
   <button  id="start-stop" class="action-button">Start Walking</button>
+      </div>
         
     </span>
 </p>

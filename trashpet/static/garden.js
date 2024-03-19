@@ -22,16 +22,6 @@ document.getElementById("bin-button").addEventListener("click",function (){
     currentIndex = currentIndex + 1;
 });
 
-//alert placeholder for feed button
-document.getElementById("feed-button").addEventListener("click", function () {
-    alert("Yum! Thanks for feeding me.");
-});
-  
-//alert placeholder for play buttin
-document.getElementById("play-button").addEventListener("click", function () {
-    alert("Yay! Playing is fun.");
-});
-
 //when page loads, run applySavedItems function
 document.addEventListener("DOMContentLoaded", function () {
     applySavedItems();
