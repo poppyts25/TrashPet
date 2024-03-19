@@ -148,4 +148,4 @@ if platform.system() == 'Windows':
     import os
     os.environ['PATH'] = os.path.join(BASE_DIR, r'venv\\Lib\\site-packages\\osgeo') + ';' + os.environ['PATH']
     os.environ['PROJ_LIB'] = os.path.join(BASE_DIR, r'env3\\Lib\site-packages\\osgeo\\data\\proj') + ';' + os.environ['PATH']
-    GDAL_LIBRARY_PATH = os.path.join(BASE_DIR, r'venv\\lib\\site-packages\\osgeo\\gdal.dll')
+    GDAL_LIBRARY_PATH = os.path.join(BASE_DIR, r'venv\\lib\\site-packages\\osgeo\\gdal304.dll')
