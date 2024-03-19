@@ -307,7 +307,3 @@ def policy(request):
     return render(request, "trashpetapp/policy.html")
 
 
-
-def map(request):
-    markers = Marker.objects.all()
-    return render(request, 'trashpetapp/map.html', {'markers': markers})
