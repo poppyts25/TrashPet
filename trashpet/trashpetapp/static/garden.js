@@ -42,8 +42,6 @@ function applySavedItems() {
     
   });
   
-    const savedBackgroundImage = localStorage.getItem("petBackgroundImage");
-    if (savedBackgroundImage) {
-      document.querySelector(".pet-background").src = savedBackgroundImage;
-    }
+  document.querySelector(".pet-background").src = pet_colour;
+    
 }

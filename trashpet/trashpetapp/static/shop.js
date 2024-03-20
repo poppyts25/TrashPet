@@ -13,14 +13,10 @@ document.addEventListener("DOMContentLoaded", function () {
         newItem.className = "pet-layered-item";
         newItem.id = itemId;
         document.getElementById("pet-container").appendChild(newItem);
-        // Save the item state as added
-        //localStorage.setItem(itemId, "added");
         item.style.outline = "2px solid green"; // Visual cue for selected item
       } else {
         // Item is being removed
         document.getElementById(itemId).remove();
-        // Update the item state as removeds
-       //localStorage.removeItem(itemId);
         item.style.outline = "2px solid red"; // Visual cue for deselected item
       }
     });
@@ -30,23 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
 function loadItemStates() {
   document.querySelectorAll(".shop-item").forEach((item, index) => {
     var itemName = item.getAttribute("src").replace("/static/images/", "").replace(".png","");
+    alert(itemName);
     if (equipped_list[itemName]) {
-      // Item was previously added, so recreate it in the pet-container
-      //const newItem = document.createElement("img");
-      //newItem.src = item.getAttribute("src");
-      //newItem.className = "pet-layered-item";
-      //newItem.id = itemId;
-      //document.getElementById("pet-container").appendChild(newItem);
       item.style.outline = "2px solid green"; // Visual cue for selected item
     } else {
       item.style.outline = "2px solid red"; // Visual cue for deselected item
     }
   });
-  const savedBackgroundImage = localStorage.getItem("petBackgroundImage");
-  console.log("Saved Background Image:", savedBackgroundImage);
-  if (savedBackgroundImage) {
-    document.querySelector(".pet-background").src = savedBackgroundImage;
-  }
 }
 
 function applySavedItems() {
@@ -63,10 +49,8 @@ function applySavedItems() {
     
   });
 
-  const savedBackgroundImage = localStorage.getItem("petBackgroundImage");
-  if (savedBackgroundImage) {
-    document.querySelector(".pet-background").src = savedBackgroundImage;
-  }
+  document.querySelector(".pet-background").src = pet_colour;
+  
 }
 
 
@@ -89,6 +73,7 @@ document.querySelectorAll(".color-option").forEach(function (option) {
     const imagePath = option.getAttribute("data-path");
     console.log("background:", imagePath);
     document.querySelector(".pet-background").src = imagePath;
-    localStorage.setItem("petBackgroundImage", imagePath);
+    pet_colour = imagePath;
   });
 });
+
