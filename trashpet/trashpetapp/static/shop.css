@@ -25,7 +25,7 @@ body {
     cursor: pointer;
     object-fit: contain;
     border-radius: 10px;
-    
+
 }
 
 
@@ -47,7 +47,7 @@ button {
 }
 
 #item-reel {
-    background-color: rgba(0,0,0,.5);
+    background-color: rgba(0, 0, 0, .5);
     outline-color: black;
     outline-style: ridge;
     border-radius: 10px;
@@ -64,19 +64,22 @@ button {
     position: relative;
 }
 
-.fa-lock, .fa-dollar-sign {
+.fa-lock,
+.fa-dollar-sign {
     position: absolute;
     padding: 60px;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); /* Center lock */
-    font-size: 50px; 
-    color: #FFD43B; 
-    z-index: 1; /* Ensure lock is on top */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Center lock */
+    font-size: 50px;
+    color: #FFD43B;
+    z-index: 1;
+    /* Ensure lock is on top */
 }
 
 .hidden {
-    display: none; 
+    display: none;
 }
 
 .pet-layered-item {
@@ -111,47 +114,53 @@ button {
     display: inline-block;
     /* Align side by side */
     margin: 20px;
-    /* Spacing */    
+    /* Spacing */
 
     transition: 0.4s;
 }
 
-.color-option:hover{
+.color-option:hover {
     border: 1px solid black;
 }
 
-#code-page-button{
+#code-page-button {
     transition: 0.4s;
-    padding: 0px; /*vertically align*/
+    padding: 0px;
+    /*vertically align*/
 }
-#code-page-button:hover{
+
+#code-page-button:hover {
     background-color: rgb(255, 212, 59);
     border-color: black;
     box-shadow: 2px 2px 3px;
 }
 
-#item-menu-button{
+#item-menu-button {
     transition: 0.4s;
-    padding: 0px; /*vertically align*/
+    padding: 0px;
+    /*vertically align*/
 }
-#item-menu-button:hover{
+
+#item-menu-button:hover {
     background-color: rgb(111, 198, 252);
     border-color: black;
     box-shadow: 2px 2px 3px;
 }
 
-#color-menu-button{
+#color-menu-button {
     transition: 0.4s;
-    padding: 0px; /*vertically align*/
+    padding: 0px;
+    /*vertically align*/
 }
-#color-menu-button:hover{
+
+#color-menu-button:hover {
     background-color: rgb(252, 146, 224);
     border-color: black;
     box-shadow: 2px 2px 3px;
 }
 
-#color-menu{
-    background-color: rgba(0,0,0,.5);
+#color-menu {
+    background-color: rgba(0, 0, 0, .5);
     outline-color: black;
     outline-style: ridge;
     border-radius: 10px;
@@ -171,4 +180,4 @@ button {
     padding: 10px 20px;
     border-radius: 5px;
     text-align: center;
-  }
+}
