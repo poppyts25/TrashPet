@@ -100,6 +100,11 @@
   <script src="{% static 'jquery.min.js' %}"></script>
 
   <script>
+    const items = JSON.parse('{{ items | escapejs }}');
+    equipped_list = JSON.parse('{{ equipped_list | escapejs }}') 
+  </script>
+
+  <script>
     function goToCodes(){
       window.location.href=("{%url 'codes' %}")
     }

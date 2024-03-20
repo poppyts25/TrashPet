@@ -25,8 +25,10 @@ body {
     cursor: pointer;
     object-fit: contain;
     border-radius: 10px;
-    outline: 2px solid red;
+    
 }
+
+
 
 .pet-background,
 .pet-eyes,

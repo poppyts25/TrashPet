@@ -123,8 +123,21 @@ def shop(request):
         bought_list = {"":""}
 
     accessories = Accessory.objects.all()
+    
+    user_accessories = profile.accessories
+    try:
+        user_accessories = json.loads(user_accessories)
+    except:
+        user_accessories = {"":""}
 
-    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves})
+    items = []
+    for accessory in accessories:
+        if user_accessories[accessory.name]:
+            items.append('/static/images/'+accessory.link)
+
+    items = json.dumps(items)
+
+    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves, "items":  items, "equipped_list": profile.accessories})
 
 
 def save_accessories(request):
