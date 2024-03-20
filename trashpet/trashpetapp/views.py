@@ -29,17 +29,20 @@ def gamemaker(request):
             form = GamemakerForm(request.POST)
             
             if form.is_valid():
+
                 item_name = form.cleaned_data['item_name']
                 item_type = form.cleaned_data['item_type']
                 item_code = form.cleaned_data['item_code']
                 item_price = form.cleaned_data['item_price']
                 item_link = form.cleaned_data['item_link']
-                item_name = item_name.lower()
                 item = Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link)
                 item.save()
+
                 for user in UserProfile.objects.all():
-                    locked_list = user.accessories
-                    bought_list = user.bought
+
+                    locked_list = user.locked_list
+                    bought_list = user.bought_list
+                    accessories = user.accessories
 
                     try:
                         locked_list = json.loads(locked_list)
@@ -51,8 +54,20 @@ def gamemaker(request):
                     except:
                         bought_list = {"":""}
                     
+                    try:
+                        accessories = json.loads(accessories)
+                    except:
+                        accessories = {"":""}
+                    
                     locked_list[item_name] = True
                     bought_list[item_name] = True
+                    accessories[item_name] = False
+
+                    user.locked_list = locked_list
+                    user.bought_list = bought_list
+                    user.accessories = accessories
+
+                    user.save()
 
                 return redirect("shop")
         else:
@@ -83,6 +98,7 @@ def home(request):
     #list of item links
     accessories = Accessory.objects.all()
     user_accessories = profile.accessories
+
     try:
         user_accessories = json.loads(user_accessories)
     except:
@@ -103,12 +119,8 @@ def shop(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     locked_list = profile.locked_list
-    bought_list = profile.bought
+    bought_list = profile.bought_list
 
-    # Default bought list - for testing
-    '''bought_list = {"Cap":False, "Crown":False, "Socks":False, "Bottle":False }
-    profile.bought = json.dumps(bought_list) 
-    profile.save()'''
 
     #loads unlocked accessories
     try:
@@ -173,14 +185,14 @@ def save_accessories(request):
         profile.accessories = user_accessories
         profile.save()
 
-        return JsonResponse({"message": "Saved Successfully"})
+        return redirect("home")
 
 
 def buy_accessory(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     leaves = profile.leaves
-    bought_list = profile.bought
+    bought_list = profile.bought_list
     #loads bought accessories
     try:
         bought_list = json.loads(bought_list)
@@ -204,7 +216,7 @@ def buy_accessory(request):
                 name = accessory.name
                 bought_list[name] = True
                 bought_list = json.dumps(bought_list)
-                profile.bought = bought_list
+                profile.bought_list = bought_list
                 profile.save()
                 break
         
@@ -286,8 +298,8 @@ def update_map_leaves(request):
 def codes(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
-    locked_list = profile.accessories
-    bought_list = profile.bought
+    locked_list = profile.locked_list
+    bought_list = profile.bought_list
 
     #loads unlocked accessories list
     try:
@@ -310,7 +322,6 @@ def codes(request):
         form = CodeForm(request.POST)
         if form.is_valid():
             code = form.cleaned_data['code']
-            print(code)
             
             #checks accessory unlock codes, and if one is correct sets that accessory to "unlocked"
             for accessory in accessories:
@@ -322,7 +333,7 @@ def codes(request):
                     # Add to bought list
                     bought_list[name] = True
                     bought_list = json.dumps(bought_list)
-                    profile.bought = bought_list
+                    profile.bought_list = bought_list
                     profile.save()
                     found = True
                     break
@@ -379,11 +390,13 @@ def user_signup(request):
             accessories = Accessory.objects.all()
             locked_list = {}
             bought_list = {}
+            user_accessories = {}
 
             # Set all items to unbought and locked items to locked
             for accessory in accessories:
                 accessory_name = accessory.name
                 locked_list[accessory_name] = accessory.locked
+                user_accessories[accessory_name] = False
                 if accessory.locked:
                     bought_list[accessory_name] = True
                 else:
@@ -391,6 +404,7 @@ def user_signup(request):
 
             profile.locked_list = json.dumps(locked_list) 
             profile.bought_list = json.dumps(bought_list) 
+            profile.accessories = json.dumps(user_accessories)
             profile.save()
 
             return redirect('login')
