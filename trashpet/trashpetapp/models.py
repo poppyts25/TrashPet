@@ -1,11 +1,7 @@
-from django.contrib.auth.models import User,Permission
+from django.contrib.auth.models import User, Group, Permission
 from django.db import models
 from django.contrib.gis.db import models
-
-
-
 import json
-
 
 # User Profile: Leaves are currency, locked_list designates unlocked accessories
 class UserProfile(models.Model):
@@ -20,9 +16,6 @@ class UserProfile(models.Model):
     bought_list = json.dumps(bought_list) 
     bought = models.CharField(max_length=200, default=bought_list)
 
-
-
-
     def __str__(self):
         return f"{self.user.username}"
     
@@ -35,6 +28,7 @@ class Accessory(models.Model):
     code = models.CharField(max_length=20)
     price = models.DecimalField(max_digits=10, decimal_places=0)
     link = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="images/", default = "cap.png")
 
     def __str__(self):
         return f"{self.name}"

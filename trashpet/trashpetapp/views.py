@@ -5,8 +5,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from .forms import UserCreationForm, LoginForm, RenamePetForm, CodeForm, GamemakerForm, LeavesCodeForm
 from .models import UserProfile, Accessory, LeavesCode,Marker
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 import json
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
+
 
 
 
@@ -19,6 +22,9 @@ def map(request):
 
 def index(request): 
     return render(request, "trashpetapp/index.html")
+
+def is_gamemaker(user):
+    return user.groups.filter(name='Gamemaker').exists()
 
 @login_required
 @permission_required('auth.gamemaker')
@@ -33,8 +39,10 @@ def gamemaker(request):
                 item_type = form.cleaned_data['item_type']
                 item_code = form.cleaned_data['item_code']
                 item_price = form.cleaned_data['item_price']
-                item_link = form.cleaned_data['item_link']
-                Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link)
+                image = form.cleaned_data['image']
+                item_link = image.path
+
+                Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link, image=image)
 
                 for user in UserProfile.objects.all():
                     locked_list = user.accessories
@@ -52,6 +60,8 @@ def gamemaker(request):
                     
                     locked_list[item_name] = True
                     bought_list[item_name] = True
+
+                return redirect("shop")
         else:
             form = GamemakerForm()
         if 'leavescode_form' in request.POST:  
@@ -60,6 +70,8 @@ def gamemaker(request):
                 code = form2.cleaned_data['code']
                 leaves = form2.cleaned_data['leaves']
                 LeavesCode.objects.create(name=code, leaves=leaves)
+            return redirect("shop")
+        
         else:
             form2 = LeavesCodeForm()
 
@@ -70,7 +82,7 @@ def gamemaker(request):
     return render(request, "trashpetapp/gamemaker.html", {"form": form, "form2": form2})
 
 
-@login_required # automatically redirects to login page if not logged in
+@login_required # Automatically redirects to login page if not logged in
 def home(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
@@ -122,18 +134,16 @@ def buy_accessory(request):
         # Get the new leaves value from the POST data
         new_leaves = request.POST.get('new_leaves')
         
-        # Update the leaves value in your Django application
+        # Update the leaves value
         profile.leaves=new_leaves
         profile.save()
 
         # Checks accessories and if they match sets that accessory to "bought"
         accessories = Accessory.objects.all()
         accessory_name = request.POST.get('accessory_name')
-
         for accessory in accessories:
             if accessory.name == accessory_name:
-                name = accessory.name
-                bought_list[name] = True
+                bought_list[accessory.name] = True
                 bought_list = json.dumps(bought_list)
                 profile.bought = bought_list
                 profile.save()
@@ -168,7 +178,7 @@ def update_leaves(request):
         # Get the new leaves value from the POST data
         new_leaves = request.POST.get('new_leaves')
         
-        # Update the leaves value in your Django application
+        # Update the leaves value
         profile.leaves=new_leaves
         profile.save()
         
@@ -245,8 +255,9 @@ def profile(request):
     pet_name = profile.pet_name
 
     if request.method == 'POST':
+        # Check if the delete button was clicked
         if 'delete_user' in request.POST:
-            # Check if the delete button was clicked
+            # Only delete regular users
             if not user.is_superuser:
                 user.delete()
                 profile.delete()
@@ -263,7 +274,7 @@ def profile(request):
     else:
         form = RenamePetForm()
 
-    return render(request, "trashpetapp/profile.html", {"form": form, "username": username, "leaves": leaves, "pet_name": pet_name})
+    return render(request, "trashpetapp/profile.html", {"form": form, "username": username, "leaves": leaves, "pet_name": pet_name, "is_gamemaker": is_gamemaker(user)})
 
 
 
@@ -271,6 +282,8 @@ def user_signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
+
+            # Create user
             user = form.save()
             profile = UserProfile.objects.create(user=user)
             accessories = Accessory.objects.all()
@@ -283,6 +296,7 @@ def user_signup(request):
                 locked_list[accessory_name] = accessory.locked
                 bought_list[accessory_name] = False
 
+            # Convert data to json string
             profile.accessories = json.dumps(locked_list) 
             profile.bought = json.dumps(bought_list) 
             profile.save()
@@ -292,7 +306,7 @@ def user_signup(request):
         form = UserCreationForm()
     return render(request, 'trashpetapp/signup.html', {'form': form})
 
-# login page - need a popup when user/password is incorrect
+# login page
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -321,4 +335,43 @@ def user_logout(request):
 def policy(request): 
     return render(request, "trashpetapp/policy.html")
 
+
+def is_admin(user):
+   return user.is_superuser
+
+@user_passes_test(is_admin)
+def gamemakercreation(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+
+            # Create user
+            user = form.save()
+           
+            # Add to gamemaker group
+            gamemaker, created = Group.objects.get_or_create(name='Gamemaker')
+            user.groups.add(gamemaker)
+            user.save()
+
+            # Create their profile
+            profile = UserProfile.objects.create(user=user)
+            accessories = Accessory.objects.all()
+            locked_list = {}
+            bought_list = {}
+
+            # Set all items to unbought and locked items to locked
+            for accessory in accessories:
+                accessory_name = accessory.name
+                locked_list[accessory_name] = accessory.locked
+                bought_list[accessory_name] = False
+
+            # Convert data to json string
+            profile.accessories = json.dumps(locked_list) 
+            profile.bought = json.dumps(bought_list) 
+            profile.save()
+
+            return redirect('gamemakercreation')
+    else:
+        form = UserCreationForm()
+    return render(request, 'trashpetapp/gamemakercreation.html', {'form': form})
 

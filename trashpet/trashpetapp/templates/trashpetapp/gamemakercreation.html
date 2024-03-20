@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Admin</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <style>
+            .main-page-map {
+                padding-top: 100px;
+            }
+
+            h3{
+                padding-bottom: 10px;
+            }
+
+            body{
+                background: url('{% static "SkylineBackground.png" %}') rgba(0,0,0,0.3);
+                background-blend-mode: multiply;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            p {
+                color: white
+            }
+        </style>
+    </head>
+<body>
+    {% include "../trashpetapp/navbar.html" %}
+    <p>Helloooo</p>
+
+    <form method="POST">
+        <fieldset>
+            <legend>Create Gamemaker</legend>
+            <div class="form-inputs">
+                {% csrf_token %}
+
+                <div class="signup-inputs">
+                    {{ form.as_p }}
+
+                </div>
+                
+
+                <div class="signup-buttons">
+                    <button type="submit" class="signup signup-button">Create</button>
+                </div>
+            </div>
+                </fieldset>                
+            </form>
+
+</body>
+</html>
