@@ -5,5 +5,6 @@ django
 psycopg[binary]
 psycopg2
 postgis
-Pillow
+pillow
 trashpetapp/GDAL-3.4.3-cp310-cp310-win_amd64.whl
+django-extensions

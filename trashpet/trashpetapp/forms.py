@@ -23,10 +23,10 @@ class GamemakerForm(forms.Form):
     item_type = forms.CharField(max_length=20, label='Item Type:', widget=forms.TextInput(attrs={'placeholder': 'Enter item type'}))
     item_code = forms.CharField(max_length=20, label='Unlock Code:', widget=forms.TextInput(attrs={'placeholder': 'Enter unlock code'}))
     item_price = forms.IntegerField(label='Price:')
-    photo = forms.ImageField(label="Image:")
+    item_link = forms.CharField(label="Image Name:", widget=forms.TextInput(attrs={'placeholder': 'Enter item url'}))
     gamemaker_form = forms.BooleanField(widget=forms.HiddenInput, initial=True)
    
-#Gamemaker form to add money codes
+#Gamemaker form to add money codesß
 class LeavesCodeForm(forms.Form):
     code = forms.CharField(max_length=30, label='Unlock Code:', widget=forms.TextInput(attrs={'placeholder': 'Enter code here'}))
     leaves = forms.IntegerField(label='Reward:')

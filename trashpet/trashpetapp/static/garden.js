@@ -27,21 +27,16 @@ document.addEventListener("DOMContentLoaded", function () {
     applySavedItems();
 });
   
-
 function applySavedItems() {
-  items.forEach((item, index) => {
-    const itemId = `item-${index}`;
-    if (!document.getElementById(itemId)) {
-      // Check to avoid duplicating the item
+  items.forEach((item) => {
       const newItem = document.createElement("img");
       newItem.src = item;
       newItem.className = "pet-layered-item";
-      newItem.id = itemId;
       document.getElementById("pet-container").appendChild(newItem);
-    }
+    
     
   });
-  
+
   document.querySelector(".pet-background").src = pet_colour;
-    
+  
 }

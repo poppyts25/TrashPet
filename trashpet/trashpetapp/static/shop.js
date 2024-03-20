@@ -2,21 +2,27 @@ document.addEventListener("DOMContentLoaded", function () {
   applySavedItems();
   loadItemStates(); // Load the states of items when the page loads
 
-  document.querySelectorAll(".shop-item").forEach((item, index) => {
+  document.querySelectorAll(".shop-item").forEach((item) => {
     item.addEventListener("click", function () {
-      const itemId = `item-${index}`;
-      if (!document.getElementById(itemId)) {
+      var itemName = item.getAttribute("src").replace("/static/images/", "").replace(".png","");
+      if (!equipped_list[itemName]) {
+        equipped_list[itemName] = true;
         // Item is being added
         const newItem = document.createElement("img");
         newItem.src = item.getAttribute("src");
         newItem.data = item.getAttribute("alt")
         newItem.className = "pet-layered-item";
-        newItem.id = itemId;
         document.getElementById("pet-container").appendChild(newItem);
         item.style.outline = "2px solid green"; // Visual cue for selected item
       } else {
         // Item is being removed
-        document.getElementById(itemId).remove();
+        list = document.querySelectorAll('[src="'+item.getAttribute("src")+'"]');
+        list.forEach((image) => {
+          if (image.className == "pet-layered-item") {
+            image.remove();
+          }
+        })
+        equipped_list[itemName] = false;
         item.style.outline = "2px solid red"; // Visual cue for deselected item
       }
     });
@@ -24,9 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function loadItemStates() {
-  document.querySelectorAll(".shop-item").forEach((item, index) => {
+  document.querySelectorAll(".shop-item").forEach((item) => {
     var itemName = item.getAttribute("src").replace("/static/images/", "").replace(".png","");
-    alert(itemName);
     if (equipped_list[itemName]) {
       item.style.outline = "2px solid green"; // Visual cue for selected item
     } else {
@@ -36,16 +41,12 @@ function loadItemStates() {
 }
 
 function applySavedItems() {
-  items.forEach((item, index) => {
-    const itemId = `item-${index}`;
-    if (!document.getElementById(itemId)) {
-      // Check to avoid duplicating the item
+  items.forEach((item) => {
       const newItem = document.createElement("img");
       newItem.src = item;
       newItem.className = "pet-layered-item";
-      newItem.id = itemId;
       document.getElementById("pet-container").appendChild(newItem);
-    }
+    
     
   });
 

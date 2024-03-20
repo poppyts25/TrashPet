@@ -9,13 +9,11 @@ class UserProfile(models.Model):
     leaves = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     pet_name = models.CharField(max_length=30, default="Trash Pet") # set different / validate pet name length???
     locked_list = {}
-    locked_list = json.dumps(locked_list)               
+    locked_list = json.dumps(locked_list)  
     accessories = models.CharField(max_length=200, default=locked_list)
     pet_colour = models.CharField(max_length = 50, default="/static/images/petbackground.png")
     locked_list = models.CharField(max_length=200, default=locked_list)
-    bought_list = {}
-    bought_list = json.dumps(bought_list) 
-    bought = models.CharField(max_length=200, default=bought_list)
+    bought_list = models.CharField(max_length=200, default=locked_list)
 
     def __str__(self):
         return f"{self.user.username}"
@@ -29,7 +27,7 @@ class Accessory(models.Model):
     code = models.CharField(max_length=20)
     price = models.DecimalField(max_digits=10, decimal_places=0)
     link = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="static/images/", default = "cap.png")
+    
 
     def __str__(self):
         return f"{self.name}"
