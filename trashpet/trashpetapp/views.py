@@ -312,6 +312,7 @@ def codes(request):
         form = CodeForm(request.POST)
         if form.is_valid():
             code = form.cleaned_data['code']
+            print(code)
             
             #checks accessory unlock codes, and if one is correct sets that accessory to "unlocked"
             for accessory in accessories:
@@ -319,7 +320,7 @@ def codes(request):
                     name = accessory.name
                     locked_list[name] = False
                     locked_list = json.dumps(locked_list)
-                    profile.accessories = locked_list
+                    profile.locked_list = locked_list
                     # Add to bought list
                     bought_list[name] = True
                     bought_list = json.dumps(bought_list)
