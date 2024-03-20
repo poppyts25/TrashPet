@@ -181,8 +181,15 @@
             </form>   
         </div>
         <script>
-            document.getElementById("id_username_helptext").innerHTML="<br><br>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
-            document.getElementById("id_password2_helptext").innerHTML="<br><br>Enter the same password as before, for verification."
+            document.addEventListener("DOMContentLoaded", function(){
+                var helptextElements = document.querySelectorAll(".helptext");
+
+                helptextElements.forEach(function(element){
+                    var textContent = element.textContent;
+                    var newTextContent = textContent.replace(/(\S.+)/, '<br>');
+                    element.innerHTML = newTextContent;
+                });
+            });
         </script>
 
     </body>

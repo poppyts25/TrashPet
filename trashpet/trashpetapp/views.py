@@ -27,7 +27,7 @@ def is_gamemaker(user):
     return user.groups.filter(name='Gamemaker').exists()
 
 @login_required
-@permission_required('auth.gamemaker')
+@user_passes_test(is_gamemaker)
 def gamemaker(request): 
 
     if request.method == 'POST':
