@@ -42,10 +42,10 @@ def gamemaker(request):
                 image = form.cleaned_data['image']
                 item_link = image.path
 
-                Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link, image=image)
-
+                item = Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link, image=image)
+                item.save()
                 for user in UserProfile.objects.all():
-                    locked_list = user.accessories
+                    locked_list = user.locked_list
                     bought_list = user.bought
 
                     try:
@@ -89,16 +89,27 @@ def home(request):
     petname = profile.pet_name
     #list of item links
     accessories = Accessory.objects.all()
+    user_accessories = profile.accessories
+    try:
+        user_accessories = json.loads(user_accessories)
+    except:
+        user_accessories = {"":""}
+
     items = []
     for accessory in accessories:
-        items.append(accessory.link)
-    return render(request, "trashpetapp/home.html", {"petname": petname, "items":items})
+        if user_accessories[accessory.name]:
+            items.append('/static/images/'+accessory.link)
+
+    items = json.dumps(items)
+    pet_colour = json.dumps(profile.pet_colour)
+    
+    return render(request, "trashpetapp/home.html", {"petname": petname, "accessories":items, "pet_colour": pet_colour})
 
 @login_required
 def shop(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
-    locked_list = profile.accessories
+    locked_list = profile.locked_list
     bought_list = profile.bought
 
     # Loads unlocked accessories
@@ -114,8 +125,57 @@ def shop(request):
         bought_list = {"":""}
 
     accessories = Accessory.objects.all()
+    
+    user_accessories = profile.accessories
+    try:
+        user_accessories = json.loads(user_accessories)
+    except:
+        user_accessories = {"":""}
 
-    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves})
+    items = []
+    for accessory in accessories:
+        if user_accessories[accessory.name]:
+            items.append('/static/images/'+accessory.link)
+
+    items = json.dumps(items)
+    pet_colour = json.dumps(profile.pet_colour)
+    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "pet_colour":pet_colour, "locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves, "items":  items, "equipped_list": profile.accessories})
+
+
+def save_accessories(request):
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    user_accessories = profile.accessories
+
+    try:
+        user_accessories = json.loads(user_accessories)
+    except:
+        user_accessories = {"":""}
+    
+    if request.method == 'POST':
+        user_accessories = {}
+        new_accessory_list = request.POST.get('accessories')
+        try:
+            new_accessory_list = json.loads(new_accessory_list)
+        except:
+            new_accessory_list = []
+        
+        accessories = Accessory.objects.all()
+
+        for accessory in accessories:
+            if "/static/images/"+accessory.link in new_accessory_list:
+                user_accessories[accessory.name] = True
+            else:
+                user_accessories[accessory.name] = False
+   
+
+        user_accessories = json.dumps(user_accessories)
+        
+        profile.pet_colour = request.POST.get('pet_colour')
+        profile.accessories = user_accessories
+        profile.save()
+
+        return JsonResponse({"message": "Saved Successfully"})
 
 
 def buy_accessory(request):
@@ -167,7 +227,22 @@ def garden(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
     leaves = profile.leaves
-    data = {"leaves":leaves} #view that handles ajax request
+    accessories = Accessory.objects.all()
+    user_accessories = profile.accessories
+    try:
+        user_accessories = json.loads(user_accessories)
+    except:
+        user_accessories = {"":""}
+
+    items = []
+    for accessory in accessories:
+        if user_accessories[accessory.name]:
+            items.append('/static/images/'+accessory.link)
+
+    items = json.dumps(items)
+    pet_colour = json.dumps(profile.pet_colour)
+
+    data = {"leaves":leaves, "accessories": items, "pet_colour": pet_colour} #view that handles ajax request
     return render(request, "trashpetapp/garden.html", data)
 
 def update_leaves(request):
@@ -186,6 +261,22 @@ def update_leaves(request):
     else:
         # Handle other HTTP methods if necessary
         return render(request, 'trashpetapp/garden.html', {'leaves': 0})
+def update_map_leaves(request):
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    leaves = profile.leaves
+    if request.method == 'POST':
+        # Get the new leaves value from the POST data
+        new_leaves = request.POST.get('new_leaves')
+        
+        # Update the leaves value in your Django application
+        profile.leaves=new_leaves
+        profile.save()
+        
+        return JsonResponse({'new_leaves': new_leaves})
+    else:
+        # Handle other HTTP methods if necessary
+        return render(request, 'trashpetapp/walking.html', {'leaves': 0})
     
 
 
@@ -193,7 +284,7 @@ def update_leaves(request):
 def codes(request):
     user = request.user
     profile = UserProfile.objects.get(user=user)
-    locked_list = profile.accessories
+    locked_list = profile.locked_list
     bought_list = profile.bought
 
     #loads unlocked accessories list
@@ -224,7 +315,7 @@ def codes(request):
                     name = accessory.name
                     locked_list[name] = False
                     locked_list = json.dumps(locked_list)
-                    profile.accessories = locked_list
+                    profile.locked_list = locked_list
                     # Add to bought list
                     bought_list[name] = True
                     bought_list = json.dumps(bought_list)
@@ -289,16 +380,19 @@ def user_signup(request):
             accessories = Accessory.objects.all()
             locked_list = {}
             bought_list = {}
+            accessory_list = {}
 
             # Set all items to unbought and locked items to locked
             for accessory in accessories:
                 accessory_name = accessory.name
                 locked_list[accessory_name] = accessory.locked
                 bought_list[accessory_name] = False
+                accessory_list[accessory_name] = False
 
             # Convert data to json string
-            profile.accessories = json.dumps(locked_list) 
+            profile.locked_list = json.dumps(locked_list) 
             profile.bought = json.dumps(bought_list) 
+            profile.accessories = json.dumps(accessory_list) 
             profile.save()
 
             return redirect('login')
@@ -366,11 +460,11 @@ def gamemakercreation(request):
                 bought_list[accessory_name] = False
 
             # Convert data to json string
-            profile.accessories = json.dumps(locked_list) 
+            profile.locked_list = json.dumps(locked_list) 
             profile.bought = json.dumps(bought_list) 
             profile.save()
 
-            return redirect('gamemakercreation')
+            return redirect('profile')
     else:
         form = UserCreationForm()
     return render(request, 'trashpetapp/gamemakercreation.html', {'form': form})

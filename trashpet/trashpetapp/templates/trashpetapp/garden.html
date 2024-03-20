@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Virtual Pet</title>
   <link rel="stylesheet" href="{% static 'style.css' %}?{%now 'U'%}">
-  <link rel="stylesheet" href="{% static 'garden.css' %}">
+  <link rel="stylesheet" href="{% static 'garden.css' %}?{%now 'U'%}">
   <script src="https://kit.fontawesome.com/f32a47c063.js" crossorigin="anonymous"></script>
 
   <style>
@@ -33,6 +33,8 @@
       overflow: hidden;
       bottom: 8%;
       left: 0;
+      transform: translateY(-20px)
+
     }
 
     .pet-background,
@@ -66,7 +68,7 @@
     document.getElementById("map-tab").classList.remove("active")
 
     document.getElementById("garden-tab").classList.add("active")
-    document.getElementById("camera-tab").classList.remove("active")
+    
 
   </script>
 
@@ -79,31 +81,39 @@
       <img src = '{% static "/images/smile.png" %}' class="pet-smile" alt="pet">
     </div>
 
-    <!--container that holds buttons that user can interact with-->
-    <div class="buttons-container">
-      <button id="bin-button"><i class="fa-solid fa-droplet"></i></button>
-    </div>
-
     <!--container that plant is stored in-->
     <div id="plant-container">
       <img src="{% static 'images/plant1.png' %}" class="plant-image" id="plant-image">
     </div>
-  
-    <!--leaves count for user to see-->
-    <div id="leavesCounterContainer">
-      <!--leaf icon-->
-      <i class="fa-solid fa-leaf"></i>:
-      <div id = "leavesCounter">
-        <!--django reference-->
-        {{leaves}}
+   
+    
+      <div class="buttons-container" id="buttonID">
+        <button id="bin-button"><i class="fa-solid fa-droplet"></i></button>
       </div>
-    </div>
+
+      <!--leaves count for user to see-->
+      <div id="leavesCounterContainer">
+        <!--leaf icon-->
+        <i class="fa-solid fa-leaf"></i>:
+        <div id = "leavesCounter">
+          <!--django reference-->
+          {{leaves}}
+        </div>
+      </div>
+
+    <!--container that holds buttons that user can interact with-->
+    
 
 
     <script src="{% static 'garden.js' %}"></script>
     <script src="{% static 'animate.js' %}"></script>
     <script src="{% static 'jquery.min.js' %}"></script>
   </div>
+
+  <script>
+    pet_colour = JSON.parse('{{pet_colour | escapejs }}')
+    const items = JSON.parse('{{ accessories | escapejs }}');
+  </script>
   
   <script>
     //script to update leaves count in database and on screen
@@ -159,6 +169,8 @@
       });
     });
   </script>
+
+
 
 </body>
 </html>

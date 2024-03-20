@@ -25,10 +25,33 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+function applySavedItems() {
+  const items = home.attr("data-items");
+  items.forEach((itemSrc, index) => {
+    const itemId = `item-${index}`;
+    if (localStorage.getItem(itemId)) {
+      // Item was previously added, recreate it on the pet
+      if (!document.getElementById(itemId)) {
+        // Check to avoid duplicating the item
+        const newItem = document.createElement("img");
+        newItem.src = itemSrc;
+        newItem.className = "pet-layered-item";
+        newItem.id = itemId;
+        document.getElementById("pet-container").appendChild(newItem);
+      }
+    }
+  });
+
+  const savedBackgroundImage = pet_colour;
+  if (savedBackgroundImage) {
+    document.querySelector(".pet-background").src = savedBackgroundImage;
+  }
+}
+
 function loadItemStates() {
   document.querySelectorAll(".shop-item").forEach((item, index) => {
     const itemId = `item-${index}`;
-    if (localStorage.getItem(itemId)) {
+    if () {
       // Item was previously added, so recreate it in the pet-container
       const newItem = document.createElement("img");
       newItem.src = item.getAttribute("src");
@@ -40,7 +63,7 @@ function loadItemStates() {
       item.style.outline = "2px solid red"; // Visual cue for deselected item
     }
   });
-  const savedBackgroundImage = localStorage.getItem("petBackgroundImage");
+  const savedBackgroundImage = pet_colour;
   console.log("Saved Background Image:", savedBackgroundImage);
   if (savedBackgroundImage) {
     document.querySelector(".pet-background").src = savedBackgroundImage;
@@ -66,6 +89,6 @@ document.querySelectorAll(".color-option").forEach(function (option) {
     const imagePath = option.getAttribute("data-path");
     console.log("background:", imagePath);
     document.querySelector(".pet-background").src = imagePath;
-    localStorage.setItem("petBackgroundImage", imagePath);
+    pet_colour = imagePath;
   });
 });

@@ -126,6 +126,7 @@ USE_I18N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -149,3 +150,4 @@ if platform.system() == 'Windows':
     os.environ['PATH'] = os.path.join(BASE_DIR, r'venv\\Lib\\site-packages\\osgeo') + ';' + os.environ['PATH']
     os.environ['PROJ_LIB'] = os.path.join(BASE_DIR, r'env3\\Lib\site-packages\\osgeo\\data\\proj') + ';' + os.environ['PATH']
     GDAL_LIBRARY_PATH = os.path.join(BASE_DIR, r'venv\\lib\\site-packages\\osgeo\\gdal304.dll')
+
