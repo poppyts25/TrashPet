@@ -470,18 +470,21 @@ def gamemakercreation(request):
             accessories = Accessory.objects.all()
             locked_list = {}
             bought_list = {}
+            user_accessories = {}
 
             # Set all items to unbought and locked items to locked
             for accessory in accessories:
                 accessory_name = accessory.name
                 locked_list[accessory_name] = accessory.locked
+                user_accessories[accessory_name] = False
                 if accessory.locked:
                     bought_list[accessory_name] = True
                 else:
                     bought_list[accessory_name] = False
 
             profile.locked_list = json.dumps(locked_list) 
-            profile.bought_list = json.dumps(bought_list) #
+            profile.bought_list = json.dumps(bought_list)
+            profile.accessories = json.dumps(user_accessories)
 
             profile.save()
 
