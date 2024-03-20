@@ -137,7 +137,7 @@ def shop(request):
 
     items = json.dumps(items)
 
-    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves, "items":  items, "equipped_list": profile.accessories})
+    return render(request, "trashpetapp/shop.html", {"accessories": accessories, locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves, "items":  items, "equipped_list": profile.accessories})
 
 
 def save_accessories(request):
