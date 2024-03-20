@@ -386,10 +386,13 @@ def user_signup(request):
             for accessory in accessories:
                 accessory_name = accessory.name
                 locked_list[accessory_name] = accessory.locked
-                bought_list[accessory_name] = False
+                if accessory.locked:
+                    bought_list[accessory_name] = True
+                else:
+                    bought_list[accessory_name] = False
 
-            profile.accessories = json.dumps(locked_list) 
-            profile.bought = json.dumps(bought_list) 
+            profile.locked_list = json.dumps(locked_list) 
+            profile.bought_list = json.dumps(bought_list) 
             profile.save()
 
             return redirect('login')
@@ -439,10 +442,13 @@ def gkcreator(request):
             for accessory in accessories:
                 accessory_name = accessory.name
                 locked_list[accessory_name] = accessory.locked
-                bought_list[accessory_name] = False
+                if accessory.locked:
+                    bought_list[accessory_name] = True
+                else:
+                    bought_list[accessory_name] = False
 
-            profile.accessories = json.dumps(locked_list) 
-            profile.bought = json.dumps(bought_list) #
+            profile.locked_list = json.dumps(locked_list) 
+            profile.bought_list = json.dumps(bought_list) #
 
             #Need to add it so that they have the game keeper permissions   <----------
 
