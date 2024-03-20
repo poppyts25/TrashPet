@@ -186,6 +186,8 @@ def save_accessories(request):
         profile.save()
 
         return redirect("home")
+    
+    return JsonResponse({"message":"Accessories Saved Successfully"})
 
 
 def buy_accessory(request):
