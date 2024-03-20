@@ -33,5 +33,5 @@ Basic page functionality
 <ul>
 <li>GitHub: https://github.com/poppyts25/TrashPet
 <li>Kanban Board: https://trello.com/b/N11jXliZ 
-<li>Public Handle: https://trashpetapp.pythonanywhere.com/trashpetapp</li>
+<li>Public Handle: https://trashpetapp.pythonanywhere.com</li>
 </ul>
