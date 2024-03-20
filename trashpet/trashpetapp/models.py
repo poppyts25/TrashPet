@@ -15,7 +15,7 @@ class UserProfile(models.Model):
     locked_list = {}
     locked_list = json.dumps(locked_list)               
     accessories = models.CharField(max_length=200, default=locked_list)
-    pet_colour = models.CharField(max_length = 30, default="petbackground.png")
+    pet_colour = models.CharField(max_length = 50, default="/static/images/petbackground.png")
     locked_list = models.CharField(max_length=200, default=locked_list)
     bought_list = {}
     bought_list = json.dumps(bought_list) 

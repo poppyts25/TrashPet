@@ -102,6 +102,7 @@
   <script>
     const items = JSON.parse('{{ items | escapejs }}');
     equipped_list = JSON.parse('{{ equipped_list | escapejs }}') 
+    pet_colour = JSON.parse('{{pet_colour | escapejs }}')
   </script>
 
   <script>
@@ -151,7 +152,7 @@
               method: 'POST',
               headers: { 'X-CSRFToken': getCookie('csrftoken')},
               
-              data: {'accessories': JSON.stringify(accessories)},  
+              data: {'accessories': JSON.stringify(accessories),'pet_colour': pet_colour },  
               success: function(response) {
                 console.log('Accessories saved successfully.');
                 

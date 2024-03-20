@@ -95,8 +95,9 @@ def home(request):
             items.append('/static/images/'+accessory.link)
 
     items = json.dumps(items)
+    pet_colour = json.dumps(profile.pet_colour)
     
-    return render(request, "trashpetapp/home.html", {"petname": petname, "accessories":items})
+    return render(request, "trashpetapp/home.html", {"petname": petname, "accessories":items, "pet_colour": pet_colour})
 
 @login_required
 def shop(request):
@@ -136,8 +137,8 @@ def shop(request):
             items.append('/static/images/'+accessory.link)
 
     items = json.dumps(items)
-
-    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "pet_colour":profile.pet_colour, "locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves, "items":  items, "equipped_list": profile.accessories})
+    pet_colour = json.dumps(profile.pet_colour)
+    return render(request, "trashpetapp/shop.html", {"accessories": accessories, "pet_colour":pet_colour, "locked_list": locked_list, "bought_list": bought_list, "leaves": profile.leaves, "items":  items, "equipped_list": profile.accessories})
 
 
 def save_accessories(request):
@@ -168,8 +169,8 @@ def save_accessories(request):
    
 
         user_accessories = json.dumps(user_accessories)
-        print(user_accessories)
-
+        
+        profile.pet_colour = request.POST.get('pet_colour')
         profile.accessories = user_accessories
         profile.save()
 
@@ -242,8 +243,9 @@ def garden(request):
             items.append('/static/images/'+accessory.link)
 
     items = json.dumps(items)
+    pet_colour = json.dumps(profile.pet_colour)
 
-    data = {"leaves":leaves, "accessories": items} #view that handles ajax request
+    data = {"leaves":leaves, "accessories": items, "pet_colour": pet_colour} #view that handles ajax request
     return render(request, "trashpetapp/garden.html", data)
 
 def update_leaves(request):
