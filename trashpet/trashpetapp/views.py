@@ -33,11 +33,9 @@ def gamemaker(request):
                 item_type = form.cleaned_data['item_type']
                 item_code = form.cleaned_data['item_code']
                 item_price = form.cleaned_data['item_price']
-                image = form.cleaned_data['image']
-                item_link = image.path
+                item_link = form.cleaned_data['item_link']
                 item_name = item_name.lower()
-
-                item = Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link, image=image)
+                item = Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link)
                 item.save()
                 for user in UserProfile.objects.all():
                     locked_list = user.accessories
