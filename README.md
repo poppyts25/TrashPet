@@ -15,6 +15,7 @@ Basic page functionality
 <li>When plant is fully grown the user's leaves (currency) is increased
 <li>Shop to customize the pet
 <li>Can change colour of pet and add accessories
+<li>User can track their walks to earn leaves and exercise the pet
 </ul>
 <h3> Requirements:</h3>
 <ul>
@@ -25,7 +26,8 @@ Basic page functionality
   <li>You should enter the venv before installing requirements</li>
   <li>pip install -r requirements.txt</li>
   <li>This system is made using python 3.10.11</li>
-  <li> The maping system does not run on newer versions of python but does work on previous versions</li>
+  <li> The mapping system does not run on newer versions of python but does work on previous versions</li>
+  <li> The mapping system is not compatible with Safari</li>
 </ul>
 <h3> Links:</h3>
 <ul>
