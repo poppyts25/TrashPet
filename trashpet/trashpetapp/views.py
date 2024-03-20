@@ -429,9 +429,7 @@ def user_login(request):
             if user:
                 login(request, user)    
                 return redirect('home')
-            else:
-                # Add an error message to template if incorrect user/password
-                return render(request, 'trashpetapp/login.html', {'form': form, 'error_message': 'Invalid username or password.'})
+            
 
     else:
         form = LoginForm()
