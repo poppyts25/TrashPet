@@ -1,11 +1,7 @@
-from django.contrib.auth.models import User,Permission
+from django.contrib.auth.models import User, Group, Permission
 from django.db import models
 from django.contrib.gis.db import models
-
-
-
 import json
-
 
 # User Profile: Leaves are currency, locked_list designates unlocked accessories
 class UserProfile(models.Model):
@@ -18,9 +14,6 @@ class UserProfile(models.Model):
     pet_colour = models.CharField(max_length = 50, default="/static/images/petbackground.png")
     locked_list = models.CharField(max_length=200, default=locked_list)
     bought_list = models.CharField(max_length=200, default=locked_list)
-
-
-
 
     def __str__(self):
         return f"{self.user.username}"

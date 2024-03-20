@@ -137,15 +137,25 @@
                 </form>
             </div>
 
-            {% if perms.trashpetapp.gamemaker %}
-            <div>
-                <button class="form-btn submit-name-btn" onclick="goToGamemaker()">Gamemaker Control Page</button>
-            </div>
+            {% if user.is_superuser or is_gamemaker %}
+                <div>
+                    <button class="form-btn submit-name-btn" onclick="goToGamemaker()">Gamemaker Control Page</button>
+                </div>
+            {% endif %}
+
+            {% if user.is_superuser %}
+                <div>
+                    <button class="form-btn submit-name-btn" onclick="goToGamemakerCreation()">Gamemaker Creation Page</button>
+                </div>
             {% endif %}
 
             <script>
                 function goToGamemaker(){
                   window.location.href=("{%url 'gamemaker' %}")
+                }
+
+                function goToGamemakerCreation() {
+                    window.location.href=("{%url 'gamemakercreation' %}")
                 }
               </script>
 
