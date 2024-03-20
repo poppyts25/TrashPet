@@ -12,12 +12,14 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     leaves = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     pet_name = models.CharField(max_length=30, default="Trash Pet") # set different / validate pet name length???
-    locked_list = {}
-    locked_list = json.dumps(locked_list)               
-    accessories = models.CharField(max_length=200, default=locked_list)
+    locked_list = '{"socks": False, "bottle": True, "crown":False, "cap": False}'
+    locked_list = json.dumps(locked_list)
+    accessories = '{"socks": False, "bottle": False, "crown":False, "cap": False}'     
+    accessories = json.dumps(accessories)        
+    accessories = models.CharField(max_length=200, default=accessories)
     pet_colour = models.CharField(max_length = 50, default="/static/images/petbackground.png")
     locked_list = models.CharField(max_length=200, default=locked_list)
-    bought_list = {}
+    bought_list = '{"socks": False, "bottle": True, "crown":False, "cap": False}'
     bought_list = json.dumps(bought_list) 
     bought = models.CharField(max_length=200, default=bought_list)
 

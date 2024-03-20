@@ -35,6 +35,7 @@ def gamemaker(request):
                 item_price = form.cleaned_data['item_price']
                 image = form.cleaned_data['image']
                 item_link = image.path
+                item_name = item_name.lower()
 
                 item = Accessory.objects.create(name=item_name, type=item_type, locked= True, code=item_code, price=item_price, link=item_link, image=image)
                 item.save()

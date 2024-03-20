@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function loadItemStates() {
   document.querySelectorAll(".shop-item").forEach((item, index) => {
     var itemName = item.getAttribute("src").replace("/static/images/", "").replace(".png","");
-    alert(itemName);
     if (equipped_list[itemName]) {
       item.style.outline = "2px solid green"; // Visual cue for selected item
     } else {
