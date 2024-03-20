@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function loadItemStates() {
   document.querySelectorAll(".shop-item").forEach((item, index) => {
     var itemName = item.getAttribute("src").replace("/static/images/", "").replace(".png","");
+    alert(itemName);
     if (equipped_list[itemName]) {
       item.style.outline = "2px solid green"; // Visual cue for selected item
     } else {
@@ -48,10 +49,8 @@ function applySavedItems() {
     
   });
 
-  const savedBackgroundImage = pet_colour;
-  if (savedBackgroundImage) {
-    document.querySelector(".pet-background").src = savedBackgroundImage;
-  }
+  document.querySelector(".pet-background").src = pet_colour;
+  
 }
 
 
@@ -77,3 +76,4 @@ document.querySelectorAll(".color-option").forEach(function (option) {
     pet_colour = imagePath;
   });
 });
+
