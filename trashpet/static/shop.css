@@ -1,0 +1,202 @@
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/static/shop-background.jpg");
+    /* Corrected path */
+    background-size: cover;
+    background-position: center;
+}
+
+
+#pet-container {
+    margin: auto;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.shop-item {
+    width: 150px;
+    margin: 20px;
+    cursor: pointer;
+    object-fit: contain;
+    border-radius: 10px;
+
+}
+
+
+
+.pet-background,
+.pet-eyes,
+.pet-smile {
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#item-reel {
+    background-color: rgba(0, 0, 0, .5);
+    outline-color: black;
+    outline-style: ridge;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    flex-wrap: wrap;
+}
+
+.accessory {
+    position: relative;
+}
+
+.fa-lock,
+.fa-dollar-sign {
+    position: absolute;
+    padding: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Center lock */
+    font-size: 50px;
+    color: #FFD43B;
+    z-index: 1;
+    /* Ensure lock is on top */
+}
+
+.hidden {
+    display: none;
+}
+
+.pet-layered-item {
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 2;
+    top: 0;
+    left: 0;
+}
+
+.menu-toggle-button {
+    border-radius: 50%;
+    /* Circular shape */
+    width: 50px;
+    height: 50px;
+    /* Size of the buttons */
+    font-size: 20px;
+    /* Icon size */
+    cursor: pointer;
+    margin: 10px;
+    /* Spacing */
+}
+
+.color-option {
+    width: 40px;
+    height: 40px;
+    /* Size of color circles */
+    border-radius: 50%;
+    /* Circular shape */
+    cursor: pointer;
+    display: inline-block;
+    /* Align side by side */
+    margin: 20px;
+    /* Spacing */
+
+    transition: 0.4s;
+}
+
+.color-option:hover {
+    border: 1px solid black;
+}
+
+#code-page-button {
+    transition: 0.4s;
+    padding: 0px;
+    /*vertically align*/
+}
+
+#code-page-button:hover {
+    background-color: rgb(255, 212, 59);
+    border-color: black;
+    box-shadow: 2px 2px 3px;
+}
+
+#item-menu-button {
+    transition: 0.4s;
+    padding: 0px;
+    /*vertically align*/
+}
+
+#item-menu-button:hover {
+    background-color: rgb(111, 198, 252);
+    border-color: black;
+    box-shadow: 2px 2px 3px;
+}
+
+.save-button {
+    margin: 10px 20px;
+    display: inline-block;
+    padding: 8px 20px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.5);
+    /* Translucent white background */
+    border: 3px solid;
+    border-radius: 99px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.save-button:hover {
+    background-color: rgb(80, 68, 100, 0.9);
+    box-shadow: 2px 2px 3px;
+}
+
+#color-menu-button {
+    transition: 0.4s;
+    padding: 0px;
+    /*vertically align*/
+}
+
+#color-menu-button:hover {
+    background-color: rgb(252, 146, 224);
+    border-color: black;
+    box-shadow: 2px 2px 3px;
+}
+
+#color-menu {
+    background-color: rgba(0, 0, 0, .5);
+    outline-color: black;
+    outline-style: ridge;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+#leavesCounterContainer {
+    position: fixed;
+    top: 10%;
+    right: 10px;
+    background-color: #00ff2f;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+}
