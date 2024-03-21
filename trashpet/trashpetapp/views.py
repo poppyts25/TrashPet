@@ -69,9 +69,9 @@ def gamemaker(request):
                     bought_list[item_name] = True
                     accessories[item_name] = False
 
-                    user.locked_list = locked_list
-                    user.bought_list = bought_list
-                    user.accessories = accessories
+                    user.locked_list = json.dumps(locked_list)
+                    user.bought_list = json.dumps(bought_list)
+                    user.accessories = json.dumps(accessories)
 
                     user.save()
 
